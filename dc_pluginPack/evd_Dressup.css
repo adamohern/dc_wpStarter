@@ -1,0 +1,214 @@
+body {font-family:helvetica,arial,sans-serif; background-image:url("images/evd_bodyBackground.png");}
+article h3 {font-family:helvetica,arial,sans-serif;font-weight:bold;}
+
+#headerWrap {background-image:url("images/evd_headerBackground.png");}
+#headerContent li {background-color:transparent;background-image:url("images/evd_headerBackground.png"); color:#8b8b8b;padding-left:10px;padding-right:10px;}
+#headerContent li a {color:#8b8b8b;}
+#headerContent li:hover a {color:#a6a6a6; text-decoration:underline;}
+#headerContent li.background {position:relative; width:220px;height:80px;background-color:transparent;background-image:none;padding-left:0;padding-right:0;}
+#headerContent li .hover {opacity:0;position:absolute;top:0;left:0;width:220px;height:80px;background-color:transparent;background-image:none;padding-left:0;padding-right:0;}
+#headerContent li.evdm.background,
+#headerContent li.evdm .hover {width:64px;}
+#headerContent li.background a {display:none;}
+#headerContent li.cadjunkie.background {background-image:url("images/headerContent_cj.png");}
+#headerContent li.solidsmack.background {background-image:url("images/headerContent_ss.png");}
+#headerContent li.evd.background {background-image:url("images/headerContent_evd.png");}
+#headerContent li.evdm.background {background-image:url("images/headerContent_evdMedia.png");}
+#headerContent li.cadjunkie .hover {background-image:url("images/headerContent_cj-hover.png");}
+#headerContent li.solidsmack .hover {background-image:url("images/headerContent_ss-hover.png");}
+#headerContent li.evd .hover {background-image:url("images/headerContent_evd-hover.png");}
+#headerContent li.evdm .hover {background-image:url("images/headerContent_evdMedia-hover.png");}
+
+#evd-page-wrap {
+	background: white;
+	-webkit-box-shadow: 0 5px 9px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 5px 9px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 5px 9px rgba(0, 0, 0, 0.1);
+	margin-bottom: 20px;
+}
+
+/* These are included for backward-compatibility with older cadjunkie lists */
+article .imageGallery { width:710px; padding:8px 0 0 8px; margin:20px 0; overflow:hidden; border:1px solid #ccc; }
+article .imageGallery img { width:165px; height:93px; }
+article .imageGallery ul { margin:0; list-style-type:none; }
+article .imageGallery ul li { line-height:1; float:left; margin-right:12px; margin-bottom:8px; }
+
+#sidebar div {margin-bottom:2em;}
+#sidebar .widget a {font-family:'LeagueGothicRegular',sans-serif;font-size:2.3em;text-transform:uppercase;line-height:1.1em;}
+#sidebar .widget a {color:#333;}
+#sidebar .widget a:hover {color:#000;text-decoration:none;}
+#sidebar .widget .sub-menu {margin:1em 0;}
+#sidebar .widget .sub-menu a {line-height:3em;font-family:helvetica,arial,sans-serif;font-size:14px;text-transform:none;display:block;}
+#sidebar .widget_recent_entries a {line-height:1em;margin:.5em 0;}
+#sidebar .widget li li:first-child {/*border-top:1px solid #ddd;*/}
+#sidebar .widget li li {padding-left:.5em;/*border-bottom:1px solid #ddd;*/}
+#sidebar .widget li li:hover {background-image:url('images/evd_articleBGOverlay.png');cursor:pointer;}
+
+.articles {margin-bottom:1em;}
+.page article h2,
+.single article h2 {sans-serif;font-size:1.3em;font-weight:bold;text-transform:uppercase;margin:0 0 30px 0;line-height:1.2em;}
+.page .articles article h2,
+.single .articles article h2 {font-size:1.1em;margin:0;font-family:helvetica,arial,sans-serif;font-weight:normal;}
+.page article h1,
+.single article h1 {font-family:'LeagueGothicRegular',sans-serif;font-size:3em;line-height:1em;font-weight:normal;margin-bottom:.2em;margin-right:15px;}
+.page article,
+.single article {margin-bottom:2em;padding-bottom:2em;}
+
+article.evd_postcard:hover {background-image:url("images/evd_articleBGOverlay.png");background-color:transparent;}
+
+article .author_bio {margin-bottom:2em;margin-top:3em;
+-webkit-border-radius: 5px; 
+	background: #f5f5f5;
+	background: -moz-linear-gradient(top, #f5f5f5 0%, #eee 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #eee));
+}
+article .author_bio td {padding:2em;line-height:2em;font-size:.8em;}
+article .author_bio_title {font-family:helvetica,arial,sans-serif; text-transform:uppercase; color:#000; display:inline;}
+article .gallery {}
+article .entry-content div.thumbnail {margin-right:2em;}
+article .meta {font-size:11px;text-transform:uppercase;}
+article h2 {font-family:helvetica,arial,sans-serif; text-transform:uppercase; font-weight:normal;}
+article .splashBack {margin-bottom:1.5em;background-image:url('images/evd_CJSplashBack.png');width:720px;height:420px;position:relative;left:-5px;top:-5px;padding:5px;}
+article .nowrap .splashBack {background-image:none;width:auto; height:auto;left:0;top:0;padding:0;}
+article .bigCaption01 {margin-bottom:1em;padding:0 1em; font-family:helvetica,arial,sans-serif;color:#666;}
+article .bigQuote01 {min-height:95px;}
+article .bigQuote01 .title {width:325px;float:right;text-align:left;font-family:'LeagueGothicRegular';font-size:48px;text-transform:uppercase;position:relative;top:-12px;padding-left:45px;background:url('images/evd_rightBracket.png');background-repeat:no-repeat;padding-top:5px;}
+article .bigQuote01 .quote {width:345px; float:left;text-align:right;font-family:helvetica,arial,sans-serif;font-size:1.2em;color:#666;}
+article .buttonBoxContainer{margin:3em 0;}
+article .buttonBox {width:230px;padding:5px;overflow:hidden;float:left;margin-bottom:1em;}
+article .buttonBox p {font-size:.8em;margin:1em;line-height:1.8em;}
+article .evdButton a {color:#333;}
+article .evdButton a:hover {color:#000;text-decoration:none;}
+article .evdButton.left,
+article .evdButton.right,
+article .evdButton.middle {cursor:pointer;height:42px;}
+article .evdButton.left {width:10px;background-image:url('images/evdButton_left.png');position:absolute;left:-10px;top:0;}
+article .evdButton.right {width:10px;background-image:url('images/evdButton_right.png');position:absolute;right:-10px;top:0;}
+article .evdButton.middle {text-align:left;font-family:'BitstreamVeraSansBold';font-size:16px;line-height:.9em;margin:0 10px;position:relative;padding:14px 0;height:12px;background-image:url('images/evdButton_middle.png');}
+article .evdButton:hover .left {width:10px;background-image:url('images/evdButton_left_down.png');}
+article .evdButton:hover .right {width:10px;background-image:url('images/evdButton_right_down.png');}
+article .evdButton:hover.middle {background-image:url('images/evdButton_middle_down.png');}
+
+article .entry-content p {line-height:2.2em;margin:0 0 2em 0;}
+article .entry-content ul,
+article .entry-content ol {margin:2em 1em;margin-left:3em;}
+article .entry-content .evd_postsList ul {margin:0;margin-bottom:3em;}
+article .entry-content blockquote {margin:2em 1em;background-color:#f2f2f2;padding:.1em;}
+article .entry-content .evd_postsList {list-style-type:none;margin-left:0;}
+article .entry-content .evd_postsList li {padding:.5em;margin-bottom:5px;background-color:#f9f9f9;list-style-type:none;}
+
+article.evd_postcard h2 {font-weight:normal;width:340px;}
+article.evd_postcard {padding-left:0;position:relative;margin-bottom:0;}
+article.evd_postcard .squeezeOver {width:410px;}
+article.evd_postcard div.thumbnail {width:256px;height:144px;padding:5px;border:0;position:relative;left:-5px;top:-5px;}
+article.evd_postcard .skillLevel {float:right;}
+article.evd_postcard .meta {margin-bottom:0;width:340px;}
+article.evd_postcard .entry {color:#666;}
+article.evd_postcard:hover .entry {color:#333;}
+
+.bigMenu .subwrap h2 {font-family:'LeagueGothicRegular',sans-serif;font-size:2.8em;font-weight:normal;text-transform:uppercase;line-height:.9em;padding-top:15px;}
+.bigMenu .subwrap h3 {font-family:helvetica,arial,sans-serif;font-weight:normal;}
+.bigMenu {background-color:#f9f9f9; border:1px solid #eee; width:658px; padding:0px 30px 60px 30px;}
+.bigMenu .closeBox:hover {background-color:#f4f4f4;}
+.bigMenu header {top:-16px;display:none;}
+.bigMenu footer {bottom:-16px;background-position:bottom left;display:none;}
+.bigMenu .subwrap li:hover,
+.bigMenu .subwrap .titleBar:hover {background-color:#f4f4f4;}
+.bigMenu .subwrap h3 a {color:#333;}
+.bigMenu .subwrap h3 a:hover {color:#000;}
+.bigMenu .page.subwrap {padding:1em 0;}
+.bigMenu .page.subwrap p {margin-bottom:1em;}
+
+#sidebar p.bigButton,
+p.bigButton {
+	margin-bottom:0;
+}
+#sidebar p.bigButton {padding:0;position:relative;left:-10px;}
+p.bigButton a {
+	font-size: 18px;
+	font-family:sans-serif;
+	text-transform:none;
+	text-decoration: none;
+	display: inline-block;
+	-webkit-border-radius: 999px;
+	padding: 10px 15px;
+	color: #924C00;
+	background: #FCDA71;
+	background: -moz-linear-gradient(top, #FCDA71 0%, #E2BE00 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FCDA71), color-stop(100%, #E2BE00));
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
+	margin-bottom: 4px;
+}
+p.bigButton a:hover {
+	color: #924C00;
+	background: #FFD35F; /* Old browsers */
+	background: -moz-linear-gradient(top, #FFD35F 0%, #D5A200 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFD35F), color-stop(100%, #D5A200)); /* Chrome,Safari4+ */
+}
+
+p.bigButton.gray a {
+    color: #666;
+    background: #EEE;
+    background: -moz-linear-gradient(top, #DDD 0%, #CCC 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #DDD), color-stop(100%, #CCC));
+}
+
+p.bigButton.gray a:hover {
+    color: #333;
+    background: #DDD;
+    background: -moz-linear-gradient(top, #DDD 0%, #CCC 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #DDD), color-stop(100%, #CCC));
+}
+
+.evd_postsList .title {float:left; height:auto; overflow:visible;width:430px;}
+
+#login {font-size:14px}
+#login .welcome {margin-bottom:1em;}
+#login h3 {font-family:helvetica,arial,sans-serif;}
+#login label {font-size:12px;}
+#login input {border:1px solid #ccc;}
+#user_login, #user_pass {background-color:#eee;border:none;width:225px;padding:.4em;font-size:18px;}
+#login .forgetmenot label input {position:relative;top:-4px;}
+#login #wp-submit {background-color:#666;color:#fff;width:150px;text-align:left;padding:.4em;font-size:18px;font-family:'BitstreamVeraSansRoman',sans-serif;border:1px solid #333;}
+
+.caption, .meta {font-family: 'Arial',sans-serif;}
+
+.alert {-webkit-border-radius: 5px; 
+	background: #f5f5f5;
+	background: -moz-linear-gradient(top, #f5f5f5 0%, #eee 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #eee));
+padding:30px;;color:#000;margin-bottom:2em;}
+.alert p {margin-bottom:20px;}
+.alert h2,
+.alert h2,
+.alert h2 a,
+.alert h2 a,
+.alert h2 a {text-decoration:none;margin:0; font-family:'LeagueGothicRegular',sans-serif;text-transform:uppercase;font-size:36px;font-weight:normal;}
+.alert a,
+.alert a {text-decoration:none;}
+.alert a:hover,
+.alert a:hover {text-decoration:underline;}
+
+.section {font-weight:normal;font-family:'LeagueGothicRegular',sans-serif;font-size:2.8em;text-transform:uppercase;border:0;height:64px;background-image:url('images/evd_sectionHead.png');}
+
+.evdPlayer_bigPlay {pointer-events:none;width:120px;height:120px; position:relative;top:-275px;margin:auto;background-image:url('images/evdPlayer_bigPlay.png');color:transparent;}
+.evd_latestVideo .evdPlayer_bigPlay {top:-375px;}
+
+#sidebar .widget #dsq-combo-widget a {font-family:'Arial',sans-serif;text-transform:none;font-size:inherit;}
+
+#sidebar .evd_ad250 li,
+#sidebar .evd_ad250x125 li {width:250px!important;height:250px!important;position:relative!important;left:-10px!important;top:-10px!important;padding:10px!important;}
+#sidebar .evd_ad300 li {width:300px!important;height:250px!important;position:relative!important;left:-10px!important;top:-10px!important;padding:10px!important;}
+#sidebar .evd_ad250 li {background-image:url('images/evd_adBG-250.png')!important;}
+#sidebar .evd_ad300 li {background-image:url('images/evd_adBG-300.png')!important;}
+#sidebar .evd_ad250x125 li {height:125px!important;background-image:url('images/evd_adBG-250x125.png')!important;}
+
+#footer {margin-bottom:1em;}
+#footer.h-lists div,
+#footer.h-lists ul {display:block;}
+#footer #copyright_etc {margin-bottom:1em;}
+#footer .widget {font-family:'Arial',sans-serif;font-size:12px;color:#999;margin-bottom:30px;}
+#footer .widget h3 {font-family:'Arial',sans-serif;font-weight:bold;font-size:12px;color:#666}
+#footer .widget a {color:#999;}
+#footer .widget a:hover {text-decoration:underline;color:#333;}
+#footer .widget div {display:inline;}

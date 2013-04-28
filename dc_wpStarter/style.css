@@ -1,0 +1,283 @@
+/*   
+Theme Name: evd_wpStarter
+Theme URI: http://evd1.tv
+Description: The basis for the EvD master template, no bells, no whistles, just clean HTML.
+Author: A-Dawg
+Version: 120927
+*/
+
+/* Based on the fantastic HTML5 Reset Wordpress Theme (html5reset.org) */
+
+html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, 
+blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, 
+samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, 
+form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, 
+aside, figure, footer, header, hgroup, menu, nav, section, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+	line-height:1.5em;
+}				
+
+article, aside, figure, footer, header, hgroup, nav, section {display: block;}
+
+/* Note: keeping IMG here will cause problems if you're using 
+foreground images as sprites, like, say for Google Maps custom placemarkers. */
+img,
+object,
+embed {max-width: 100%;}
+
+.post img {max-width: 100%; height: auto;} /* Hamilton Boyce CSS to replace image width adjust code */
+
+html {overflow-y: scroll;}
+
+ul, li {list-style: none;}
+
+blockquote, q {quotes: none;}
+blockquote:before, 
+blockquote:after, 
+q:before, 
+q:after {content: ''; content: none;}
+
+a, a:hover {margin: 0; padding: 0; font-size: 100%; vertical-align: baseline; background: transparent; text-decoration:none;}
+a:hover, a:active {outline: none;}
+a img, a:hover img, a:active img {outline:none;border:0;}
+
+/* tables still need cellspacing="0" in the markup */
+table {border-collapse: collapse; border-spacing: 0;}
+table {font-size: inherit; font: 100%;}
+th {font-weight: bold; vertical-align: bottom;}
+td {font-weight: normal; vertical-align: top;}
+td, td img {vertical-align: top;} 
+
+hr {display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0;}
+
+input, select {vertical-align: middle;}
+
+pre, code, kbd, samp {font-family: monospace, sans-serif;}
+pre {
+	white-space: pre; /* CSS2 */
+	white-space: pre-wrap; /* CSS 2.1 */
+	white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+	word-wrap: break-word; /* IE */
+}
+
+input[type="radio"] {vertical-align: text-bottom;}
+input[type="checkbox"] {vertical-align: bottom; *vertical-align: baseline;}
+.ie6 input {vertical-align: text-bottom;}
+select, input, textarea {font: 99% sans-serif;}
+
+del {text-decoration: line-through;}
+abbr[title], dfn[title] {border-bottom: 1px dashed #ccc; cursor: help;}
+small {font-size: 85%;}
+strong, th {font-weight: bold;}
+
+sub, sup {font-size: 75%; line-height: 0; position: relative;}
+sup {top: -0.5em;}
+sub {bottom: -0.25em;}
+
+.clickable,
+label, 
+input[type=button], 
+input[type=submit], 
+button {cursor: pointer;}
+
+button, input, select, textarea {margin: 0;}
+button {width: auto; overflow: visible;}
+
+::-moz-selection{ text-shadow: none;}
+::selection { text-shadow: none;} 
+ins {color: #000; text-decoration: none;}
+mark {color: #000; font-style: italic; font-weight: bold;}
+ 
+.ie7 img {-ms-interpolation-mode: bicubic;}
+.ie6 html {filter: expression(document.execCommand("BackgroundImageCache", false, true));}
+
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
+.clearfix:after { clear: both; }  
+.clearfix { zoom: 1; }  
+
+
+/* Page Structure
+-------------------------------------------------------------------------------*/
+
+/*We hide the body by default and then use jQuery to show it when everything's loaded.*/
+body {font: 14px/30px Arial, sans-serif;position:relative;} 
+body, select, input, textarea {color: #333;}
+
+a:hover {text-decoration:underline;}
+
+#headerWrap {background-color:#f5f5f5;border-bottom:1px solid #eee;overflow:hidden; margin-bottom:1.5em;height:80px;}
+#headerContent {width:960px;margin:0 auto;}
+#headerContent li {height:20px;padding:30px;float:left;background-color:#f5f5f5;margin-right:0;}
+#headerContent li.hover,
+#headerContent li:hover {background-color:#eee;cursor: pointer;}
+#headerContent li:last-child {float:right;}
+.h-lists div,
+.h-lists ul,
+.h-lists li,
+.h-lists h3 {display:inline;margin-right:.5em;}
+#beforeContent {margin-bottom:1em;padding-bottom:1em;border-bottom:1px solid #eee;}
+#afterContent {padding-top:1em;border-top:1px solid #eee;margin-bottom:1em;}
+
+#evd-page-wrap {width: 960px; margin: 0 auto 50px auto;position:absolute;top:80px;left:0;right:0;}
+#evd-content {width:720px;position:relative;margin-bottom:2em;}
+#evd-content.fullWidth {width:960px;}
+#sidebar {width:200px;}
+#logo {margin-bottom:2em;}
+
+.evd-nav-top {margin-bottom:1em;}
+.evd-nav-bottom {margin-top:1em;}
+.next-posts, .alignleft {float:left;margin-right:1em;}
+.prev-posts, .alignright {float:right;margin-left:1em;}
+.aligncenter {display:block;margin:0 auto 0 auto;}
+.navigation{margin-bottom:1em;}
+
+.caption{margin-right:2em;margin-bottom:1em;font-size:.9em;font-style:italic;color:#999;}
+
+#sLabel {display:block;font-size:.8em;}
+#s {width:150px;}
+
+/* Content Structure
+-------------------------------------------------------------------------------*/
+
+article {border-bottom:1px dashed #ccc; position:relative;}
+.page .articles article,
+.single .articles article,
+.articles article {padding:1em;}
+.page article,
+.single article {padding:0;}
+
+article ol, article ul {margin-left:1em;margin-bottom:1em;}
+article ol li {list-style-type:decimal;}
+article ol ol li {list-style-type:lower-alpha;}
+article ol ol ol li {list-style-type:lower-roman;}
+article ul li {list-style-type:disc;}
+article ul ul li {list-style-type:circle;}
+article ul ul ul li {list-style-type:square;}
+article .entry-content ul.raw {margin:0;}
+article .entry-content ul.raw li {list-style-type:none;}
+
+article h1 {font-size:1.5em;font-weight:bold;text-transform:uppercase;}
+article h2, 
+article h3, 
+article h4, 
+article h5, 
+article h6 {font-size:1em;font-weight:normal;}
+article caption {font-size:.8em; font-style:italic;}
+article header {margin-bottom:1em;position:relative;}
+article header h2 {margin-bottom:0;}
+article h2,
+article p,
+article blockquote {margin-bottom:1em;}
+article h2 {font-weight:bold;text-transform:uppercase;line-height:1.3em;}
+article h3 {margin-bottom:0;}
+article blockquote {margin-left:1em; font-style:italic; margin-bottom:1em;}
+article .gallery {margin-bottom:1em!important;border:0;padding:0;}
+article .gallery-item {width:auto!important;margin-right:6px!important;margin-top:0!important;float:left;}
+article .gallery img {width:170px;height:96px;border-width:1px!important;}
+article .meta {font-size:.8em;}
+article .meta,
+article .meta a {color:#999;}
+article footer.meta {margin-top:1.5em;}
+article .squeezeOver {width:410px;float:right;}
+
+article div.thumbnail {width:256px;height:144px;overflow:hidden;}
+ol.commentlist div.thumbnail{width:256px;border:1px solid #ccc;overflow:hidden;}
+ol.commentlist div.thumbnail:hover,
+article div.thumbnail:hover {}
+ol.commentlist div.thumbnail img
+article div.thumbnail img {width:256px;height:144px;}
+
+.accordion {border-top:1px solid #ccc; border-bottom:1px solid #ccc;}
+
+
+/* Comment Structure
+-------------------------------------------------------------------------------*/
+
+#respond {margin:1em 0; padding:1em 0;}
+#comment {width:100%;}
+ol.commentlist {margin-bottom:1em;}
+ol.commentlist li.comment {border-bottom: 1px dashed #ccc; padding: 10px;}
+ol.commentlist li.comment div.vcard cite.fn {font-style: normal;}
+ol.commentlist li.comment div.vcard img.avatar {float:right; margin: 0 0 10px 10px;}
+ol.commentlist li.comment div.comment-meta,
+ol.commentlist li.comment div.comment-meta a {font-size:.8em;color:#999;}
+ol.commentlist li.comment div.reply {font-size: 11px;}
+ol.commentlist li.comment div.reply a {font-weight: bold;}
+ol.commentlist li.comment ul.children li {margin: 10px 0 0;}
+ol.commentlist li.comment ul.children li {padding:0;border:0;}
+ol.commentlist li.comment ul.children li.depth-2 {padding-left:1.5em;}
+ol.commentlist li.comment ul.children li.depth-3 {padding-left:1.5em;}
+ol.commentlist li.comment:first-child {border-top: 1px dashed #ccc;}
+ol.commentlist .comment-body ol,
+ol.commentlist .comment-body ul {margin-left:30px;}
+ol.commentlist .comment-body ol li {list-style-type:decimal;}
+ol.commentlist .comment-body ul li {list-style-type:circle;}
+ol.commentlist .comment-body p,
+ol.commentlist .comment-body div,
+ol.commentlist .comment-body ul,
+ol.commentlist .comment-body ol,
+ol.commentlist .comment-body blockquote {margin-bottom:1em;}
+ol.commentlist .comment-body code,
+ol.commentlist .comment-body blockquote {margin:30px 0;padding:15px;background-color:#eee;}
+ol.commentlist .comment-body blockquote {font-style:italic;}
+
+/* bigMenu Structure
+-------------------------------------------------------------------------------*/
+
+#windowShade{background-image:url(images/windowShade.png);position:fixed;left:0;top:0;bottom:0;width:100%;z-index:20;display:none;}
+.bigMenu {z-index:30;position:relative;width:688px;min-height:520px;background-color:#f5f5f5;border:1px solid #eee;padding:15px 15px 50px 15px;margin-bottom:2em;}
+.bigMenu header {position:absolute;height:16px;width:100%;left:0;top:0;background-color:#eee;}
+.bigMenu .closeBox {z-index:10;width:32px;height:32px;position:absolute;right:15px;top:15px;background-image:url('images/expandCollapse.png');background-position:center bottom;}
+.bigMenu .closeBox:hover {background-color:#eee;cursor:pointer;}
+.bigMenu nav {margin-bottom:2em;}
+.bigMenu footer {position:absolute;height:16px;width:100%;left:0;bottom:0;background-color:#eee;}
+
+.bigMenu .subwrap.title {min-height:100px;padding-bottom:1em;overflow:hidden;}
+.bigMenu .link {padding:1em 0 1em 25px;cursor:pointer;}
+
+.bigMenu .subwrap {border-bottom:1px solid #ddd; position:relative;}
+.bigMenu .subwrap div {position:relative;}
+.bigMenu .subwrap h2 {font-size:2em;}
+.bigMenu .subwrap p {margin:0;}
+.bigMenu li {padding:.6em .5em .6em 25px; border-top:1px solid #ddd; cursor:pointer;}
+.bigMenu .link:hover,
+.bigMenu li:hover {background-color:#eee;}
+.bigMenu .subwrap .icon {width:16px;height:16px;position:absolute;left:0;top:18px;}
+.bigMenu .subwrap .hideShow {background-image:url('images/expandCollapse-sm.png');background-position:center bottom;}
+.bigMenu .subwrap.closed .hideShow {background-position:top;}
+.bigMenu .subwrap .directLink {background-image:url('images/link.png');background-position:center top;}
+.bigMenu .subwrap .titleBar {padding:1em 0;}
+.bigMenu .subwrap .titleBar:hover {background-color:#eee;cursor:pointer;}
+.bigMenu .subwrap .titleBlock {position:relative;left:25px;padding-right:25px;}
+
+.bigMenu .widget h3 {padding:1em 0 1em 25px;}
+.bigMenu .widget ul {border-bottom:1px solid #ddd;}
+
+.bigMenu .subwrap.page li {padding:0;border:0;cursor:auto;}
+.bigMenu .subwrap.page li:hover {background-color:transparent;}
+.bigMenu .subwrap.page div,
+.bigMenu .subwrap.page ul,
+.bigMenu .subwrap.page p {display:block;margin:0 0 1em 0;}
+
+/* Misc - Ads, etc.
+-------------------------------------------------------------------------------*/
+
+.oio-inline-left {
+float: none !important;
+text-align:center !important;
+margin: 2em 0!important;
+}
+
+img.border {border:3px solid #fff;}
+img.shadow {
+-moz-box-shadow: 1px 1px 4px #000;-webkit-box-shadow: 1px 1px 4px #000;box-shadow: 1px 1px 4px #000;
+/* For IE 8 */ -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#000000')";
+/* For IE 5.5 - 7 */ filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#000000');
+}
+img.border:hover {border:3px solid #fff;}
