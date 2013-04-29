@@ -1,9 +1,9 @@
 /*   
-Theme Name: evd_wpStarter
-Theme URI: http://evd1.tv
-Description: The basis for the EvD master template, no bells, no whistles, just clean HTML.
+Theme Name: dc_wpStarter
+Theme URI: http://destructive-creative.com/wordpress
+Description: The basis for the destructive-creative.com master template. No bells, no whistles, just clean, validated HTML5.
 Author: A-Dawg
-Version: 120927
+Version: 130428
 */
 
 /* Based on the fantastic HTML5 Reset Wordpress Theme (html5reset.org) */
@@ -27,10 +27,7 @@ article, aside, figure, footer, header, hgroup, nav, section {display: block;}
 
 /* Note: keeping IMG here will cause problems if you're using 
 foreground images as sprites, like, say for Google Maps custom placemarkers. */
-img,
-object,
-embed {max-width: 100%;}
-
+img, object, embed {max-width: 100%;}
 .post img {max-width: 100%; height: auto;} /* Hamilton Boyce CSS to replace image width adjust code */
 
 html {overflow-y: scroll;}
@@ -124,14 +121,14 @@ a:hover {text-decoration:underline;}
 #beforeContent {margin-bottom:1em;padding-bottom:1em;border-bottom:1px solid #eee;}
 #afterContent {padding-top:1em;border-top:1px solid #eee;margin-bottom:1em;}
 
-#evd-page-wrap {width: 960px; margin: 0 auto 50px auto;position:absolute;top:80px;left:0;right:0;}
-#evd-content {width:720px;position:relative;margin-bottom:2em;}
-#evd-content.fullWidth {width:960px;}
+#dc-page-wrap {width: 960px; margin: 0 auto 50px auto;position:absolute;top:80px;left:0;right:0;}
+#dc-content {width:720px;position:relative;margin-bottom:2em;}
+#dc-content.fullWidth {width:960px;}
 #sidebar {width:200px;}
 #logo {margin-bottom:2em;}
 
-.evd-nav-top {margin-bottom:1em;}
-.evd-nav-bottom {margin-top:1em;}
+.dc-nav-top {margin-bottom:1em;}
+.dc-nav-bottom {margin-top:1em;}
 .next-posts, .alignleft {float:left;margin-right:1em;}
 .prev-posts, .alignright {float:right;margin-left:1em;}
 .aligncenter {display:block;margin:0 auto 0 auto;}
@@ -226,58 +223,3 @@ ol.commentlist .comment-body blockquote {margin-bottom:1em;}
 ol.commentlist .comment-body code,
 ol.commentlist .comment-body blockquote {margin:30px 0;padding:15px;background-color:#eee;}
 ol.commentlist .comment-body blockquote {font-style:italic;}
-
-/* bigMenu Structure
--------------------------------------------------------------------------------*/
-
-#windowShade{background-image:url(images/windowShade.png);position:fixed;left:0;top:0;bottom:0;width:100%;z-index:20;display:none;}
-.bigMenu {z-index:30;position:relative;width:688px;min-height:520px;background-color:#f5f5f5;border:1px solid #eee;padding:15px 15px 50px 15px;margin-bottom:2em;}
-.bigMenu header {position:absolute;height:16px;width:100%;left:0;top:0;background-color:#eee;}
-.bigMenu .closeBox {z-index:10;width:32px;height:32px;position:absolute;right:15px;top:15px;background-image:url('images/expandCollapse.png');background-position:center bottom;}
-.bigMenu .closeBox:hover {background-color:#eee;cursor:pointer;}
-.bigMenu nav {margin-bottom:2em;}
-.bigMenu footer {position:absolute;height:16px;width:100%;left:0;bottom:0;background-color:#eee;}
-
-.bigMenu .subwrap.title {min-height:100px;padding-bottom:1em;overflow:hidden;}
-.bigMenu .link {padding:1em 0 1em 25px;cursor:pointer;}
-
-.bigMenu .subwrap {border-bottom:1px solid #ddd; position:relative;}
-.bigMenu .subwrap div {position:relative;}
-.bigMenu .subwrap h2 {font-size:2em;}
-.bigMenu .subwrap p {margin:0;}
-.bigMenu li {padding:.6em .5em .6em 25px; border-top:1px solid #ddd; cursor:pointer;}
-.bigMenu .link:hover,
-.bigMenu li:hover {background-color:#eee;}
-.bigMenu .subwrap .icon {width:16px;height:16px;position:absolute;left:0;top:18px;}
-.bigMenu .subwrap .hideShow {background-image:url('images/expandCollapse-sm.png');background-position:center bottom;}
-.bigMenu .subwrap.closed .hideShow {background-position:top;}
-.bigMenu .subwrap .directLink {background-image:url('images/link.png');background-position:center top;}
-.bigMenu .subwrap .titleBar {padding:1em 0;}
-.bigMenu .subwrap .titleBar:hover {background-color:#eee;cursor:pointer;}
-.bigMenu .subwrap .titleBlock {position:relative;left:25px;padding-right:25px;}
-
-.bigMenu .widget h3 {padding:1em 0 1em 25px;}
-.bigMenu .widget ul {border-bottom:1px solid #ddd;}
-
-.bigMenu .subwrap.page li {padding:0;border:0;cursor:auto;}
-.bigMenu .subwrap.page li:hover {background-color:transparent;}
-.bigMenu .subwrap.page div,
-.bigMenu .subwrap.page ul,
-.bigMenu .subwrap.page p {display:block;margin:0 0 1em 0;}
-
-/* Misc - Ads, etc.
--------------------------------------------------------------------------------*/
-
-.oio-inline-left {
-float: none !important;
-text-align:center !important;
-margin: 2em 0!important;
-}
-
-img.border {border:3px solid #fff;}
-img.shadow {
--moz-box-shadow: 1px 1px 4px #000;-webkit-box-shadow: 1px 1px 4px #000;box-shadow: 1px 1px 4px #000;
-/* For IE 8 */ -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#000000')";
-/* For IE 5.5 - 7 */ filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#000000');
-}
-img.border:hover {border:3px solid #fff;}

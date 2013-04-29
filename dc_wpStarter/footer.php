@@ -6,7 +6,7 @@ echo '<ul id="copyright_etc">'."\n";
 echo '<li><small>&copy;'.date("Y").' '.get_bloginfo('name').'</small></li>'."\n";
 echo '</ul>'."\n";
 
-if (evd_option('evd_sidebars-Footer_Widgets')) {
+if (dc_option('sidebars-Footer_Widgets')) {
 c('Begin footer widgets',2);
 if (function_exists('dynamic_sidebar') && dynamic_sidebar('Footer_Widgets')) {} else {};
 c('End footer widgets',3);
@@ -15,9 +15,9 @@ c('End footer widgets',3);
 t(
     array(
         'tag'=>'script',
-    	'c'=>'evd_option(\'evd_customJS_footer\')',
+    	'c'=>'dc_option(\'customJS_footer\')',
 		'wrap'=>true,
-		'content'=>"\n".evd_option('evd_customJS_footer')."\n"),
+		'content'=>"\n".dc_option('customJS_footer')."\n"),
 	array('type'=>'text/javascript')
 );
 

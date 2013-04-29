@@ -4,9 +4,9 @@ get_header();
 
 c('Begin archive.php',2);
 
-evd_auxSidebar('Banner_All');
+dc_auxSidebar('Banner_All');
 
-if(is_home()) {evd_auxSidebar('Before_Home');} else if(is_archive()) {evd_auxSidebar('Before_Archive');}
+if(is_home()) {dc_auxSidebar('Before_Home');} else if(is_archive()) {dc_auxSidebar('Before_Archive');}
 
 	$post = $posts[0]; // Hack. Set $post so that the_date() works.
 	
@@ -42,11 +42,11 @@ if(is_home()) {evd_auxSidebar('Before_Home');} else if(is_archive()) {evd_auxSid
 	br();
 }
 
-evd_postNav();
-evd_archiveLoop();
-evd_postNav();
+dc_postNav();
+dc_archiveLoop();
+dc_postNav();
 
-evd_auxSidebar('After_Archive');
+dc_auxSidebar('After_Archive');
 
 c('End archive.php',3);
 get_footer(); 

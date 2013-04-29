@@ -1,6 +1,6 @@
 <?php 
 
-function evd_count($tags){
+function dc_count($tags){
     
     // Extract tags/cats from CSV
 
@@ -49,7 +49,7 @@ function evd_count($tags){
 
 }
 
-function evd_get_duration($disp=2,$before='',$after='') {
+function dc_get_duration($disp=2,$before='',$after='') {
     if(get_post_meta( get_the_ID(), 'duration', true )){
         $duration = get_post_meta( get_the_ID(), 'duration', true );
         if($disp==1){
@@ -59,11 +59,11 @@ function evd_get_duration($disp=2,$before='',$after='') {
         } else if($disp==3){
             $duration = secondsToHMS($duration);
         }
-        return c('get_post_meta "duration" for post id "'.$id.'" (evd_renderposts.php)',0,1).$before.$duration.$after;
-    } else { return c('get_post_meta "duration" for post id "'.$id.'" returned nothing (evd_renderposts.php)',0,1); }
+        return c('get_post_meta "duration" for post id "'.$id.'" (dc_renderposts.php)',0,1).$before.$duration.$after;
+    } else { return c('get_post_meta "duration" for post id "'.$id.'" returned nothing (dc_renderposts.php)',0,1); }
 }
 
-function evd_totalDuration($tags){
+function dc_totalDuration($tags){
     
 	// Extract tags/cats from CSV
 
@@ -142,13 +142,13 @@ function commasToArray($wholeString){
 }
 
 // Useful for grabbing the slug of a tag by title (http://wordpress.org/support/topic/get-tag-slug#post-800335)
-function evd_get_tag_slug($title) {
+function dc_get_tag_slug($title) {
 	global $wpdb;
 	$slug = $wpdb->get_var("SELECT slug FROM $wpdb->terms WHERE name='$title'");
 	return $slug;
 }
 
-function evd_tag_links(){
+function dc_tag_links(){
     $tags = get_the_tags();
     if($tags){
     foreach ($tags as $tag){
@@ -159,7 +159,7 @@ function evd_tag_links(){
     }
 }
 
-function evd_category_links(){
+function dc_category_links(){
     $categories = get_the_category();
     if($categories){
     foreach ($categories as $category){
@@ -171,7 +171,7 @@ function evd_category_links(){
 }
 
 // searches through an array of terms (e.g. 'post_tag' or 'category') and removes any invalid entries before returning the array
-function evd_term_exists_array($array=array(),$taxonomy){
+function dc_term_exists_array($array=array(),$taxonomy){
     foreach ($array as $key => $item) {
         $term = term_exists($item,$taxonomy);
         if ($term == 0 || $term == null) {
@@ -181,17 +181,17 @@ function evd_term_exists_array($array=array(),$taxonomy){
     return $array;
 }
 
-function evd_commasToTermArray($csv,$taxonomy){
+function dc_commasToTermArray($csv,$taxonomy){
     if($csv){
         $array = commasToArray($csv);
-        $array = evd_term_exists_array($array,$taxonomy);
+        $array = dc_term_exists_array($array,$taxonomy);
         return $array;
     } else {
         return null;
     }
 }
 
-function evd_commasToTypeArray($csv){
+function dc_commasToTypeArray($csv){
     if($csv){
         $array = commasToArray($csv);
         foreach($array as $key => $item){
@@ -203,7 +203,7 @@ function evd_commasToTypeArray($csv){
     }
 }
 
-function evd_termArrayToLinks($array=array(),$taxonomy){
+function dc_termArrayToLinks($array=array(),$taxonomy){
     if(is_array($array)){
         $links = '';
         $i=1;
@@ -221,7 +221,7 @@ function evd_termArrayToLinks($array=array(),$taxonomy){
     }
 }
 
-function evd_superBoolean($superboolean,$data,$default='*'){
+function dc_superBoolean($superboolean,$data,$default='*'){
     if($superboolean && $superboolean != 'false' && $superboolean != '0' && $data){
         if(strpos($superboolean,'*')===false) $superboolean=$default;
         $result = str_replace('*',$data,$superboolean);
@@ -229,7 +229,7 @@ function evd_superBoolean($superboolean,$data,$default='*'){
     }
 }
 
-function evd_tax_query($terms=array(),$taxonomy,$operator=null){
+function dc_tax_query($terms=array(),$taxonomy,$operator=null){
     if(is_array($terms)){
         foreach($terms as $term) {
             if($operator){
@@ -281,16 +281,21 @@ function t($atts,$tags=array()){
 	else echo $html;
 }
 
+function e($string,$newline=1){
+    if($newline) echo $string."\n";
+    else echo $string;
+}
+
 // If debug mode is turned on in the theme settings, html comments in the theme are displayed
-$evd_debugMode = evd_option('evd_debugMode');
+$dc_debugMode = dc_option('debugMode');
 function c($comment='',$mode=0,$return=false) {
-	global $evd_debugMode;
+	global $dc_debugMode;
 	$l = strlen($comment); 
 	if($l%2==0) $d=1; //even numbered strings need a compensation character
 	$w = 100;
 	$s = '*';
 	
-	if ( $evd_debugMode == 1 ) {
+	if ( $dc_debugMode == 1 ) {
 		if ( $mode == 0 ) 
 		{
 			$html = '<!-- '.$comment.' -->';

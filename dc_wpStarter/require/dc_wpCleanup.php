@@ -43,7 +43,7 @@ add_filter( 'the_content', 'wpautop' , 10);
 /*
 // <title> tag
 */
-function evd_archiveTitle() {
+function dc_archiveTitle() {
 	$title = '';
 	global $page, $paged;
     $customTitle = get_post_meta(get_the_ID(), 'customTitle', true);

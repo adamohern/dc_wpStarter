@@ -1,95 +1,115 @@
 <?php 
-echo "<!DOCTYPE html>\n";
 
-// c($comment,$mode) defined in functions.php
-c('evd_option(\'evd_debugMode\') is enabled. Enjoy.',1);
+// e($string) defined in require/dc_utilities.php
+e("<!DOCTYPE html>\n");
+
+// c($comment,$mode) defined in require/dc_utilities.php
+c('dc_option(\'debugMode\') is enabled. Enjoy.',1);
 c('Begin header.php',2); 
 
-echo '<head>';
+c('static code');
+e('<head profile="http://gmpg.org/xfn/11">'); 
 
-// t($atts,$tags) defined in functions.php
-// t(array('tag'=>'','c'=>''),array(''=>''));
-t(array('tag'=>'head','c'=>'static code'),array('profile'=>'http://gmpg.org/xfn/11'));
-t(array('tag'=>'meta','c'=>'bloginfo(\'charset\')'),array('charset'=>get_bloginfo('charset')));
-t(array('tag'=>'meta','c'=>'force latest IE rendering'),array('http-equiv'=>'X-UA-Compatible','content'=>'IE=edge,chrome=1'));
+c('bloginfo(\'charset\')'); 
+e('<meta charset="'.get_bloginfo('charset').'" />'); 
+
+c('force latest IE rendering'); 
+e('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />'); 
 
 c('Begin SEO',2); 
 
-$title = evd_archiveTitle();
-t(array('tag'=>'title','c'=>'evd_archiveTitle()','content'=>$title,'wrap'=>true));
-t(array('tag'=>'meta','c'=>'evd_archiveTitle()'),array('name'=>'DC.title','content'=>$title));
+$title = dc_archiveTitle();
+c('dc_archiveTitle()');
+e('<title>'.$title.'</title>'); 
 
-c('if present, evd_option(\'evd_indexSEODescription\'), else get_the_excerpt()):',1);
-if(is_archive()||is_front_page()) { $description = (strip_tags(evd_option('evd_indexSEODescription'))); $descriptionType = 'evd_indexSEODescription'; 
-} else { $description = strip_tags(get_the_excerpt()); $descriptionType = 'get_the_excerpt()'; } 
-t(array('tag'=>'meta','c'=>'description type: '.$descriptionType),array('name'=>'description','content'=>$description));
-t(array('tag'=>'meta','c'=>'description type: '.$descriptionType),array('name'=>'DC.subject','content'=>$description));
+c('dc_archiveTitle()'); 
+e('<meta name="DC.title" content="'.$title.'" />'); 
 
-$evd_authorName = evd_option('evd_authorName');
-t(array('tag'=>'meta','c'=>'evd_option(\'evd_authorName\'):'),array('content'=>$evd_authorName));
-t(array('tag'=>'meta','c'=>'evd_option(\'evd_authorName\').\' \'.date(\'Y\'):'),array('name'=>'Copyright','content'=>"Copyright $evd_authorName ".date('Y').". All Rights Reserved."));
+br();
 
-t(array('tag'=>'meta','c'=>'static code:'),array('name'=>'DC.creator','content'=>'EvD Media'));
+c('if present, dc_option(\'indexSEODescription\'), else get_the_excerpt())',1);
 
-$googleVerification = evd_option('evd_googleVerification');
-if($googleVerification) c('evd_googleVerification:');echo ($googleVerification)."\n"; 
+if(is_archive()||is_front_page()) { 
+    $description = (strip_tags(dc_option('indexSEODescription'))); $descriptionType = 'dc_indexSEODescription'; 
+} else { 
+    $description = strip_tags(get_the_excerpt()); $descriptionType = 'get_the_excerpt()'; 
+} 
 
-$googleAnalytics = evd_option('evd_googleAnalytics');
-if($googleAnalytics) c('evd_googleAnalytics');echo($googleAnalytics)."\n"; 
+c('description type: '.$descriptionType); 
+e('<meta name="description" content="'.$description.'" />'); 
+
+c('description type: '.$descriptionType); 
+e('<meta name="DC.subject" content="'.$description.'" />'); 
+
+br();
+
+$dc_authorName = dc_option('authorName');
+
+c('dc_option(\'authorName\')'); 
+e('<meta content="'.$dc_authorName.'" />'); 
+
+c('dc_option(\'authorName\').\' \'.date(\'Y\')'); 
+e('<meta name="Copyright" content="Copyright '.$dc_authorName.' '.date('Y').'. All rights reserved." />'); 
+
+br();
+
+c('static code'); e('<mega name="DC.creator" content="destructive-creative" />');
+
+$googleVerification = dc_option('googleVerification');
+if($googleVerification) c('dc_googleVerification:');echo ($googleVerification)."\n"; 
+
+$googleAnalytics = dc_option('googleAnalytics');
+if($googleAnalytics) c('dc_googleAnalytics');echo($googleAnalytics)."\n"; 
 
 c('End SEO',3); 
 
-c('traditional 16x16 favicon');
-t(array('tag'=>'link','c'=>'evd_option(\'evd_favicon\'):'),array('href'=>evd_option('evd_favicon'),'rel'=>'shortcut icon'));
+c('traditional 16x16 favicon - dc_option(\'favicon\')');
+e('<link href="'.dc_option('favicon').'" rel="shortcut icon" />');
 
-c('iOS\'s Web Clip, 114x114, name it \'apple-touch-icon-precomposed.png\', no transparency',1);
-t(array('tag'=>'link','c'=>'evd_option(\'evd_appleicon\'):'),array('rel'=>'apple-touch-icon','href'=>evd_option('evd_appleicon')));
+c('iOS\'s Web Clip, 114x114, name it \'apple-touch-icon-precomposed.png\', no transparency - dc_option(\'appleicon\')');
+e('<link href="'.dc_option('appleicon').'" rel="apple-touch-icon" />');
 
-c('CSS: screen, mobile & print are all in the same file',1);
-t(array('tag'=>'link','c'=>'evd_option(\'stylesheet_url\'):'),array('rel'=>'stylesheet','href'=>get_bloginfo('stylesheet_url')));
+c('CSS: screen, mobile & print are all in the same file - dc_option(\'stylesheet_url\')');
+e('<link href="'.get_bloginfo('stylesheet_url').'" rel="stylesheet" />');
 
 c('PHP CSS, customize in theme options (style_header.php):',2); 
 include 'style_header.php';
 c('End style_header.php',3); 
 
-c('NOTE: most js is at the bottom of the page');
-t(array('tag'=>'meta','c'=>'set default <script> tag type'),array('http-equiv'=>'content-script-type','content'=>'text/javascript')); 
-t(array('tag'=>'link','c'=>'bloginfo(\'pingback_url\')'),array('rel'=>'pingback','href'=>get_bloginfo('pingback_url')));
+c('set default <script> tag type (NOTE: most js is in footer.php)');
+e('<meta http-equiv="content-script-type" content="text/javascript" />');
 
-t(
-	array(
-		'tag'=>'script',
-		'c'=>'if we have js, hide the body until everything is loaded',
-		'wrap'=>true,
-		'content'=>"document.write('<style>#everything { display:none }</style>');"),
-	array('type'=>'text/javascript')
-);
+c('bloginfo(\'pingback_url\')');
+e('<link href="'.get_bloginfo('pingback_url').'" rel="pingback" />');
+
+c('if we have js, hide the body until everything is loaded');
+e('<stript type="text/javascript">document.write(\'<style>#everything { display:none }</style>\');</script>');
 
 
 c('Begin wp_head()',2); 
 wp_head();
 c('End wp_head()',3); 
 
-t(
-    array(
-        'tag'=>'script',
-		'c'=>'evd_option(\'evd_customJS\')',
-		'wrap'=>true,
-		'content'=>"\n".evd_option('evd_customJS')."\n"),
-	array('type'=>'text/javascript')
-);
+c('dc_option(\'customJS\')');
+e('<script type="text/javascript">'."\n".dc_option('customJS')."\n".'</script>');
 
-echo "</head>\n\n<body "; body_class(evd_option('evd_titleSlug')); echo ">\n<div id=\"everything\">";
+e("</head>");
 
-$evd_headerSidebar = evd_option('evd_headerSidebar');
-if ($evd_headerSidebar!='hidden' && evd_option('evd_sidebars-Header_Widgets')) { 
-	c('$evd_headerSidebar!=\'hidden\' && evd_option(\'evd_sidebars-Header_Widgets\') tested true',1);
-	c('Begin evd_headerSidebar',2);
+c('get_body_class() wordpress function');
+e('<body class="'.implode(' ',get_body_class(dc_option('titleSlug'))).'">');
+
+c('static code');
+e('<div id=\"everything\">');
+
+$dc_headerSidebar = dc_option('headerSidebar');
+if ($dc_headerSidebar!='hidden' && dc_option('sidebars-Header_Widgets')) { 
+	c('$dc_headerSidebar!=\'hidden\' && dc_option(\'sidebars-Header_Widgets\') tested true',1);
+	c('Begin dc_headerSidebar',2);
 	
-	if (evd_is_active_sidebar('Header_Widgets')) {
-		c('evd_is_active_sidebar(\'Header_Widgets\') tested true',1);
+	if (dc_is_active_sidebar('Header_Widgets')) {
+		c('dc_is_active_sidebar(\'Header_Widgets\') tested true',1);
 		
-		if($evd_headerSidebar=='animate') $class = 'class="animate"';
+		if($dc_headerSidebar=='animate') $class = 'class="animate"';
 		echo "<header id=\"headerWrap\"$class>\n".'<div id="headerContent" class="h-lists clearfix">';
 		
 		c('Begin dynamic_sidebar(\'Header_Widgets\')',1);
@@ -100,32 +120,32 @@ if ($evd_headerSidebar!='hidden' && evd_option('evd_sidebars-Header_Widgets')) {
 	} else { 
 		c('Add widgets to activate header'); 
 	}
-	c('End evd_headerSidebar',3);
+	c('End dc_headerSidebar',3);
 } 
 
-echo '<div id="evd-page-wrap" class="clearfix">'; br();
+echo '<div id="dc-page-wrap" class="clearfix">'; br();
  
-if(is_home()){ c('Begin evd_auxSidebar(\'Banner_Home\')',1); evd_auxSidebar('Banner_Home'); } 
-else if(is_archive()){ c('Begin evd_auxSidebar(\'Banner_Archive\')',1); evd_auxSidebar('Banner_Archive'); } 
+if(is_home()){ c('Begin dc_auxSidebar(\'Banner_Home\')',1); dc_auxSidebar('Banner_Home'); } 
+else if(is_archive()){ c('Begin dc_auxSidebar(\'Banner_Archive\')',1); dc_auxSidebar('Banner_Archive'); } 
 
 $fullWidth = get_post_meta($post->ID, 'fullWidth'); if($fullWidth[0]=='true' && is_singular()) $fullWidth=true; else $fullWidth=false;
-if($fullWidth) c('get_post_meta($post->ID, \'fullWidth\') tested true; adding fullWidth class to #evd-content',1);
-else  c('get_post_meta($post->ID, \'fullWidth\') tested false; NOT adding fullWidth class to #evd-content',1);
+if($fullWidth) c('get_post_meta($post->ID, \'fullWidth\') tested true; adding fullWidth class to #dc-content',1);
+else  c('get_post_meta($post->ID, \'fullWidth\') tested false; NOT adding fullWidth class to #dc-content',1);
 
 $class='clearfix';
 if($fullWidth) $class.=' fullWidth';
-echo '<div id="evd-content" class="'.$class.'">'; br();
+echo '<div id="dc-content" class="'.$class.'">'; br();
 
 echo '<div id="contentBody">'; br();
 
-$evd_noscriptMessage = evd_option('evd_noscriptMessage');
-if($evd_noscriptMessage) {
+$dc_noscriptMessage = dc_option('noscriptMessage');
+if($dc_noscriptMessage) {
 	t(
 		array(
 			'tag'=>'noscript',
-			'c'=>'evd_option(\'evd_noscriptMessage\') tested true',
+			'c'=>'dc_option(\'noscriptMessage\') tested true',
 			'wrap'=>true,
-			'content'=>'<div id="noscriptMessage" class="alert"><h2>Javascript disabled.</h2><p>'.$evd_noscriptMessage.'</p></div>'
+			'content'=>'<div id="noscriptMessage" class="alert"><h2>Javascript disabled.</h2><p>'.$dc_noscriptMessage.'</p></div>'
 		)
 	);
 }

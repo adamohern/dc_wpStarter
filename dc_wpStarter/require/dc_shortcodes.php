@@ -40,13 +40,13 @@ add_shortcode('downloads','sc_downloads');
 
 function sc_totalDuration($atts,$content=null){
     $tags = $atts[tags];
-    return '<span class="duration">'.evd_totalDuration($tags).'</span>';
+    return '<span class="duration">'.dc_totalDuration($tags).'</span>';
 }
 add_shortcode('totalDuration','sc_totalDuration');
 
 function sc_count($atts,$content=null){
     $tags = $atts[tags];
-    return '<span class="count">'.evd_count($tags).'</span>';
+    return '<span class="count">'.dc_count($tags).'</span>';
 }
 add_shortcode('count','sc_count');
 
@@ -66,7 +66,7 @@ function sc_listByTag($atts) {
 	$tags = $atts[tags];
 	$tagArray = explode(',',$tags);
 	array_walk($tagArray,'trim_value');
-	return evd_postsList($tagArray,'post_tag',evd_option('evd_postListCode'));
+	return dc_postsList($tagArray,'post_tag',dc_option('dc_postListCode'));
 }
 add_shortcode('listByTag', 'sc_listByTag');
 
@@ -134,18 +134,18 @@ function sc_listByTag2($atts) {
 	else						$closed = false;
 	
 	if($atts[displaycode]) 		$displaycode = $atts[displaycode];
-	else						$displaycode = evd_option('evd_postListCode');
+	else						$displaycode = dc_option('dc_postListCode');
     
     if($atts[tiles]) 		    $tiles = $atts[tiles];
 	else						$tiles = false;
     
-    if(!$atts[displaycode] && $tiles) $displaycode = evd_option('evd_postListTileCode');
+    if(!$atts[displaycode] && $tiles) $displaycode = dc_option('dc_postListTileCode');
 	
-	return evd_postsList2 ($tags,$categories,$title,$caption,$thumburl,$order,$maxposts,$workinprogress,$closed,$displaycode,$tiles);
+	return dc_postsList2 ($tags,$categories,$title,$caption,$thumburl,$order,$maxposts,$workinprogress,$closed,$displaycode,$tiles);
 }
 add_shortcode('listByTag2', 'sc_listByTag2');
 
-function sc_evd_query_posts($atts) {
+function sc_dc_query_posts($atts) {
     if(!$atts[showtitles])     	$atts[showtitles] = true;	
     if(!$atts[order]) 			$atts[order] = 'asc';
 	if(!$atts[maxposts])        $atts[maxposts] = 12;
@@ -153,9 +153,9 @@ function sc_evd_query_posts($atts) {
     if(!$atts[offset])          $atts[offset] = 0;
     if(!$atts[paginate])        $atts[paginate] = false;
 	
-	return evd_query_posts ($atts);
+	return dc_query_posts ($atts);
 }
-add_shortcode('evd_query_posts', 'sc_evd_query_posts');
+add_shortcode('dc_query_posts', 'sc_dc_query_posts');
 
 
 // Whitelist for comment shortcodes
@@ -163,7 +163,7 @@ add_shortcode('evd_query_posts', 'sc_evd_query_posts');
 
 // We don't want commenters to be able to use just any old shortcode, 
 // so we remove them all first...
-function evd_remove_all_shortcodes() {
+function dc_remove_all_shortcodes() {
   global $shortcode_tags;
   global $temp_shortcode_tags;
   $temp_shortcode_tags = $shortcode_tags;
@@ -171,7 +171,7 @@ function evd_remove_all_shortcodes() {
 }
 
 // But hang onto them for later.
-function evd_restore_all_shortcodes() {
+function dc_restore_all_shortcodes() {
   global $shortcode_tags;
   global $temp_shortcode_tags;
   if(!empty($temp_shortcode_tags)) {
@@ -180,21 +180,21 @@ function evd_restore_all_shortcodes() {
 }
 
 // Then we initiate the shortcodes we want to whitelist for commenters.
-function evd_shortcodes_whitelist() {
+function dc_shortcodes_whitelist() {
 	add_shortcode('img', 'sc_j_img');
 	add_shortcode('file', 'sc_j_file');
 }
 
 function init_comment_shortcodes() {
-  evd_remove_all_shortcodes();
-  evd_shortcodes_whitelist();
+  dc_remove_all_shortcodes();
+  dc_shortcodes_whitelist();
   add_filter('comment_text', 'do_shortcode');
 }
 
 //add_action('init', 'init_comment_shortcodes');
-//add_filter('dynamic_sidebar', 'evd_restore_all_shortcodes');
+//add_filter('dynamic_sidebar', 'dc_restore_all_shortcodes');
 //add_filter('widget_execphp', 'do_shortcode');
-evd_shortcodes_whitelist();
+dc_shortcodes_whitelist();
 
 
 ?>

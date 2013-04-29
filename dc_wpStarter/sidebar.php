@@ -1,6 +1,6 @@
 <?php 
 
-if (evd_is_active_sidebar('Main_Sidebar')) {
+if (dc_is_active_sidebar('Main_Sidebar')) {
 	c('Begin sidebar.php',2);
 	echo '<div id="sidebar">'."\n";
 	

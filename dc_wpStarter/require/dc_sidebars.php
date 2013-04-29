@@ -1,16 +1,16 @@
 <?php 
 // adapted from the WP is_active_sidebar() code, but allows for string index
-function evd_is_active_sidebar( $index ) {
+function dc_is_active_sidebar( $index ) {
 	$sidebars_widgets = wp_get_sidebars_widgets();
 	if ( !empty($sidebars_widgets[$index]) ) return true;
 	return false;
 }
 
-function evd_auxSidebar($sidebarHandle) {
-    c("evd_is_active_sidebar($sidebarHandle)? ...");
-	if (evd_is_active_sidebar($sidebarHandle)) {
+function dc_auxSidebar($sidebarHandle) {
+    c("dc_is_active_sidebar($sidebarHandle)? ...");
+	if (dc_is_active_sidebar($sidebarHandle)) {
         c("... Yes.");
-		c("Begin sidebar evd_auxSidebar('$sidebarHandle') (functions.php)",2);
+		c("Begin sidebar dc_auxSidebar('$sidebarHandle') (functions.php)",2);
 		echo '<div id="'.$sidebarHandle.'" class="clearfix">'."\n";
 		if (dynamic_sidebar($sidebarHandle)) {} else {}
 		echo '</div>'.c("/#$sidebarHandle",0,true);
@@ -18,7 +18,7 @@ function evd_auxSidebar($sidebarHandle) {
 	} else { c("... No."); }
 }
 
-function evd_registerSidebar($id,$description) {
+function dc_registerSidebar($id,$description) {
 	register_sidebar(
 		array(
 			'name' => $id,
@@ -32,84 +32,84 @@ function evd_registerSidebar($id,$description) {
 	);
 }
 
-function evd_registerSidebars() {
+function dc_registerSidebars() {
 	
-	if(evd_option('evd_sidebars-Main_Sidebar')) {
-	evd_registerSidebar(
+	if(dc_option('dc_sidebars-Main_Sidebar')) {
+	dc_registerSidebar(
 		'Main_Sidebar',
 		'This is where the magic happens.'
 	);
 	}
 	
-	if(evd_option('evd_sidebars-Header_Widgets')) {
-	evd_registerSidebar(
+	if(dc_option('dc_sidebars-Header_Widgets')) {
+	dc_registerSidebar(
 		'Header_Widgets',
-		'Stretches across entire top of page. This can be set to be static, animate on mouse-over, or disappear completely in the EvD Config.'
+		'Stretches across entire top of page. This can be set to be static, animate on mouse-over, or disappear completely in the DC Config.'
 	);
 	}
 
-    if(evd_option('evd_sidebars-Banner_All')) {
-	evd_registerSidebar(
+    if(dc_option('dc_sidebars-Banner_All')) {
+	dc_registerSidebar(
 		'Banner_All',
 		'If you want something to appear huge across the top of every post/page/archive on the site (above the content and Main Sidebar), put \'er here.'
 	);
 	}
 
-	if(evd_option('evd_sidebars-Banner_Home')) {
-	evd_registerSidebar(
+	if(dc_option('dc_sidebars-Banner_Home')) {
+	dc_registerSidebar(
 		'Banner_Home',
 		'If you want something to appear huge across the top of the home page (above the content and Main Sidebar), put \'er here.'
 	);
 	}
 	
-	if(evd_option('evd_sidebars-Banner_Archive')) {
-	evd_registerSidebar(
+	if(dc_option('dc_sidebars-Banner_Archive')) {
+	dc_registerSidebar(
 		'Banner_Archive',
 		'If you want something to appear huge across the top of an archive page (above the content and Main Sidebar), put \'er here.'
 	);
 	}
 	
-	if(evd_option('evd_sidebars-Footer_Widgets')) {
-	evd_registerSidebar(
+	if(dc_option('dc_sidebars-Footer_Widgets')) {
+	dc_registerSidebar(
 		'Footer_Widgets',
 		'A place to drop widgets in the site-wide footer.'
 	);
 	}
 	
-	if(evd_option('evd_sidebars-Before_Single')) {
-	evd_registerSidebar(
+	if(dc_option('dc_sidebars-Before_Single')) {
+	dc_registerSidebar(
 		'Before_Single',
 		'A place to drop widgets above content on single posts.'
 	);
 	}
 	
-	if(evd_option('evd_sidebars-After_Single')) {
-	evd_registerSidebar(
+	if(dc_option('dc_sidebars-After_Single')) {
+	dc_registerSidebar(
 		'After_Single',
 		'A place to drop widgets below content on single posts.'
 	);
 	}
 	
-	if(evd_option('evd_sidebars-Before_Archive')) {
-	evd_registerSidebar(
+	if(dc_option('dc_sidebars-Before_Archive')) {
+	dc_registerSidebar(
 		'Before_Archive',
 		'A place to drop widgets above content on lists of posts.'
 	);
 	}
 
-	if(evd_option('evd_sidebars-After_Archive')) {
-	evd_registerSidebar(
+	if(dc_option('dc_sidebars-After_Archive')) {
+	dc_registerSidebar(
 		'After_Archive',
 		'A place to drop widgets below content on lists of posts.'
 	);
 	}
 	
-	if(evd_option('evd_sidebars-Before_Home')) {
-	evd_registerSidebar(
+	if(dc_option('dc_sidebars-Before_Home')) {
+	dc_registerSidebar(
 		'Before_Home',
 		'A place to drop widgets above content on the home page.'
 	);
 	}
 }
-add_action( 'widgets_init', 'evd_registerSidebars' );
+add_action( 'widgets_init', 'dc_registerSidebars' );
 ?>
