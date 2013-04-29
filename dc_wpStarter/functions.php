@@ -1,14 +1,14 @@
 <?php
-require_once 'functions/evd_adminPanel.php';
-require_once 'functions/evd_utilities.php';
-require_once 'functions/evd_wpCleanup.php';
-require_once 'functions/evd_postmeta.php';
-require_once 'functions/evd_shortcodes.php';
-require_once 'functions/evd_sidebars.php';
-require_once 'functions/evd_widgets.php';
-require_once 'functions/evd_postsList.php';
-require_once 'functions/evd_renderposts.php';
-require_once 'functions/evd_googleAuthorship.php';
+require_once 'functions/dc_adminPanel.php';
+require_once 'functions/dc_utilities.php';
+require_once 'functions/dc_wpCleanup.php';
+require_once 'functions/dc_postmeta.php';
+require_once 'functions/dc_shortcodes.php';
+require_once 'functions/dc_sidebars.php';
+require_once 'functions/dc_widgets.php';
+require_once 'functions/dc_postsList.php';
+require_once 'functions/dc_renderposts.php';
+require_once 'functions/dc_googleAuthorship.php';
 
 add_theme_support( 'post-formats', array( 'video','status','quote','status','aside' ) );
 add_theme_support( 'post-thumbnails' );
@@ -41,8 +41,8 @@ function evd_loadScripts() {
 		wp_deregister_script( 'jquery' );  
 		wp_register_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js');  
 		wp_enqueue_script('jquery');  
-		wp_register_script('evd_functions', get_bloginfo('template_url').'/js/evd_functions_121004_01.js', array('jquery'), '1.0', true );  
-		wp_enqueue_script('evd_functions');
+		wp_register_script('dc_functions', get_bloginfo('template_url').'/js/dc_functions_121004_01.js', array('jquery'), '1.0', true );  
+		wp_enqueue_script('dc_functions');
 		wp_register_script('jqueryui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
 		wp_enqueue_script('jqueryui');
 		if($evd_options['evd_jqueryui_theme']){
