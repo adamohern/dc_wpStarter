@@ -38,8 +38,8 @@ if(is_home()) {dc_auxSidebar('Before_Home');} else if(is_archive()) {dc_auxSideb
 	/* If this is a paged archive */ 
 	} elseif (isset($_GET['paged']) && !empty($_GET['paged'])) {
 	echo '<h3 class="pagetitle">Archives</h3>';
-	
-	br();
+
+    br();
 }
 
 dc_postNav();

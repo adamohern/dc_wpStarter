@@ -16,7 +16,7 @@ e('<meta charset="'.get_bloginfo('charset').'" />');
 c('force latest IE rendering'); 
 e('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />'); 
 
-c('Begin SEO',2); 
+br(3);
 
 $title = dc_archiveTitle();
 c('dc_archiveTitle()');
@@ -53,15 +53,15 @@ e('<meta name="Copyright" content="Copyright '.$dc_authorName.' '.date('Y').'. A
 
 br();
 
-c('static code'); e('<mega name="DC.creator" content="destructive-creative" />');
+c('static code'); e('<meta name="DC.creator" content="destructive-creative" />');
 
 $googleVerification = dc_option('googleVerification');
 if($googleVerification) c('dc_googleVerification:');echo ($googleVerification)."\n"; 
 
 $googleAnalytics = dc_option('googleAnalytics');
-if($googleAnalytics) c('dc_googleAnalytics');echo($googleAnalytics)."\n"; 
+if($googleAnalytics) c('dc_googleAnalytics');echo($googleAnalytics); 
 
-c('End SEO',3); 
+br(3);
 
 c('traditional 16x16 favicon - dc_option(\'favicon\')');
 e('<link href="'.dc_option('favicon').'" rel="shortcut icon" />');
@@ -72,9 +72,11 @@ e('<link href="'.dc_option('appleicon').'" rel="apple-touch-icon" />');
 c('CSS: screen, mobile & print are all in the same file - dc_option(\'stylesheet_url\')');
 e('<link href="'.get_bloginfo('stylesheet_url').'" rel="stylesheet" />');
 
-c('PHP CSS, customize in theme options (style_header.php):',2); 
+br(3);
+
 include 'style_header.php';
-c('End style_header.php',3); 
+
+br(3);
 
 c('set default <script> tag type (NOTE: most js is in footer.php)');
 e('<meta http-equiv="content-script-type" content="text/javascript" />');
@@ -83,28 +85,36 @@ c('bloginfo(\'pingback_url\')');
 e('<link href="'.get_bloginfo('pingback_url').'" rel="pingback" />');
 
 c('if we have js, hide the body until everything is loaded');
-e('<stript type="text/javascript">document.write(\'<style>#everything { display:none }</style>\');</script>');
+e('<script type="text/javascript">document.write(\'<style>#everything { display:none }</style>\');</script>');
 
+br(3);
 
-c('Begin wp_head()',2); 
-wp_head();
-c('End wp_head()',3); 
+c('Begin wp_head()',1); 
+wp_head(); br();
+c('End wp_head()');
+
+br(3);
 
 c('dc_option(\'customJS\')');
 e('<script type="text/javascript">'."\n".dc_option('customJS')."\n".'</script>');
 
 e("</head>");
 
-c('get_body_class() wordpress function');
+br(3);
+
+c('get_body_class() wordpress function',1);
 e('<body class="'.implode(' ',get_body_class(dc_option('titleSlug'))).'">');
 
-c('static code');
-e('<div id=\"everything\">');
+c('static code',1);
+e('<div id="everything">');
 
 $dc_headerSidebar = dc_option('headerSidebar');
 if ($dc_headerSidebar!='hidden' && dc_option('sidebars-Header_Widgets')) { 
+    
+    br(3);
+    
 	c('$dc_headerSidebar!=\'hidden\' && dc_option(\'sidebars-Header_Widgets\') tested true',1);
-	c('Begin dc_headerSidebar',2);
+	c('Begin dc_headerSidebar',1);
 	
 	if (dc_is_active_sidebar('Header_Widgets')) {
 		c('dc_is_active_sidebar(\'Header_Widgets\') tested true',1);
@@ -120,7 +130,8 @@ if ($dc_headerSidebar!='hidden' && dc_option('sidebars-Header_Widgets')) {
 	} else { 
 		c('Add widgets to activate header'); 
 	}
-	c('End dc_headerSidebar',3);
+    
+	br(3);
 } 
 
 echo '<div id="dc-page-wrap" class="clearfix">'; br();
@@ -140,16 +151,9 @@ echo '<div id="contentBody">'; br();
 
 $dc_noscriptMessage = dc_option('noscriptMessage');
 if($dc_noscriptMessage) {
-	t(
-		array(
-			'tag'=>'noscript',
-			'c'=>'dc_option(\'noscriptMessage\') tested true',
-			'wrap'=>true,
-			'content'=>'<div id="noscriptMessage" class="alert"><h2>Javascript disabled.</h2><p>'.$dc_noscriptMessage.'</p></div>'
-		)
-	);
+    c('dc_option(\'noscriptMessage\') tested true');
+    e('<noscript><div id="noscriptMessage" class="alert"><h2>Javascript disabled.</h2><p>'.$dc_noscriptMessage.'</p></div></noscript>');
 }
 
 c('End header.php',3); 
-
 ?>

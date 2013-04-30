@@ -32,6 +32,9 @@ function evd_googleAuthorship() {
 }
 ?>
 
+
+dc_googleAuthorship();
+
 }
 
 EVAL:

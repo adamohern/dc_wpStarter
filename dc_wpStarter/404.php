@@ -7,18 +7,18 @@ c('Begin 404.php',2);
 
 dc_auxSidebar('Before_Archive');
 
-echo '<div class="alert">'; br();
+e('<div class="alert">');
 
-echo '<h2>404: Page not found.</h2>'; br();
+e('<h2>404: Page not found.</h2>');
 
-echo '<p>\''.get_bloginfo('wpurl').$_SERVER['REQUEST_URI'].'\'</p>'; br();
+e('<p>\''.get_bloginfo('wpurl').$_SERVER['REQUEST_URI'].'\'</p>');
 
 c('dc_404Message (theme options)'); 
-echo '<p>'.dc_option('404Message').'</p>'; br();
+e('<p>'.dc_option('404Message').'</p>');
 
 get_search_form(); br();
 
-echo '</div>'; br();
+e('</div>');
 
 c('Begin 404.php',3);
 

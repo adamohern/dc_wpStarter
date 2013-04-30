@@ -16,15 +16,22 @@ if (have_posts()) {
         
         if ($hideWpautop) remove_filter('the_content', 'wpautop');
 		
-		echo '<article '; post_class('clearfix'); echo ' id="post-'.get_the_ID().'">';
-		if(dc_option('pageTitles') && !$hideTitle) { echo '<h1 class="entry-title">'; the_title(); echo '</h1>'; }
+		e('<article '.get_post_class('clearfix').' id="post-'.get_the_ID().'">');
 		
-		echo '<div class="entry-content">';
-		if($postCSS[0]) {echo '<style type="text/css">'.$postCSS[0].'</style>';}
-		the_content();
-		echo '</div>'.c('/.entry-content',0,true);
+        if(dc_option('pageTitles') && !$hideTitle) { e('<h1 class="entry-title">'.get_the_title().'</h1>'); }
+        
+        br();
 		
-		echo '</article>';
+		e('<div class="entry-content">');
+        
+		if($postCSS[0]) { e('<style type="text/css">'."\n".$postCSS[0]."\n".'</style>'); }
+		
+        the_content();
+        
+        c('/.entry-content');
+		e('</div>'); 
+		
+		e('</article>');
 	}
 } 
 

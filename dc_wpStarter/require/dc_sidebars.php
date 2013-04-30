@@ -9,13 +9,13 @@ function dc_is_active_sidebar( $index ) {
 function dc_auxSidebar($sidebarHandle) {
     c("dc_is_active_sidebar($sidebarHandle)? ...");
 	if (dc_is_active_sidebar($sidebarHandle)) {
-        c("... Yes.");
+        c("... Yes.",1);
 		c("Begin sidebar dc_auxSidebar('$sidebarHandle') (functions.php)",2);
 		echo '<div id="'.$sidebarHandle.'" class="clearfix">'."\n";
 		if (dynamic_sidebar($sidebarHandle)) {} else {}
 		echo '</div>'.c("/#$sidebarHandle",0,true);
 		c("End sidebar '$sidebarHandle'",3);
-	} else { c("... No."); }
+	} else { c("... No.",1); }
 }
 
 function dc_registerSidebar($id,$description) {

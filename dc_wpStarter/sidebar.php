@@ -2,11 +2,12 @@
 
 if (dc_is_active_sidebar('Main_Sidebar')) {
 	c('Begin sidebar.php',2);
-	echo '<div id="sidebar">'."\n";
+	e('<div id="sidebar">');
 	
 	if (function_exists('dynamic_sidebar') && dynamic_sidebar('Main_Sidebar')) {} else {}
 	
-	echo '</div>'.c('/#sidebar',0,true);
+    c('/#sidebar');
+	e('</div>');
 	c('End sidebar.php',3);
 } 
 

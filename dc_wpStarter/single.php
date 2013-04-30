@@ -9,7 +9,7 @@ c('Begin The Loop (single.php)',2);
 if (have_posts()) { 
 	while (have_posts()) {
 		the_post();
-        echo '<article '; post_class(); echo ' id="post-'.get_the_ID().'">'."\n";
+        e('<article '.get_post_class().' id="post-'.get_the_ID().'">');
 
 		$fullWidth = get_post_meta($post->ID, 'fullWidth'); 
 		if($fullWidth[0]=='true') $fullWidth=true; else $fullWidth=false;
@@ -25,20 +25,31 @@ if (have_posts()) {
 		$postCSS = get_post_meta($post->ID, 'postCSS');
         
         dc_auxSidebar('Before_Single');
-        echo '<div class="entry-content">'."\n";
-		if($postCSS[0]) {echo '<style type="text/css">'.$postCSS[0].'</style>';}
+        
+        e('<div class="entry-content">');
+		
+        if($postCSS[0]) {
+            e('<style type="text/css">'."\n".$postCSS[0]."\n".'</style>');
+        }
+        
         the_content();
-        echo '</div>'.c('/.entry-content',0,true);
+        
+        c('/.entry-content');
+        e('</div>');
+        
 		dc_authorBio();
-		dc_googleAuthorship();
+		
         dc_auxSidebar('After_Single');
         
-        echo '</article>'."\n";
+        e('</article>');
         
         $dc_commentsDisabledMessage = dc_option('commentsDisabledMessage');
         
-        if(!dc_option('disableComments') || current_user_can('manage_options')) { comments_template(); } 
-        else { if ($dc_commentsDisabledMessage) echo $dc_commentsDisabledMessage;}
+        if(!dc_option('disableComments') || current_user_can('manage_options')) { 
+            comments_template(); 
+        } else { 
+            if ($dc_commentsDisabledMessage) e($dc_commentsDisabledMessage);
+        }
 	}
 }
 
