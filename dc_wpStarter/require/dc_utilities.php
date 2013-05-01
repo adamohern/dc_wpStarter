@@ -1,5 +1,19 @@
 <?php 
 
+
+
+
+// safely load a linebreak-dilimited list of scripts
+function dc_enqueue_scripts ( $list, $footer=false ){
+    $urls = preg_split ('/$\R?^/m', $list);
+    if( is_array($urls) ) {
+        foreach($urls as $url) dc_enqueue_script( basename($url), $url, array(), '', $footer );
+    }
+}
+
+
+
+
 // safely load scripts into WP
 function dc_enqueue_script( $handle, $src, $deps, $ver, $in_footer ){
         wp_deregister_script( $handle );  
@@ -382,6 +396,10 @@ $dc_debugMode = dc_option('debugMode');
 
 function c($comment='',$mode=0,$return=false) {
 	global $dc_debugMode;
+    
+    $source = debug_backtrace();
+    $comment = basename( $source[0]['file'] ).' line '.$source[0]['line'].': '.$comment;
+    
 	$l = strlen($comment); 
 	if($l%2==0) $d=1; //even numbered strings need a compensation character
 	$w = 100;

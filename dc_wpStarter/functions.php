@@ -29,23 +29,35 @@ $dc_options = get_option( 'dc_options' );
 
 
 
-// Load up latest jquery and jqueryUI from google servers
+/*
+// load up our external scripts
+*/
 function dc_loadScripts() {
 	global $dc_options;
 	
 	if (!is_admin()) {  
+        
+        // start with the basics
         dc_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js' );
         dc_enqueue_script( 'jqueryui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') );
         dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
         
         if( $dc_options['jqueryui_theme'] ) dc_enqueue_style('jqueryui_style',$dc_options['jqueryui_theme']);
+        
+        // load up any custom scripts from the theme options
+        dc_enqueue_scripts($dc_options['headerJS']);
+        dc_enqueue_scripts($dc_options['footerJS'],true);
+        
 	}
 }
 add_action('init', 'dc_loadScripts');
 
 
 
-// Ace isn't always needed, so we'll load it separately
+
+/*
+// only load Ace as needed
+*/
 function enqueue_ace(){
     dc_enqueue_script( 'ace', '//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js' );
 }

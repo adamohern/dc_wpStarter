@@ -98,18 +98,6 @@ $theme_options -> set('thumbsize_single', array(
         'dc_huge' => 'Supersize Me (960x540)'
     )
 ));
-
-$theme_options -> set('pageTitles', array(
-    'section' => 'layout',
-    'title'   => 'Display Page Titles',
-    'desc'    => 'Should we display the titles of pages?',
-    'type'    => 'radio',
-    'std'     => '1',
-    'choices' => array(
-        '1' => 'yes, show page titles',
-        '0' => 'no, hide page titles'
-    )
-));
                                    
                                    
                                    
@@ -124,18 +112,38 @@ $theme_options -> set('customJS', array(
     'section' => 'js',
     'title'   => 'Custom Javascript - head',
     'desc'    => 'Enter valid jquery-compatible Javascript to insert into the header.',
-    'type'    => 'js_big',
+    'type'    => 'js',
     'std'     => ''
 ));
+
+
+$theme_options -> set('headerJS', array(
+
+    'title'   => 'External Javascript URLs - header',
+    'desc'    => 'URLs of external javascript files to be enqueued in wp_header, separated by line break',
+    'std'     => '',
+    'type'    => 'html',
+    'section' => 'js'
+));
+
 
 $theme_options -> set('customJS_footer', array(
     'section' => 'js',
     'title'   => 'Custom Javascript - foot',
     'desc'    => 'Enter valid jquery-compatible Javascript to insert into the header.',
-    'type'    => 'js_big',
+    'type'    => 'js',
     'std'     => ''
 ));
 
+
+$theme_options -> set('footerJS', array(
+
+    'title'   => 'External Javascript URLs - footer',
+    'desc'    => 'URLs of external javascript files to be enqueued in wp_footer, separated by line break',
+    'std'     => '',
+    'type'    => 'html',
+    'section' => 'js'
+));
 
 
 

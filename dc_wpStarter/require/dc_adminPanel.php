@@ -23,6 +23,12 @@ class dc_theme_options {
     private $pageTitle;
     private $menuTitle;
 	
+    
+    
+    
+    /*
+    // runs on instantiation
+    */
 	public function __construct( $pt='Theme Options', $mt='Theme Options' ) {
 		
 		$this->checkboxes = array();
@@ -36,7 +42,7 @@ class dc_theme_options {
         
 		add_action( 'admin_menu', array( &$this, 'add_pages' ) );
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
-		
+        		
 		if ( ! get_option( 'dc_options' ) )
 			$this->initialize_settings();
 		
@@ -66,7 +72,7 @@ class dc_theme_options {
     
     
 	/*
-    // Add options page
+    // add options page to admin UI
     */
 	public function add_pages() {
         
@@ -81,7 +87,7 @@ class dc_theme_options {
     
 	
 	/*
-    // Create settings field
+    // create settings field
     */
 	public function create_setting( $args = array() ) {
 		
@@ -118,7 +124,7 @@ class dc_theme_options {
     
 	
 	/*
-    // Display options page
+    // display options page
     */
 	public function display_page() {
         
@@ -206,13 +212,17 @@ class dc_theme_options {
 	
     
     
-    /* HTML snippets for display_setting() function below */
+    
+    
+    /*
+    // HTML snippets for display_setting() functions below
+    */
     private function description($desc){
         if ( $desc != '' )
             echo '<br /><span class="description">' . $desc . '</span>';
     }
     
-    private function acebox($id,$height,$mode,$field_class,$std){
+    private function acebox($options,$id,$height,$mode,$field_class,$std){
         echo '<div id="'.$id.'_editor" style="border:1px solid #eee;width:95%;height:'.$height.'px;position:relative;display:block;">'.esc_attr($options[$id]).'</div>'; br();
         echo '<script>'."\n";
         echo 'var '.$id.' = ace.edit("'.$id.'_editor"); '.$id.'.setTheme("ace/theme/textmate"); '.$id.'.getSession().setMode("ace/mode/'.$mode.'");'."\n";
@@ -220,6 +230,9 @@ class dc_theme_options {
         echo '</script>'."\n";
         echo '<textarea style="display:none;" class="' . $field_class . '" id="' . $id . '" name="dc_options[' . $id . ']" placeholder="' . $std . '" rows="5" cols="30">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
     }
+    
+    
+    
     
 	
 	/*
@@ -318,7 +331,7 @@ class dc_theme_options {
 				
 			case 'css':
 			default:
-				$this->acebox($id,200,'css',$field_class,$std);
+				$this->acebox($options,$id,200,'css',$field_class,$std);
 		 		$this->description($desc);
 					
 		 		br(1);
@@ -326,7 +339,7 @@ class dc_theme_options {
                  
     		case 'css_big':
 			default:
-				$this->acebox($id,600,'css',$field_class,$std);
+				$this->acebox($options,$id,600,'css',$field_class,$std);
 		 		$this->description($desc);
 					
 		 		br(1);
@@ -334,7 +347,7 @@ class dc_theme_options {
 				
 			case 'php':
 			default:
-		 		$this->acebox($id,200,'php',$field_class,$std);
+		 		$this->acebox($options,$id,200,'php',$field_class,$std);
                 $this->description($desc);
 		 		
 				br(1);
@@ -342,7 +355,7 @@ class dc_theme_options {
                  
     		case 'php_big':
 			default:
-		 		$this->acebox($id,600,'php',$field_class,$std);
+		 		$this->acebox($options,$id,600,'php',$field_class,$std);
                 $this->description($desc);
 		 		
 				br(1);
@@ -350,15 +363,23 @@ class dc_theme_options {
 				
 			case 'html':
 			default:
-		 		$this->acebox($id,200,'html',$field_class,$std);
+		 		$this->acebox($options,$id,200,'html',$field_class,$std);
 		 		$this->description($desc);
 		 		
+				br(1);
+		 		break;
+            
+            case 'js':
+			default:
+		 		$this->acebox($options,$id,200,'javascript',$field_class,$std);
+                $this->description($desc);
+            
 				br(1);
 		 		break;
                  
             case 'js_big':
 			default:
-		 		$this->acebox($id,600,'javascript',$field_class,$std);
+		 		$this->acebox($options,$id,600,'javascript',$field_class,$std);
                 $this->description($desc);
             
 				br(1);
@@ -374,7 +395,7 @@ class dc_theme_options {
     
     
 	/*
-    // Settings and defaults
+    // settings and defaults (mostly defined in dc_themeOptions.php)
     */
 	public function get_settings() {
         
@@ -397,7 +418,7 @@ class dc_theme_options {
     
 	
 	/*
-    // Initialize settings to their default values
+    // initialize settings to their default values
     */
 	public function initialize_settings() {
 		
@@ -416,7 +437,7 @@ class dc_theme_options {
     
 	
 	/*
-	// Register settings
+	// register settings
 	*/
 	public function register_settings() {
 		
