@@ -59,6 +59,7 @@ add_action('init', 'dc_loadScripts');
 // only load Ace as needed
 */
 function enqueue_ace(){
+    c('enqueue_ace()');
     dc_enqueue_script( 'ace', '//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js' );
 }
 

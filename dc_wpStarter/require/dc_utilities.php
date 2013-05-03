@@ -35,6 +35,13 @@ function dc_enqueue_style( $handle, $src, $deps, $ver, $media ){
 
 
 
+// load dynamic sidebar into output buffer
+function dc_get_dynamic_sidebar($handle){
+    ob_start();
+    dynamic_sidebar($handle);
+    $sidebar_contents = ob_get_clean();
+    return $sidebar_contents;
+}
 
 
 

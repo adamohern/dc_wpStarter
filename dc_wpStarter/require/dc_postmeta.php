@@ -1,12 +1,81 @@
 <?php
 
 // Based on http://wordpress.org/support/topic/add-an-extra-text-input-field-on-admin-post-page
+/*
+$dc_default_meta = new dc_meta_box('dc options');
+$dc_default_meta -> add_text_field('customTitle','Custom meta title','Replaces \'title\' and \'meta name\' in <head>');
+$dc_default_meta -> add_boolean_field('displayTitle', 'Display Title','show title on is_single()?','true');
+$dc_default_meta -> add_boolean_field('wpautop', 'Disable Auto-HTML','keep WP from adding <p> tags?','false');
 
-function dc_add_meta_box() {
-	add_meta_box( 'dc-meta-box', 'EvD Post Options', 'dc_render_post_meta', 'post', 'side', 'high' );
-	add_meta_box( 'dc-meta-box', 'EvD Page Options', 'dc_render_post_meta', 'page', 'side', 'high' );
+
+class dc_meta_box(){
+    private $handle;
+    private $fields;
+    
+    public function __construct($handle){
+        add_action( 'admin_menu', array( &$this, 'add_meta_box' ) );
+        add_action( 'save_post', array( &$this, 'save_meta', 10, 2 );
+    }
+    
+    public function add_meta_box(){
+        add_meta_box( 'dc-meta-box', $this->handle, array( &$this, 'render_post_meta' ), 'post', 'side', 'high' );
+        add_meta_box( 'dc-meta-box', $this->handle, array( &$this, 'render_post_meta' ), 'page', 'side', 'high' );
+    }
+    
+    public function add_text_field($handle,$title,$description,$default=null) {
+        $fields[] = array('type'=>'text','handle'=>$handle,'title'=>$title,'description'=>$description,'default'=>$default);
+    }
+    
+    public function add_radio_field($handle,$title,$description,$options=array(),$default=null) {
+        $fields[] = array('type'=>'radio','handle'=>$handle,'title'=>$title,'description'=>$description,'options'=>$options,'default'=>$default);
+    }
+
+    public function add_boolean_field($handle,$title,$description,$default=null) {
+        $fields[] = array('type'=>'radio','handle'=>$handle,'title'=>$title,'description'=>$description,'options'=>array('true','false'),'default'=>$default);
+    }
+    
+    private function render_field($field=array()){
+        
+        e('<p class="dc-admin-meta-field '.$field['type'].'">');
+        
+        switch ($field['type']){
+            case ('text'){
+                e('<label for="'.$field['handle'].'">'.$field['title'].'<br /><em>'.$field['description'].'</em></label><br />');
+                e('<input type="text" name="'.$field['handle'].'" id="'.$field['handle'].'" value="'.$field['value'].'"/>');
+                e('<input type="hidden" name="dc_meta_box_nonce" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />');
+            }
+            
+            case ('radio' || 'boolean'){
+                
+                e('<label for="'.$field['handle'].'">'.$field['title'].'</label><br />');
+                foreach($field['options'] as $option){
+                    if($option = $field['value']) $checked = ' checked'; else $checked = '';
+                    e('<input type="radio" name="'.$field['handle'].'" id="'.$field['handle'].'" value="'.$option.'"'.$checked.' /> '.$option.'<br />');
+                }
+                e('<input type="hidden" name="dc_meta_box_nonce" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />');
+            }
+        }
+        
+        e('</p>');
+    }
+    
+    private function get_post_meta($object){
+        foreach ($fields as $field){
+            $field['value'] = get_post_meta($object->ID,$field['handle'],true);
+        }
+    }
+    
+    private function save_meta(){
+        
+    }
+    
+    public function render_post_meta($object){
+        
+
+        
+    }
+    
 }
-add_action( 'admin_menu', 'dc_add_meta_box' );
 
 function dc_render_post_meta( $object, $box ) { 
     $duration = get_post_meta( $object->ID, 'duration', true );
@@ -15,38 +84,6 @@ function dc_render_post_meta( $object, $box ) {
 	$fullWidth = get_post_meta( $object->ID, 'fullWidth', true );
     $hideTitle = get_post_meta( $object->ID, 'hideTitle', true );
     $wpautop = get_post_meta( $object->ID, 'wpautop', true );
-
-?>
-<p>
-<label for="customTitle">Custom meta title<br /><em>Replaces 'title' and 'meta name'</em></label><br />
-<input type="text" name="customTitle" id="customTitle" value="<?php echo $customTitle; ?>"/>
-<input type="hidden" name="dc_meta_box_nonce" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
-</p>
-<p>
-<label for="duration">Media Duration<br /><em>(HH:MM:SS, 24 hour max)</em></label><br />
-<input type="text" name="duration" id="duration" value="<?php echo $duration; ?>"/>
-<input type="hidden" name="dc_meta_box_nonce" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
-</p>
-<p>
-<label for="hideTitle">Display Title</label><br />
-<input type="radio" name="hideTitle" id="hideTitle" value="true"<?php if($hideTitle=='true'){ ?> checked<?php } ?> /> hide<br />
-<input type="radio" name="hideTitle" id="hideTitle" value="false"<?php if($hideTitle!='true'){ ?> checked<?php } ?> /> show
-<input type="hidden" name="dc_meta_box_nonce" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
-</p>
-<p>
-<label for="fullWidth">Full Width</label><br />
-<input type="radio" name="fullWidth" id="fullWidth" value="true"<?php if($fullWidth=='true'){ ?> checked<?php } ?> /> true<br />
-<input type="radio" name="fullWidth" id="fullWidth" value="false"<?php if($fullWidth!='true'){ ?> checked<?php } ?> /> false
-<input type="hidden" name="dc_meta_box_nonce" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
-</p>
-<p>
-<label for="wpautop">Disable auto-HTML</label><br />
-<input type="radio" name="wpautop" id="wpautop" value="true"<?php if($wpautop=='true'){ ?> checked<?php } ?> /> true<br />
-<input type="radio" name="wpautop" id="wpautop" value="false"<?php if($wpautop!='true'){ ?> checked<?php } ?> /> false
-<input type="hidden" name="dc_meta_box_nonce" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
-</p>
-<?php 
-
 }
 
 function dc_save_post_meta_box( $post_id, $post ) {

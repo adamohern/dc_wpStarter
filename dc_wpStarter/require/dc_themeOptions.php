@@ -287,14 +287,6 @@ $theme_options -> set('debugMode', array(
     )
 ));
 
-$theme_options -> set('displayBio', array(
-    'section' => 'content',
-    'title'   => 'Author Bio',
-    'desc'    => 'Display the author bio (from user meta) below posts?',
-    'type'    => 'checkbox',
-    'std'     => 1 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
 $theme_options -> set('disableComments', array(
     'section' => 'content',
     'title'   => 'Disable Comments',
@@ -303,10 +295,29 @@ $theme_options -> set('disableComments', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
- $theme_options -> set('commentsDisabledMessage', array(
+$theme_options -> set('commentsDisabledMessage', array(
     'title'   => 'Comments Disabled Message',
     'desc'    => 'HTML to display in place of comments if Disable Comments is checked.',
     'std'     => '',
+    'type'    => 'html',
+    'section' => 'content',
+    'class'   => 'code'
+));
+
+$theme_options -> set('postFormatSingle', array(
+    'title'   => 'post format for single.php',
+    'desc'    => 'HTML to display individual posts (use shortcodes for common wordpress template tags with spelled-out arguments)',
+    'std'     => htmlspecialchars(
+        '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
+        '<div class="entry-content">'."\n".
+        '<h1>[the_title]</h1>'."\n".
+        '[dc_sidebar handle="Before_Single"]'."\n".
+        '<p>[the_content]</p>'."\n".
+        '</div><!--/.entry-content-->'."\n".
+        '[dc_sidebar handle="After_Single"]'."\n".
+        '</article>'."\n".
+        '[comments_template]'
+    ),
     'type'    => 'html',
     'section' => 'content',
     'class'   => 'code'

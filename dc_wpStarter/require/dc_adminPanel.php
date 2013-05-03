@@ -42,6 +42,9 @@ class dc_theme_options {
         
 		add_action( 'admin_menu', array( &$this, 'add_pages' ) );
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
+        
+        // loads the Ace js code editor
+		add_action('admin_enqueue_scripts','enqueue_ace');
         		
 		if ( ! get_option( 'dc_options' ) )
 			$this->initialize_settings();
@@ -127,9 +130,6 @@ class dc_theme_options {
     // display options page
     */
 	public function display_page() {
-        
-        // loads the Ace js code editor
-		add_action('admin_enqueue_scripts','enqueue_ace');
 		
 		echo '<div class="wrap">'."\n".'<div class="icon32" id="icon-options-general"></div>'."\n".'<h2>' . $this->pageTitle . '</h2>';
 	
