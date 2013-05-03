@@ -369,6 +369,14 @@ class dc_theme_options {
 				br(1);
 		 		break;
             
+			case 'html_big':
+			default:
+		 		$this->acebox($options,$id,600,'html',$field_class,$std);
+		 		$this->description($desc);
+		 		
+				br(1);
+		 		break;
+            
             case 'js':
 			default:
 		 		$this->acebox($options,$id,200,'javascript',$field_class,$std);

@@ -9,8 +9,36 @@ $theme_options -> add_section('Content','content');
 $theme_options -> add_section('SEO','seo');
 $theme_options -> add_section('Custom CSS','css');
 $theme_options -> add_section('Custom JS','js');
+$theme_options -> add_section('index','index');
+$theme_options -> add_section('archive','archive');
+$theme_options -> add_section('search','search');
+$theme_options -> add_section('single','single');
+$theme_options -> add_section('page','page');
+$theme_options -> add_section('404','error404');
 
+$instructions = '(add special characters using supported wordpress template tags in [shortcode] form, e.g. [the_date])';
 
+/* single
+===========================================*/
+
+$theme_options -> set('postFormatSingle', array(
+    'title'   => 'post format for single.php',
+    'desc'    => 'HTML to display individual posts<br />'.$instructions,
+    'std'     => htmlspecialchars(
+        '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
+        "\t".'<div class="entry-content">'."\n".
+        "\t\t".'<h1>[the_title]</h1>'."\n".
+        "\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
+        "\t\t".'<p>[the_content]</p>'."\n".
+        "\t\t".'[dc_sidebar handle="After_Single"]'."\n".
+        "\t".'</div><!--/.entry-content-->'."\n".
+        '</article>'."\n\n".
+        '[comments_template]'
+    ),
+    'type'    => 'html_big',
+    'section' => 'single',
+    'class'   => 'code'
+));
 
 
 /* CSS
@@ -24,8 +52,6 @@ $theme_options -> set('cssOverrides', array(
     'section' => 'css',
     'class'   => 'cssOverrides code'
 ));
-
-
 
 
 /* Layout
@@ -152,30 +178,6 @@ $theme_options -> set('footerJS', array(
 /* Sidebars
 ===========================================*/
 
-$theme_options -> set('headerSidebar', array(
-    'section' => 'sidebars',
-    'title'   => 'Header Sidebar Mode',
-    'desc'    => 'The header sidebar is full-width, flexible height, and can animate to partially hide itself on mouseout. You can also just hide it completely!',
-    'type'    => 'radio',
-    'std'     => 'animate',
-    'choices' => array(
-        'animate' => 'Animate',
-        'visible' => 'Always Visible',
-        'hidden' => 'Never Visible'
-    )
-));
-
-$theme_options -> set('mainSidebar', array(
-    'section' => 'sidebars',
-    'title'   => 'Main Sidebar Location',
-    'desc'    => 'Where should we put the main sidebar?',
-    'type'    => 'radio',
-    'std'     => 'left',
-    'choices' => array(
-        'left' => 'Left',
-        'right' => 'Right'
-    )
-));
 
 $theme_options -> set('sidebars-Header_Widgets', array(
     'section' => 'sidebars',
@@ -304,24 +306,6 @@ $theme_options -> set('commentsDisabledMessage', array(
     'class'   => 'code'
 ));
 
-$theme_options -> set('postFormatSingle', array(
-    'title'   => 'post format for single.php',
-    'desc'    => 'HTML to display individual posts (use shortcodes for common wordpress template tags with spelled-out arguments)',
-    'std'     => htmlspecialchars(
-        '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
-        '<div class="entry-content">'."\n".
-        '<h1>[the_title]</h1>'."\n".
-        '[dc_sidebar handle="Before_Single"]'."\n".
-        '<p>[the_content]</p>'."\n".
-        '</div><!--/.entry-content-->'."\n".
-        '[dc_sidebar handle="After_Single"]'."\n".
-        '</article>'."\n".
-        '[comments_template]'
-    ),
-    'type'    => 'html',
-    'section' => 'content',
-    'class'   => 'code'
-));
 
 $theme_options -> set('404Message', array(
     'section' => 'content',
