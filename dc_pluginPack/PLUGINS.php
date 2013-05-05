@@ -1,3 +1,35 @@
+google analytics {
+
+
+$theme_options -> set('analyticsHeading', array(
+    'section' => 'seo',
+    'title'   => '', // Not used for headings.
+    'desc'    => 'Performance Tracking',
+    'type'    => 'heading'
+));
+
+$theme_options -> set('googleAnalytics', array(
+    'title'   => 'Google Analytics',
+    'desc'    => 'Paste the block of code provided by Google for performance tracking. This will be inserted in the page header.',
+    'std'     => '',
+    'type'    => 'html',
+    'section' => 'seo'
+));
+
+$theme_options -> set('googleVerification', array(
+    'title'   => 'Google Site Verification Code',
+    'desc'    => 'Speaking of Google, don\'t forget to set your site up: http://google.com/webmasters.',
+    'std'     => '',
+    'type'    => 'text',
+    'section' => 'seo'
+));
+
+
+
+}
+
+
+
 google authorship {
 
 <?php

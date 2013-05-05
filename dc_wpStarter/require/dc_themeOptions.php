@@ -2,23 +2,51 @@
 
 $theme_options = new dc_theme_options('Theme Options','Theme Options');
 
-$theme_options -> add_section('Colors and Graphics','colors');
-$theme_options -> add_section('Layout','layout');
-$theme_options -> add_section('Sidebars','sidebars');
-$theme_options -> add_section('Content','content');
-$theme_options -> add_section('SEO','seo');
 $theme_options -> add_section('Custom CSS','css');
+$theme_options -> add_section('SEO','seo');
+$theme_options -> add_section('Icons','icons');
+$theme_options -> add_section('Sidebars','sidebars');
 $theme_options -> add_section('Custom JS','js');
-$theme_options -> add_section('index','index');
-$theme_options -> add_section('archive','archive');
-$theme_options -> add_section('search','search');
-$theme_options -> add_section('single','single');
-$theme_options -> add_section('page','page');
-$theme_options -> add_section('404','error404');
+$theme_options -> add_section('Content','content');
+$theme_options -> add_section('Reset to Defaults','reset');
+
 
 $instructions = '(add special characters using supported wordpress template tags in [shortcode] form, e.g. [the_date])';
 
-/* single
+/* CSS
+===========================================*/
+
+$theme_options -> set('cssOverrides', array(
+    'title'   => 'CSS Overrides',
+    'desc'    => 'Enter any custom CSS here to apply it to your theme. Hint: copy/paste this into a <a href="http://notepad-plus-plus.org/">CSS editor</a> for editing.',
+    'std'     => htmlspecialchars(
+
+'#sidebar{float:left;}'."\n\n".
+
+'a {color: #ff3c00;}'."\n".
+'a:hover {color: #f13a09;}'."\n".
+'.primaryColor {color: #ff3c00;}'."\n\n".
+
+'::-moz-selection{background: #ffa200;color: #351a00;}'."\n".
+'::selection {background: #ffa200;color: #351a00;}'."\n".
+'a:link {-webkit-tap-highlight-color: #ffa200;}'."\n".
+'ins {background-color: #ffa200;}'."\n".
+'mark {background-color: #ffa200;}'."\n\n".
+
+'ol.commentlist li.comment ul.children li.depth-2 {border-color:#555;}'."\n".
+'ol.commentlist li.comment ul.children li.depth-3 {border-color:#999;}'."\n".
+'ol.commentlist li.comment ul.children li.depth-4 {border-color:#bbb;}'
+    
+    ),
+    
+    'type'    => 'css_big',
+    'section' => 'css',
+    'class'   => 'cssOverrides code'
+));   
+
+
+
+/* Content
 ===========================================*/
 
 $theme_options -> set('postFormatSingle', array(
@@ -35,99 +63,23 @@ $theme_options -> set('postFormatSingle', array(
         '</article>'."\n\n".
         '[comments_template]'
     ),
-    'type'    => 'html_big',
-    'section' => 'single',
+    'type'    => 'html',
+    'section' => 'content',
     'class'   => 'code'
-));
-
-
-/* CSS
-===========================================*/
-
-$theme_options -> set('cssOverrides', array(
-    'title'   => 'CSS Overrides',
-    'desc'    => 'Enter any custom CSS here to apply it to your theme. Hint: copy/paste this into a <a href="http://notepad-plus-plus.org/">CSS editor</a> for editing.',
-    'std'     => '',
-    'type'    => 'css_big',
-    'section' => 'css',
-    'class'   => 'cssOverrides code'
-));
-
-
-/* Layout
-===========================================*/
-
-$theme_options -> set('homeListContent', array(
-    'section' => 'layout',
-    'title'   => 'Home List Content',
-    'desc'    => 'What type of content should be displayed on the home screen?',
-    'type'    => 'radio',
-    'std'     => 'content',
-    'choices' => array(
-        'excerpt' => 'Display a content excerpt.',
-        'content' => 'Display full content (up to any \'more\' tags).',
-        'none' => 'Do not display content.'
-    )
-));
-
-$theme_options -> set('archiveListContent', array(
-    'section' => 'layout',
-    'title'   => 'Archive List Content',
-    'desc'    => 'What type of content should be displayed on archives and search results?',
-    'type'    => 'radio',
-    'std'     => 'excerpt',
-    'choices' => array(
-        'excerpt' => 'Display a content excerpt.',
-        'content' => 'Display full content (up to any \'more\' tags).',
-        'none' => 'Do not display content.'
-    )
-));
-
-$theme_options -> set('displayThumb_archive', array(
-    'section' => 'layout',
-    'title'   => 'Display Thumbnails in Archives',
-    'desc'    => 'Show the \'Featured Image\' with posts in a list (i.e. is_archive())?',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$theme_options -> set('thumbsize_archive', array(
-    'section' => 'layout',
-    'title'   => 'Thumbnail Size - Archives',
-    'desc'    => 'If enabled above, how big should the thumbnail be on is_archive()?',
+));                      
+                                   
+                                   
+$theme_options -> set('debugMode', array(
+    'section' => 'content',
+    'title'   => 'Debug Mode',
+    'desc'    => 'Displays helpful comments explaining the HTML output.',
     'type'    => 'radio',
     'std'     => '1',
     'choices' => array(
-        'dc_thumbnail' => 'Tall (256x144)',
-        'dc_large' => 'Grande (720x405)',
-        'dc_huge' => 'Venti (960x540)'
+        '1' => 'yes, display the comments',
+        '0' => 'no, don\'t display comments'
     )
-));
-
-$theme_options -> set('displayThumb_single', array(
-    'section' => 'layout',
-    'title'   => 'Display Thumbnails on Posts',
-    'desc'    => 'Show the \'Featured Image\' with individual posts (i.e. is_single())?',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$theme_options -> set('thumbsize_single', array(
-    'section' => 'layout',
-    'title'   => 'Thumbnail Size - Posts',
-    'desc'    => 'If enabled above, how big should the thumbnail be on is_single()?',
-    'type'    => 'radio',
-    'std'     => '1',
-    'choices' => array(
-        'dc_thumbnail' => 'Medium (256x144)',
-        'dc_large' => 'Large (720x405)',
-        'dc_huge' => 'Supersize Me (960x540)'
-    )
-));
-                                   
-                                   
-                                   
-                                   
+));                       
                                    
 
 
@@ -148,7 +100,7 @@ $theme_options -> set('headerJS', array(
     'title'   => 'External Javascript URLs - header',
     'desc'    => 'URLs of external javascript files to be enqueued in wp_header, separated by line break',
     'std'     => '',
-    'type'    => 'html',
+    'type'    => 'textarea',
     'section' => 'js'
 ));
 
@@ -163,11 +115,10 @@ $theme_options -> set('customJS_footer', array(
 
 
 $theme_options -> set('footerJS', array(
-
     'title'   => 'External Javascript URLs - footer',
     'desc'    => 'URLs of external javascript files to be enqueued in wp_footer, separated by line break',
     'std'     => '',
-    'type'    => 'html',
+    'type'    => 'textarea',
     'section' => 'js'
 ));
 
@@ -274,123 +225,11 @@ $theme_options -> set('sidebars-Before_Home', array(
 
 
 
-/* Content
+/* Icons
 ===========================================*/
-
-$theme_options -> set('debugMode', array(
-    'section' => 'content',
-    'title'   => 'Debug Mode',
-    'desc'    => 'Displays helpful comments explaining the HTML output.',
-    'type'    => 'radio',
-    'std'     => '1',
-    'choices' => array(
-        '1' => 'yes, display the comments',
-        '0' => 'no, don\'t display comments'
-    )
-));
-
-$theme_options -> set('disableComments', array(
-    'section' => 'content',
-    'title'   => 'Disable Comments',
-    'desc'    => 'Check to disable ALL comments completely (including external comment systems). Does NOT apply to admin users.',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$theme_options -> set('commentsDisabledMessage', array(
-    'title'   => 'Comments Disabled Message',
-    'desc'    => 'HTML to display in place of comments if Disable Comments is checked.',
-    'std'     => '',
-    'type'    => 'html',
-    'section' => 'content',
-    'class'   => 'code'
-));
-
-
-$theme_options -> set('404Message', array(
-    'section' => 'content',
-    'title'   => '404 Message',
-    'desc'    => 'The paragraph text below the bad URL in the 404 alert box. (Plain text)',
-    'type'    => 'text',
-    'std'     => 'Oops! Looks like we\'re missing something here...'
-));
-
-$theme_options -> set('noscriptMessage', array(
-    'section' => 'content',
-    'title'   => 'No Javascript Message',
-    'desc'    => 'The paragraph text in the \'Javascript disabled.\' alert box. (Plain text; Leave blank for no alert.)',
-    'type'    => 'text',
-    'std'     => 'We use clean, safe Javascript to make our sites easier to navigate. Please consider enabling Javascript for this site.'
-));
-
-
-
-
-
-
-
-
-/* Colors
-===========================================*/
-
-$theme_options -> set('primaryColor', array(
-    'title'   => 'Primary Color',
-    'desc'    => 'Main hex color used for links, certain headings, etc.',
-    'std'     => '#66479c',
-    'type'    => 'color',
-    'section' => 'colors'
-));
-
-$theme_options -> set('primaryColorFaded', array(
-    'title'   => 'Primary Color Faded',
-    'desc'    => 'Main hex color used for visited and active links, certain decorative elements, etc.',
-    'std'     => '#886eb6',
-    'type'    => 'color',
-    'section' => 'colors'
-));
-
-$theme_options -> set('selectionColor', array(
-    'title'   => 'Selection Highlight Color',
-    'desc'    => 'Hex color used to highlight selected text.',
-    'std'     => '#66479c',
-    'type'    => 'color',
-    'section' => 'colors'
-));
-
-$theme_options -> set('selectionTextColor', array(
-    'title'   => 'Selection Text Color',
-    'desc'    => 'Hex color used for selected text.',
-    'std'     => '#fff',
-    'type'    => 'color',
-    'section' => 'colors'
-));
-
-$theme_options -> set('alertColor', array(
-    'title'   => 'Alert Background Color',
-    'desc'    => 'Main hex color used for background for alert boxes (e.g. 404).',
-    'std'     => '#ffc',
-    'type'    => 'color',
-    'section' => 'colors'
-));
-
-$theme_options -> set('alertBorderColor', array(
-    'title'   => 'Alert Border Color',
-    'desc'    => 'Main hex color used for border around alert boxes (e.g. 404).',
-    'std'     => '#fc0',
-    'type'    => 'color',
-    'section' => 'colors'
-));
-
-$theme_options -> set('alertTextColor', array(
-    'title'   => 'Alert Text Color',
-    'desc'    => 'Main hex color used for text in alert boxes (e.g. 404).',
-    'std'     => '#000',
-    'type'    => 'color',
-    'section' => 'colors'
-));
 
 $theme_options -> set('favicon', array(
-    'section' => 'colors',
+    'section' => 'icons',
     'title'   => 'Favicon',
     'desc'    => 'Enter the URL to your custom favicon. It should be 32x32, transparency is ok. PNG works well.',
     'type'    => 'text',
@@ -398,7 +237,7 @@ $theme_options -> set('favicon', array(
 ));
 
 $theme_options -> set('appleicon', array(
-    'section' => 'colors',
+    'section' => 'icons',
     'title'   => 'Apple Favorite Icon',
     'desc'    => 'Enter the URL to your custom favicon for iOS. It should <a href="http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/mobilehig/IconsImages/IconsImages.html">probably</a> be 114x114. PNG works well.',
     'type'    => 'text',
@@ -406,37 +245,12 @@ $theme_options -> set('appleicon', array(
 ));
 
 $theme_options -> set('jqueryui_theme', array(
-    'section' => 'colors',
+    'section' => 'icons',
     'title'   => 'jquery UI theme',
     'desc'    => 'Enter the URL to your favorite jquery UI theme.',
     'type'    => 'text',
     'std'     => 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/smoothness/jquery-ui.css'
 ));
-
-$theme_options -> set('xman', array(
-    'section' => 'colors',
-    'title'   => 'Your Favorite X-Man (or woman)',
-    'desc'    => 'This is really up to you. Choose wisely.',
-    'type'    => 'select',
-    'std'     => '',
-    'choices' => array(
-        'xavier' => 'Xavier',
-        'cyclopse' => 'Cyclopse',
-        'iceman' => 'Iceman',
-        'angel' => 'Angel',
-        'beast' => 'Beast',
-        'marvelgirl' => 'Marvel Girl',
-        'wolverine' => 'Wolverine',
-        'storm' => 'Storm',
-        'emmafrost' => 'Emma Frost',
-        'colossus' => 'Colossus',
-        'nightcrawler' => 'Nightcrawler',
-        'shadowcat' => 'Shadowcat',
-        'rogue' => 'Rogue',
-        'other' => 'Other'
-    )
-));
-
 
 
 
@@ -496,27 +310,20 @@ $theme_options -> set('indexSEODescription', array(
     'section' => 'seo'
 ));
 
-$theme_options -> set('analyticsHeading', array(
-    'section' => 'seo',
-    'title'   => '', // Not used for headings.
-    'desc'    => 'Performance Tracking',
-    'type'    => 'heading'
-));
 
-$theme_options -> set('googleAnalytics', array(
-    'title'   => 'Google Analytics',
-    'desc'    => 'Paste the block of code provided by Google for performance tracking. This will be inserted in the page header.',
-    'std'     => '',
-    'type'    => 'html',
-    'section' => 'seo'
-));
 
-$theme_options -> set('googleVerification', array(
-    'title'   => 'Google Site Verification Code',
-    'desc'    => 'Speaking of Google, don\'t forget to set your site up: http://google.com/webmasters.',
-    'std'     => '',
-    'type'    => 'text',
-    'section' => 'seo'
+
+
+/* Reset
+===========================================*/
+
+$theme_options -> set('reset_theme', array(
+    'section' => 'reset',
+    'title'   => 'Reset theme',
+    'type'    => 'checkbox',
+    'std'     => 0,
+    'class'   => 'warning', // Custom class for CSS
+    'desc'    => 'Check this box and click "Save Changes" below to reset theme options to their defaults.'
 ));
 
 ?>

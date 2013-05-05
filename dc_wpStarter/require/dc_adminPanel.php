@@ -37,8 +37,6 @@ class dc_theme_options {
         
         $this->pageTitle = $pt;
         $this->menuTitle = $mt;
-		
-        $this->sections['reset'] = 'Reset to Defaults';
         
 		add_action( 'admin_menu', array( &$this, 'add_pages' ) );
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
@@ -96,11 +94,11 @@ class dc_theme_options {
 		
 		$defaults = array(
 			'id'      => 'default_field',
-			'title'   => __( 'Default Field' ),
-			'desc'    => __( 'This is a default description.' ),
+			'title'   => 'Default Field',
+			'desc'    => 'This is a default description.',
 			'std'     => '',
 			'type'    => 'text',
-			'section' => 'seo',
+			'section' => 'general',
 			'choices' => array(),
 			'class'   => ''
 		);
@@ -131,82 +129,24 @@ class dc_theme_options {
     */
 	public function display_page() {
 		
-		echo '<div class="wrap">'."\n".'<div class="icon32" id="icon-options-general"></div>'."\n".'<h2>' . $this->pageTitle . '</h2>';
+		e('<div class="wrap">');
+        e('<div class="icon32" id="icon-options-general"></div>');
+        e('<h2>' . $this->pageTitle . '</h2>');
 	
 		if ( isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] == true )
-			echo '<div class="updated fade"><p>' . __( 'Theme options updated.' ) . '</p></div>';
+            e('<div class="updated fade"><p>' . 'Theme options updated.' . '</p></div>');
 		
-		echo '<form action="options.php" method="post">';
+		e('<form action="options.php" method="post">');
 	
-		settings_fields( 'dc_options' );
-		echo '<div class="ui-tabs">
-			<ul class="ui-tabs-nav">';
-		
-		foreach ( $this->sections as $section_slug => $section )
-			echo '<li><a href="#' . $section_slug . '">' . $section . '</a></li>';
-		
-		echo '</ul>';
+		settings_fields('dc_options');
+        
 		do_settings_sections( $_GET['page'] );
-		
-		echo '</div>
-		<p class="submit"><input name="Submit" type="submit" class="button-primary" value="Save Changes" /></p>
-		
-	   </form>';
-	
-	echo '<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			var sections = [];';
         
-    foreach ( $this->sections as $section_slug => $section )
-        echo "sections['$section'] = '$section_slug';";
-    
-    echo 'var wrapped = $(".wrap h3").wrap("<div class=\"ui-tabs-panel\">");
-        wrapped.each(function() {
-            $(this).parent().append($(this).parent().nextUntil("div.ui-tabs-panel"));
-        });
-        $(".ui-tabs-panel").each(function(index) {
-            $(this).attr("id", sections[$(this).children("h3").text()]);
-            if (index > 0)
-                $(this).addClass("ui-tabs-hide");
-        });
-        $(".ui-tabs").tabs({
-            fx: { opacity: "toggle", duration: "fast" }
-        });
+		e('<p class="submit"><input name="Submit" type="submit" class="button-primary" value="Save Changes" /></p>');
         
-        $("input[type=text], textarea").each(function() {
-            if ($(this).val() == $(this).attr("placeholder") || $(this).val() == "")
-                $(this).css("color", "#999");
-        });
-        
-        $("input[type=text], textarea").focus(function() {
-            if ($(this).val() == $(this).attr("placeholder") || $(this).val() == "") {
-                $(this).val("");
-                $(this).css("color", "#000");
-            }
-        }).blur(function() {
-            if ($(this).val() == "" || $(this).val() == $(this).attr("placeholder")) {
-                $(this).val($(this).attr("placeholder"));
-                $(this).css("color", "#999");
-            }
-        });
-        
-        $(".wrap h3, .wrap table").show();
-        
-        // This will make the "warning" checkbox class really stand out when checked.
-        // I use it here for the Reset checkbox.
-        $(".warning").change(function() {
-            if ($(this).is(":checked"))
-                $(this).parent().css("background", "#c00").css("color", "#fff").css("fontWeight", "bold");
-            else
-                $(this).parent().css("background", "none").css("color", "inherit").css("fontWeight", "normal");
-        });
-        
-        // Browser compatibility
-        if ($.browser.mozilla) 
-                 $("form").attr("autocomplete", "off");
-        });
-        </script>
-        </div>';
+		e('</form>');
+
+        e('</div><!--/#icon-options-general-->');
 		
 	}
 	
@@ -295,7 +235,7 @@ class dc_theme_options {
 				break;
 			
 			case 'textarea':
-				echo '<textarea class="' . $field_class . '" id="' . $id . '" name="dc_options[' . $id . ']" placeholder="' . $std . '" rows="5" cols="30">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
+				echo '<textarea class="' . $field_class . '" id="' . $id . '" name="dc_options[' . $id . ']" placeholder="' . $std . '" rows="5" cols="100">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
 				
 				$this->description($desc);
 				
@@ -407,17 +347,7 @@ class dc_theme_options {
     */
 	public function get_settings() {
         
-		/* Reset
-		===========================================*/
-		
-		$this->settings['reset_theme'] = array(
-			'section' => 'reset',
-			'title'   => __( 'Reset theme' ),
-			'type'    => 'checkbox',
-			'std'     => 0,
-			'class'   => 'warning', // Custom class for CSS
-			'desc'    => __( 'Check this box and click "Save Changes" below to reset theme options to their defaults.' )
-		);
+        // settings defined externally from dc_themeOptions.php
 		
 	}
     
