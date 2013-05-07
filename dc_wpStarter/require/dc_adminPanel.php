@@ -1,35 +1,25 @@
 <?php 
 
+
 // Based on Alison Barrett's excellent tutorial:
 // http://alisothegeek.com/2011/01/wordpress-settings-api-tutorial-2/
-
-// Usage example: $favicon = get_option('favicon');
+// (revised significantly to improve object-oriented behavior)
 
 // instantiated in dc_themeOptions.php
 
-function dc_option( $option ) {
-	$options = get_option( 'dc_options' );
-	if ( isset( $options[$option] ) )
-		return $options[$option];
-	else
-		return false;
-}
 
+/*
+// class for constructing settings pages
+*/
 class dc_theme_options {
     
-	private $sections;
-	private $checkboxes;
-	private $settings;
-    private $pageTitle;
-    private $menuTitle;
-	
-    
+	private $sections, $checkboxes, $pageTitle, $menuTitle, $handle, $settings, $options;
     
     
     /*
     // runs on instantiation
     */
-	public function __construct( $pt='Theme Options', $mt='Theme Options' ) {
+	public function __construct( $pt='Theme Options', $mt='Theme Options', $h='dc_options' ) {
 		
 		$this->checkboxes = array();
 		$this->settings = array();
@@ -37,14 +27,16 @@ class dc_theme_options {
         
         $this->pageTitle = $pt;
         $this->menuTitle = $mt;
+        $this->handle = $h;
         
 		add_action( 'admin_menu', array( &$this, 'add_pages' ) );
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
+        $this -> add_section('Reset "'.$this->pageTitle.'" to Defaults','reset');
         
         // loads the Ace js code editor
 		add_action('admin_enqueue_scripts','enqueue_ace');
         		
-		if ( ! get_option( 'dc_options' ) )
+		if ( ! get_option( $this->handle ) )
 			$this->initialize_settings();
 		
 	}
@@ -65,8 +57,8 @@ class dc_theme_options {
     /*
     // method for adding settings
     */
-    public function set($handle,$args=array()){
-        $this->settings[$handle] = $args;   
+    public function set($setting,$args=array()){
+        $this->settings[$setting] = $args;   
     }
     
     
@@ -77,7 +69,7 @@ class dc_theme_options {
     */
 	public function add_pages() {
         
-		$admin_page = add_theme_page( $this->pageTitle, $this->menuTitle, 'manage_options', 'dc-options', array( &$this, 'display_page' ) );
+		$admin_page = add_theme_page( $this->pageTitle, $this->menuTitle, 'manage_options', $this->handle, array( &$this, 'display_page' ) );
 		
 		add_action( 'admin_print_scripts-' . $admin_page, array( &$this, 'scripts' ) );
 		add_action( 'admin_print_styles-' . $admin_page, array( &$this, 'styles' ) );
@@ -118,7 +110,7 @@ class dc_theme_options {
 		if ( $type == 'checkbox' )
 			$this->checkboxes[] = $id;
 		
-		add_settings_field( $id, $title, array( $this, 'display_setting' ), 'dc-options', $section, $field_args );
+		add_settings_field( $id, $title, array( $this, 'display_setting' ), $this->handle, $section, $field_args );
 	}
     
     
@@ -138,7 +130,7 @@ class dc_theme_options {
 		
 		e('<form action="options.php" method="post">');
 	
-		settings_fields('dc_options');
+		settings_fields($this->handle);
         
 		do_settings_sections( $_GET['page'] );
         
@@ -182,7 +174,7 @@ class dc_theme_options {
 		
 		extract( $args );
 		
-		$options = get_option( 'dc_options' );
+		$options = get_option( $this->handle );
 		
 		if ( ! isset( $options[$id] ) && $type != 'checkbox' )
 			$options[$id] = $std;
@@ -347,11 +339,36 @@ class dc_theme_options {
     */
 	public function get_settings() {
         
-        // settings defined externally from dc_themeOptions.php
+        /* Reset
+        ===========================================*/
+        
+        $this -> set('reset_theme', array(
+            'section' => 'reset',
+            'title'   => 'Reset '.$this->pageTitle,
+            'type'    => 'checkbox',
+            'std'     => 0,
+            'class'   => 'warning', // Custom class for CSS
+            'desc'    => 'Check this box and click "Save Changes" below to reset the "'.$this->pageTitle.'" settings to their default values.'
+        ));
+        
+        
+        $this->options = get_option( $this->handle );
+        var_dump($this->options);
 		
 	}
     
     
+    
+    
+    /*
+    // method for snatching options out of RAM (quicker than a mySQL lookup)
+    */
+    public function get($h){
+        if($this->options[$h]) return $this->options[$h];
+        else {
+            return false;
+        }
+    }
     
     
 	
@@ -359,14 +376,14 @@ class dc_theme_options {
     // initialize settings to their default values
     */
 	public function initialize_settings() {
-		
+		        
 		$default_settings = array();
 		foreach ( $this->settings as $id => $setting ) {
 			if ( $setting['type'] != 'heading' )
 				$default_settings[$id] = $setting['std'];
 		}
 		
-		update_option( 'dc_options', $default_settings );
+		update_option( $this->handle, $default_settings );
 		
 	}
     
@@ -379,13 +396,13 @@ class dc_theme_options {
 	*/
 	public function register_settings() {
 		
-		register_setting( 'dc_options', 'dc_options', array ( &$this, 'validate_settings' ) );
+		register_setting( $this->handle, $this->handle, array ( &$this, 'validate_settings' ) );
 		
 		foreach ( $this->sections as $slug => $title ) {
 			if ( $slug == 'about' )
-				add_settings_section( $slug, $title, array( &$this, 'display_about_section' ), 'dc-options' );
+				add_settings_section( $slug, $title, array( &$this, 'display_about_section' ), $this->handle );
 			else
-				add_settings_section( $slug, $title, array( &$this, 'display_section' ), 'dc-options' );
+				add_settings_section( $slug, $title, array( &$this, 'display_section' ), $this->handle );
 		}
 		
 		$this->get_settings();
@@ -434,7 +451,7 @@ class dc_theme_options {
 	public function validate_settings( $input ) {
 		
 		if ( ! isset( $input['reset_theme'] ) ) {
-			$options = get_option( 'dc_options' );
+			$options = get_option( $this->handle );
 			
 			foreach ( $this->checkboxes as $id ) {
 				if ( isset( $options[$id] ) && ! isset( $input[$id] ) )

@@ -1,6 +1,16 @@
 <?php
 
 /*
+// remove the default theme editor from the admin menu
+// http://www.tcbarrett.com/2011/09/remove-and-disable-wordpress-theme-and-plugin-editors/
+*/
+function tcb_remove_editor_menu() {
+  remove_action('admin_menu', '_add_themes_utility_last', 101);
+}
+add_action('admin_menu', 'tcb_remove_editor_menu', 1);
+
+
+/*
 // clean up the <head>
 */
 function removeHeadLinks() {

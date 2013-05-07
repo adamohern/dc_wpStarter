@@ -1,6 +1,19 @@
 <?php 
 
 
+// return a theme option by handle
+function dc_option($handle){
+    global $dc_options;
+    
+    $std = $dc_options['std']->get($handle);
+    if($std) {echo "yay";return $std;}
+    
+    echo "oops";
+    return false;
+}
+
+
+
 
 
 // safely load a linebreak-dilimited list of scripts
@@ -15,7 +28,7 @@ function dc_enqueue_scripts ( $list, $footer=false ){
 
 
 // safely load scripts into WP
-function dc_enqueue_script( $handle, $src, $deps, $ver, $in_footer ){
+function dc_enqueue_script( $handle, $src, $deps='', $ver='', $in_footer='' ){
         wp_deregister_script( $handle );  
 		wp_register_script( $handle, $src, $deps, $ver, $in_footer );  
 		wp_enqueue_script( $handle );  
@@ -388,12 +401,6 @@ function br($n=0) {
 
 
 
-// If debug mode is turned on in the theme settings, html comments in the theme are displayed
-$dc_debugMode = dc_option('debugMode');
-
-
-
-
 
 // HTML comments have three modes:
 // 0 : <!-- comment -->
@@ -402,17 +409,16 @@ $dc_debugMode = dc_option('debugMode');
 // 3 : [end code block]
 
 function c($comment='',$mode=0,$return=false) {
-	global $dc_debugMode;
-    
-    $source = debug_backtrace();
-    $comment = basename( $source[0]['file'] ).' line '.$source[0]['line'].': '.$comment;
-    
-	$l = strlen($comment); 
-	if($l%2==0) $d=1; //even numbered strings need a compensation character
-	$w = 100;
-	$s = '/';
+
+    if ( dc_option('debugMode') == 1 ) {
+        $source = debug_backtrace();
+        $comment = basename( $source[0]['file'] ).' line '.$source[0]['line'].': '.$comment;
+        
+        $l = strlen($comment); 
+        if($l%2==0) $d=1; //even numbered strings need a compensation character
+        $w = 100;
+        $s = '/';
 	
-	if ( $dc_debugMode == 1 ) {
 		if ( $mode == 0 ) 
 		{
 			$html = '<!-- '.$comment.' -->';

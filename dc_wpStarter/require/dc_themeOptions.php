@@ -1,14 +1,22 @@
 <?php 
 
-$theme_options = new dc_theme_options('Theme Options','Theme Options');
+global $dc_options;
 
-$theme_options -> add_section('Custom CSS','css');
-$theme_options -> add_section('SEO','seo');
-$theme_options -> add_section('Icons','icons');
-$theme_options -> add_section('Sidebars','sidebars');
-$theme_options -> add_section('Custom JS','js');
-$theme_options -> add_section('Content','content');
-$theme_options -> add_section('Reset to Defaults','reset');
+$dc_options['std'] = new dc_theme_options('Theme Options','Theme Options','dc_options');
+$dc_options['std'] -> add_section('SEO','seo');
+$dc_options['std'] -> add_section('Icons','icons');
+$dc_options['std'] -> add_section('Sidebars','sidebars');
+$dc_options['std'] -> add_section('Content','content');
+
+$dc_options['css'] = new dc_theme_options('CSS','CSS','dc_css_options');
+$dc_options['css'] -> add_section('CSS','css');
+
+$dc_options['js'] = new dc_theme_options('Javascript','Javascript','dc_javascript_options');
+$dc_options['js'] -> add_section('Javascript','js');
+
+$dc_options['content'] = new dc_theme_options('Content','Content','dc_content_options');
+$dc_options['content'] -> add_section('Common Markup','common');
+$dc_options['content'] -> add_section('Special Markup','special');
 
 
 $instructions = '(add special characters using supported wordpress template tags in [shortcode] form, e.g. [the_date])';
@@ -16,7 +24,7 @@ $instructions = '(add special characters using supported wordpress template tags
 /* CSS
 ===========================================*/
 
-$theme_options -> set('cssOverrides', array(
+$dc_options['css'] -> set('cssOverrides', array(
     'title'   => 'CSS Overrides',
     'desc'    => 'Enter any custom CSS here to apply it to your theme. Hint: copy/paste this into a <a href="http://notepad-plus-plus.org/">CSS editor</a> for editing.',
     'std'     => htmlspecialchars(
@@ -49,27 +57,29 @@ $theme_options -> set('cssOverrides', array(
 /* Content
 ===========================================*/
 
-$theme_options -> set('postFormatSingle', array(
+$dc_options['content'] -> set('postFormatSingle', array(
     'title'   => 'post format for single.php',
     'desc'    => 'HTML to display individual posts<br />'.$instructions,
     'std'     => htmlspecialchars(
-        '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
-        "\t".'<div class="entry-content">'."\n".
-        "\t\t".'<h1>[the_title]</h1>'."\n".
-        "\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
-        "\t\t".'<p>[the_content]</p>'."\n".
-        "\t\t".'[dc_sidebar handle="After_Single"]'."\n".
-        "\t".'</div><!--/.entry-content-->'."\n".
-        '</article>'."\n\n".
-        '[comments_template]'
+        
+'<article class="[get_post_class]" id="post-[the_ID]">'."\n".
+"\t".'<div class="entry-content">'."\n".
+"\t\t".'<h1>[the_title]</h1>'."\n".
+"\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t\t".'<p>[the_content]</p>'."\n".
+"\t\t".'[dc_sidebar handle="After_Single"]'."\n".
+"\t".'</div><!--/.entry-content-->'."\n".
+'</article>'."\n\n".
+'[comments_template]'
+        
     ),
     'type'    => 'html',
-    'section' => 'content',
+    'section' => 'common',
     'class'   => 'code'
 ));                      
                                    
                                    
-$theme_options -> set('debugMode', array(
+$dc_options['std'] -> set('debugMode', array(
     'section' => 'content',
     'title'   => 'Debug Mode',
     'desc'    => 'Displays helpful comments explaining the HTML output.',
@@ -86,7 +96,7 @@ $theme_options -> set('debugMode', array(
 /* JS
 ===========================================*/
 
-$theme_options -> set('customJS', array(
+$dc_options['js'] -> set('customJS', array(
     'section' => 'js',
     'title'   => 'Custom Javascript - head',
     'desc'    => 'Enter valid jquery-compatible Javascript to insert into the header.',
@@ -95,7 +105,7 @@ $theme_options -> set('customJS', array(
 ));
 
 
-$theme_options -> set('headerJS', array(
+$dc_options['js'] -> set('headerJS', array(
 
     'title'   => 'External Javascript URLs - header',
     'desc'    => 'URLs of external javascript files to be enqueued in wp_header, separated by line break',
@@ -105,7 +115,7 @@ $theme_options -> set('headerJS', array(
 ));
 
 
-$theme_options -> set('customJS_footer', array(
+$dc_options['js'] -> set('customJS_footer', array(
     'section' => 'js',
     'title'   => 'Custom Javascript - foot',
     'desc'    => 'Enter valid jquery-compatible Javascript to insert into the header.',
@@ -114,7 +124,7 @@ $theme_options -> set('customJS_footer', array(
 ));
 
 
-$theme_options -> set('footerJS', array(
+$dc_options['js'] -> set('footerJS', array(
     'title'   => 'External Javascript URLs - footer',
     'desc'    => 'URLs of external javascript files to be enqueued in wp_footer, separated by line break',
     'std'     => '',
@@ -130,7 +140,7 @@ $theme_options -> set('footerJS', array(
 ===========================================*/
 
 
-$theme_options -> set('sidebars-Header_Widgets', array(
+$dc_options['std'] -> set('sidebars-Header_Widgets', array(
     'section' => 'sidebars',
     'title'   => 'Header_Widgets',
     'desc'    => 'Topmost header on the page, above all content.',
@@ -138,7 +148,7 @@ $theme_options -> set('sidebars-Header_Widgets', array(
     'std'     => 1 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$theme_options -> set('sidebars-Banner_All', array(
+$dc_options['std'] -> set('sidebars-Banner_All', array(
     'section' => 'sidebars',
     'title'   => 'Banner_All',
     'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on home, archive, search, post, and page views.',
@@ -146,7 +156,7 @@ $theme_options -> set('sidebars-Banner_All', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$theme_options -> set('sidebars-Banner_Home', array(
+$dc_options['std'] -> set('sidebars-Banner_Home', array(
     'section' => 'sidebars',
     'title'   => 'Banner_Home',
     'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on is_home().',
@@ -154,7 +164,7 @@ $theme_options -> set('sidebars-Banner_Home', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$theme_options -> set('sidebars-Banner_Archive', array(
+$dc_options['std'] -> set('sidebars-Banner_Archive', array(
     'section' => 'sidebars',
     'title'   => 'Banner_Archive',
     'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on is_archive().',
@@ -162,7 +172,7 @@ $theme_options -> set('sidebars-Banner_Archive', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$theme_options -> set('sidebars-Main_Sidebar', array(
+$dc_options['std'] -> set('sidebars-Main_Sidebar', array(
     'section' => 'sidebars',
     'title'   => 'Main_Sidebar',
     'desc'    => 'Appears at either left or right of #content.',
@@ -170,7 +180,7 @@ $theme_options -> set('sidebars-Main_Sidebar', array(
     'std'     => 1 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$theme_options -> set('sidebars-Footer_Widgets', array(
+$dc_options['std'] -> set('sidebars-Footer_Widgets', array(
     'section' => 'sidebars',
     'title'   => 'Footer_Widgets',
     'desc'    => 'Appears at bottom of #content.',
@@ -178,7 +188,7 @@ $theme_options -> set('sidebars-Footer_Widgets', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));		
 
-$theme_options -> set('sidebars-Before_Single', array(
+$dc_options['std'] -> set('sidebars-Before_Single', array(
     'section' => 'sidebars',
     'title'   => 'Before_Single',
     'desc'    => 'Appears at top of #content on is_single().',
@@ -186,7 +196,7 @@ $theme_options -> set('sidebars-Before_Single', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$theme_options -> set('sidebars-After_Single', array(
+$dc_options['std'] -> set('sidebars-After_Single', array(
     'section' => 'sidebars',
     'title'   => 'After_Single',
     'desc'    => 'Appears at bottom of #content on is_single().',
@@ -194,7 +204,7 @@ $theme_options -> set('sidebars-After_Single', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$theme_options -> set('sidebars-Before_Archive', array(
+$dc_options['std'] -> set('sidebars-Before_Archive', array(
     'section' => 'sidebars',
     'title'   => 'Before_Archive',
     'desc'    => 'Appears at top of #content on is_archive().',
@@ -202,7 +212,7 @@ $theme_options -> set('sidebars-Before_Archive', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$theme_options -> set('sidebars-After_Archive', array(
+$dc_options['std'] -> set('sidebars-After_Archive', array(
     'section' => 'sidebars',
     'title'   => 'After_Archive',
     'desc'    => 'Appears at bottom of #content on is_archive().',
@@ -210,7 +220,7 @@ $theme_options -> set('sidebars-After_Archive', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$theme_options -> set('sidebars-Before_Home', array(
+$dc_options['std'] -> set('sidebars-Before_Home', array(
     'section' => 'sidebars',
     'title'   => 'Before_Home',
     'desc'    => 'Appears at top of #content on is_home().',
@@ -228,7 +238,7 @@ $theme_options -> set('sidebars-Before_Home', array(
 /* Icons
 ===========================================*/
 
-$theme_options -> set('favicon', array(
+$dc_options['std'] -> set('favicon', array(
     'section' => 'icons',
     'title'   => 'Favicon',
     'desc'    => 'Enter the URL to your custom favicon. It should be 32x32, transparency is ok. PNG works well.',
@@ -236,7 +246,7 @@ $theme_options -> set('favicon', array(
     'std'     => get_bloginfo('wpurl').'/favicon.ico'
 ));
 
-$theme_options -> set('appleicon', array(
+$dc_options['std'] -> set('appleicon', array(
     'section' => 'icons',
     'title'   => 'Apple Favorite Icon',
     'desc'    => 'Enter the URL to your custom favicon for iOS. It should <a href="http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/mobilehig/IconsImages/IconsImages.html">probably</a> be 114x114. PNG works well.',
@@ -244,7 +254,7 @@ $theme_options -> set('appleicon', array(
     'std'     => get_bloginfo('wpurl').'/appleicon.ico'
 ));
 
-$theme_options -> set('jqueryui_theme', array(
+$dc_options['std'] -> set('jqueryui_theme', array(
     'section' => 'icons',
     'title'   => 'jquery UI theme',
     'desc'    => 'Enter the URL to your favorite jquery UI theme.',
@@ -261,7 +271,7 @@ $theme_options -> set('jqueryui_theme', array(
 /* SEO Settings
 ===========================================*/
 
-$theme_options -> set('defaultFocus', array(
+$dc_options['std'] -> set('defaultFocus', array(
     'title'   => 'Default Focus Keyword',
     'desc'    => 'Single keyword for use as the default \'focus\' keyword.',
     'std'     => '',
@@ -269,7 +279,7 @@ $theme_options -> set('defaultFocus', array(
     'section' => 'seo'
 ));
 
-$theme_options -> set('useMetaKeywords', array(
+$dc_options['std'] -> set('useMetaKeywords', array(
     'section' => 'seo',
     'title'   => 'Use Meta Keywords Tag?',
     'desc'    => ' - If you\'re not sure, <a href="http://googlewebmastercentral.blogspot.com/2009/09/google-does-not-use-keywords-meta-tag.html">probably not</a>.',
@@ -277,7 +287,7 @@ $theme_options -> set('useMetaKeywords', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$theme_options -> set('globalKeywords', array(
+$dc_options['std'] -> set('globalKeywords', array(
     'title'   => 'Global Keywords',
     'desc'    => '(Only used if Use Meta Keywords Tag is enabled.) Comma-delimited keywords for use in the \'keywords\' header meta tag.',
     'std'     => '',
@@ -285,7 +295,7 @@ $theme_options -> set('globalKeywords', array(
     'section' => 'seo'
 ));
         
-$theme_options -> set('titleSlug', array(
+$dc_options['std'] -> set('titleSlug', array(
     'title'   => 'Title Slug',
     'desc'    => 'Programmer-friendly site title, used as a class for the <body> element on all pages.',
     'std'     => preg_replace("/[^a-zA-Z0-9]/", "",get_bloginfo('name')),
@@ -293,7 +303,7 @@ $theme_options -> set('titleSlug', array(
     'section' => 'seo'
 ));
 
-$theme_options -> set('authorName', array(
+$dc_options['std'] -> set('authorName', array(
     'title'   => 'Author Name',
     'desc'    => 'Used for copyright and author meta tags.',
     'std'     => get_bloginfo('name'),
@@ -301,7 +311,7 @@ $theme_options -> set('authorName', array(
     'section' => 'seo'
 ));
 
-$theme_options -> set('indexSEODescription', array(
+$dc_options['std'] -> set('indexSEODescription', array(
 
     'title'   => 'Index SEO Description',
     'desc'    => '70 chars describing the site. Will be used by default for index and archive pages. On single posts or pages, the excerpt is used.',
@@ -311,19 +321,5 @@ $theme_options -> set('indexSEODescription', array(
 ));
 
 
-
-
-
-/* Reset
-===========================================*/
-
-$theme_options -> set('reset_theme', array(
-    'section' => 'reset',
-    'title'   => 'Reset theme',
-    'type'    => 'checkbox',
-    'std'     => 0,
-    'class'   => 'warning', // Custom class for CSS
-    'desc'    => 'Check this box and click "Save Changes" below to reset theme options to their defaults.'
-));
 
 ?>
