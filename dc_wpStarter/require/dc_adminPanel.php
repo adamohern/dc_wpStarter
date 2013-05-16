@@ -20,7 +20,7 @@ class dc_theme_options {
     // runs on instantiation
     */
 	public function __construct( $pt='Theme Options', $mt='Theme Options', $h='dc_options' ) {
-		
+		        
 		$this->checkboxes = array();
 		$this->settings = array();
 		$this->get_settings();
@@ -35,32 +35,10 @@ class dc_theme_options {
         
         // loads the Ace js code editor
 		add_action('admin_enqueue_scripts','enqueue_ace');
-        		
-		if ( ! get_option( $this->handle ) )
-			$this->initialize_settings();
-		
+        				
+		if (!get_option($this->handle)) { $this->initialize_settings(); }
+
 	}
-    
-	
-    
-    
-    /*
-    // method for adding sections
-    */
-    public function add_section($title,$slug){
-        $this->sections[$slug] = $title;
-    }
-    
-    
-    
-    
-    /*
-    // method for adding settings
-    */
-    public function set($setting,$args=array()){
-        $this->settings[$setting] = $args;   
-    }
-    
     
     
     
@@ -80,10 +58,53 @@ class dc_theme_options {
     
 	
 	/*
+	// register settings
+	*/
+	public function register_settings() {
+		
+		register_setting( $this->handle, $this->handle, array ( &$this, 'validate_settings' ) );
+		
+		foreach ( $this->sections as $slug => $title ) {
+            add_settings_section( $slug, $title, array( &$this, 'display_section' ), $this->handle );
+		}
+		
+		$this->get_settings();
+		
+		foreach ( $this->settings as $id => $setting ) {
+			$setting['id'] = $id;
+			$this->create_setting( $setting );
+		}
+		
+	}
+    
+    
+    
+    
+    /*
+    // initialize settings to their default values
+    */
+	public function initialize_settings() {
+		        
+		$default_settings = array();
+		foreach ( $this->settings as $id => $setting ) {
+			if ( $setting['type'] != 'heading' )
+				$default_settings[$id] = $setting['std'];
+		}
+		
+		update_option( $this->handle, $default_settings );
+		
+	}
+    
+    
+    
+    
+    
+	
+	/*
     // create settings field
     */
 	public function create_setting( $args = array() ) {
-		
+        		        
 		$defaults = array(
 			'id'      => 'default_field',
 			'title'   => 'Default Field',
@@ -109,9 +130,10 @@ class dc_theme_options {
 		
 		if ( $type == 'checkbox' )
 			$this->checkboxes[] = $id;
-		
+        
 		add_settings_field( $id, $title, array( $this, 'display_setting' ), $this->handle, $section, $field_args );
-	}
+	
+    }
     
     
     
@@ -144,6 +166,13 @@ class dc_theme_options {
 	
     
     
+    /*
+	** Not currently used, but needs to be here.
+    */
+	public function display_section() {
+		//
+	}
+    
     
     
     /*
@@ -160,7 +189,7 @@ class dc_theme_options {
         echo 'var '.$id.' = ace.edit("'.$id.'_editor"); '.$id.'.setTheme("ace/theme/textmate"); '.$id.'.getSession().setMode("ace/mode/'.$mode.'");'."\n";
         echo $id.'.getSession().on(\'change\', function(e) { document.getElementById(\''.$id.'\').value = '.$id.'.getSession().getValue(); });'."\n";
         echo '</script>'."\n";
-        echo '<textarea style="display:none;" class="' . $field_class . '" id="' . $id . '" name="dc_options[' . $id . ']" placeholder="' . $std . '" rows="5" cols="30">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
+        echo '<textarea style="display:none;" class="' . $field_class . '" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" placeholder="' . $std . '" rows="5" cols="30">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
     }
     
     
@@ -194,13 +223,13 @@ class dc_theme_options {
 			
 			case 'checkbox':
 				
-				echo '<input class="checkbox' . $field_class . '" type="checkbox" id="' . $id . '" name="dc_options[' . $id . ']" value="1" ' . checked( $options[$id], 1, false ) . ' /> <label for="' . $id . '">' . $desc . '</label>';
+				echo '<input class="checkbox' . $field_class . '" type="checkbox" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" value="1" ' . checked( $options[$id], 1, false ) . ' /> <label for="' . $id . '">' . $desc . '</label>';
 				
 				br(1);
 				break;
 			
 			case 'select':
-				echo '<select class="select' . $field_class . '" name="dc_options[' . $id . ']">';
+				echo '<select class="select' . $field_class . '" name="'.$this->handle.'[' . $id . ']">';
 				
 				foreach ( $choices as $value => $label )
 					echo '<option value="' . esc_attr( $value ) . '"' . selected( $options[$id], $value, false ) . '>' . $label . '</option>';
@@ -215,7 +244,7 @@ class dc_theme_options {
 			case 'radio':
 				$i = 0;
 				foreach ( $choices as $value => $label ) {
-					echo '<input class="radio' . $field_class . '" type="radio" name="dc_options[' . $id . ']" id="' . $id . $i . '" value="' . esc_attr( $value ) . '" ' . checked( $options[$id], $value, false ) . '> <label for="' . $id . $i . '">' . $label . '</label>';
+					echo '<input class="radio' . $field_class . '" type="radio" name="'.$this->handle.'[' . $id . ']" id="' . $id . $i . '" value="' . esc_attr( $value ) . '" ' . checked( $options[$id], $value, false ) . '> <label for="' . $id . $i . '">' . $label . '</label>';
 					if ( $i < count( $options ) - 1 )
 						echo '<br />';
 					$i++;
@@ -227,7 +256,7 @@ class dc_theme_options {
 				break;
 			
 			case 'textarea':
-				echo '<textarea class="' . $field_class . '" id="' . $id . '" name="dc_options[' . $id . ']" placeholder="' . $std . '" rows="5" cols="100">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
+				echo '<textarea class="' . $field_class . '" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" placeholder="' . $std . '" rows="5" cols="100">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
 				
 				$this->description($desc);
 				
@@ -235,7 +264,7 @@ class dc_theme_options {
 				break;
 			
 			case 'password':
-				echo '<input class="regular-text' . $field_class . '" type="password" id="' . $id . '" name="dc_options[' . $id . ']" value="' . esc_attr( $options[$id] ) . '" />';
+				echo '<input class="regular-text' . $field_class . '" type="password" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" value="' . esc_attr( $options[$id] ) . '" />';
 				
 				$this->description($desc);
 				
@@ -244,7 +273,7 @@ class dc_theme_options {
 			
 			case 'text':
 			default:
-		 		echo '<input class="regular-text' . $field_class . '" type="text" id="' . $id . '" name="dc_options[' . $id . ']" placeholder="' . $std . '" value="' . esc_attr( $options[$id] ) . '" />';
+		 		echo '<input class="regular-text' . $field_class . '" type="text" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" placeholder="' . $std . '" value="' . esc_attr( $options[$id] ) . '" />';
 				
 		 		$this->description($desc);
 		 		
@@ -253,7 +282,7 @@ class dc_theme_options {
 				
 			case 'color':
 			default:
-		 		echo '<div id="'.$id.'_swatch" class="swatch" style="width:20px; height:20px; float:left; margin-top:3px; margin-right:10px; background-color:'.esc_attr($options[$id]).';"></div><input class="regular-text' . $field_class . '" type="text" id="' . $id . '" name="dc_options[' . $id . ']" placeholder="' . $std . '" value="' . esc_attr( $options[$id] ) . '" />';
+		 		echo '<div id="'.$id.'_swatch" class="swatch" style="width:20px; height:20px; float:left; margin-top:3px; margin-right:10px; background-color:'.esc_attr($options[$id]).';"></div><input class="regular-text' . $field_class . '" type="text" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" placeholder="' . $std . '" value="' . esc_attr( $options[$id] ) . '" />';
 				echo '<script>document.getElementById("'.$id.'").onchange=function(){ document.getElementById("'.$id.'_swatch").style.backgroundColor=this.value; } ;</script>';
 
 		 		$this->description($desc);
@@ -353,7 +382,6 @@ class dc_theme_options {
         
         
         $this->options = get_option( $this->handle );
-        var_dump($this->options);
 		
 	}
     
@@ -369,52 +397,14 @@ class dc_theme_options {
             return false;
         }
     }
-    
-    
-	
-	/*
-    // initialize settings to their default values
-    */
-	public function initialize_settings() {
-		        
-		$default_settings = array();
-		foreach ( $this->settings as $id => $setting ) {
-			if ( $setting['type'] != 'heading' )
-				$default_settings[$id] = $setting['std'];
-		}
-		
-		update_option( $this->handle, $default_settings );
-		
-	}
-    
-    
-    
-    
-	
-	/*
-	// register settings
-	*/
-	public function register_settings() {
-		
-		register_setting( $this->handle, $this->handle, array ( &$this, 'validate_settings' ) );
-		
-		foreach ( $this->sections as $slug => $title ) {
-			if ( $slug == 'about' )
-				add_settings_section( $slug, $title, array( &$this, 'display_about_section' ), $this->handle );
-			else
-				add_settings_section( $slug, $title, array( &$this, 'display_section' ), $this->handle );
-		}
-		
-		$this->get_settings();
-		
-		foreach ( $this->settings as $id => $setting ) {
-			$setting['id'] = $id;
-			$this->create_setting( $setting );
-		}
-		
-	}
 	
     
+    /*
+    // method for snatching ALL options out of RAM (quicker than a mySQL lookup)
+    */    
+    public function get_all() {
+        return $this->options;
+    }
     
     
     
@@ -463,5 +453,27 @@ class dc_theme_options {
 		return false;
 		
 	}
+    
+    
+    
+    
+    
+    /*
+    // method for adding sections
+    */
+    public function add_section($title,$slug){
+        $this->sections[$slug] = $title;
+    }
+    
+    
+    
+    
+    /*
+    // method for adding settings
+    */
+    public function set($setting,$args=array()){
+        $this->settings[$setting] = $args;
+    }
+    
 	
 }

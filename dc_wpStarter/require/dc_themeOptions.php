@@ -320,6 +320,4 @@ $dc_options['std'] -> set('indexSEODescription', array(
     'section' => 'seo'
 ));
 
-
-
 ?>

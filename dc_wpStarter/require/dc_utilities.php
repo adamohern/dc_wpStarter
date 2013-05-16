@@ -1,14 +1,23 @@
 <?php 
 
+// loads all theme options into a single array
+function dc_load_options(){
+    global $dc_options;
+    $dc_load_options = array();
+    foreach($dc_options as $key => $object){
+        $dc_load_options .= $object->get_all();
+    }
+    return $dc_load_options;
+}
+
 
 // return a theme option by handle
 function dc_option($handle){
     global $dc_options;
     
     $std = $dc_options['std']->get($handle);
-    if($std) {echo "yay";return $std;}
+,,,,,,,    if($std) { return $std; }
     
-    echo "oops";
     return false;
 }
 

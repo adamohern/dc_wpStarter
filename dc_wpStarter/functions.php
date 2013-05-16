@@ -13,6 +13,14 @@ foreach(glob(get_stylesheet_directory()."/require/*.php") as $file){ require $fi
 
 
 /*
+// loads all options into a single global array from require/dc_utilities.php
+*/
+global $dc_options_array;
+$dc_options_array = dc_load_options();
+var_dump($dc_options_array);
+
+
+/*
 // turn on extra Wordpress goodies
 */
 add_theme_support( 'post-formats', array( 'video','status','quote','status','aside' ) );
@@ -27,16 +35,21 @@ add_image_size( 'dc_huge', 960, 540, true ); // 960 x 540, hard crop mode
 // load up our external scripts
 */
 function dc_loadScripts() {
-    
-	global $dc_options;
-    
+        
 	if (!is_admin()) {  
         
         // start with the basics
+        /*
         dc_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js' );
         dc_enqueue_script( 'jqueryui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') );
         dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
-
+        */
+        dc_enqueue_script( 'jquery', '/resources/jquery-1.9.1.min.js' );
+        dc_enqueue_script( 'jqueryui', '/resources/ui/jquery-ui.js', array('jquery') );
+        dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
+        
+        
+        
         if( dc_option('jqueryui_theme') ) dc_enqueue_style('jqueryui_style', dc_option('jqueryui_theme') );
         
         // load up any custom scripts from the theme options
@@ -55,7 +68,8 @@ add_action('init', 'dc_loadScripts');
 */
 function enqueue_ace(){
     c('enqueue_ace()');
-    dc_enqueue_script( 'ace', '//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js' );
+    //dc_enqueue_script( 'ace', '//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js' );
+    dc_enqueue_script( 'ace', '/resources/ace-builds-master/src-min-noconflict/ace.js' );
 }
 
 ?>
