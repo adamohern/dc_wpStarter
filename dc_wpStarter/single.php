@@ -2,7 +2,7 @@
 
 c('Begin single.php',2);
 
-dc_auxSidebar('Banner_All');
+dc_sidebar('Banner_All');
 
 c('Begin The Loop (single.php)',2);
 

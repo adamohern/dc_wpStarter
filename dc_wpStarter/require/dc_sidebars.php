@@ -6,28 +6,8 @@ function dc_is_active_sidebar( $index ) {
 	return false;
 }
 
-function dc_auxSidebar($sidebarHandle) {
-    c("dc_is_active_sidebar($sidebarHandle)? ...");
-	if (dc_is_active_sidebar($sidebarHandle)) {
-        c("... Yes.",1);
-		c("Begin sidebar dc_auxSidebar('$sidebarHandle') (functions.php)",2);
-		
-		e('<div id="'.$sidebarHandle.'" class="clearfix">');
-		
-		if (!dynamic_sidebar($sidebarHandle)) c('dynamic sidebar empty',1);
-		
-		c("/#$sidebarHandle",1);
-		e('</div>'); 
-		
-		c("End sidebar '$sidebarHandle'",3);
-	} 
-	
-	else { 
-		c("... No.",1); 
-	}
-}
 
-function dc_registerSidebar($id,$description) {
+function dc_register_sidebar($id,$description) {
 	register_sidebar(
 		array(
 			'name' => $id,
@@ -41,84 +21,84 @@ function dc_registerSidebar($id,$description) {
 	);
 }
 
-function dc_registerSidebars() {
+function dc_register_sidebars() {
 	
-	if(o('dc_sidebars-Main_Sidebar')) {
-	dc_registerSidebar(
+	if(o('dc-Main_Sidebar')) {
+	dc_register_sidebar(
 		'Main_Sidebar',
 		'This is where the magic happens.'
 	);
 	}
 	
-	if(o('dc_sidebars-Header_Widgets')) {
-	dc_registerSidebar(
+	if(o('dc-Header_Widgets')) {
+	dc_register_sidebar(
 		'Header_Widgets',
 		'Stretches across entire top of page. This can be set to be static, animate on mouse-over, or disappear completely in the DC Config.'
 	);
 	}
 
-    if(o('dc_sidebars-Banner_All')) {
-	dc_registerSidebar(
+    if(o('dc-Banner_All')) {
+	dc_register_sidebar(
 		'Banner_All',
 		'If you want something to appear huge across the top of every post/page/archive on the site (above the content and Main Sidebar), put \'er here.'
 	);
 	}
 
-	if(o('dc_sidebars-Banner_Home')) {
-	dc_registerSidebar(
+	if(o('dc-Banner_Home')) {
+	dc_register_sidebar(
 		'Banner_Home',
 		'If you want something to appear huge across the top of the home page (above the content and Main Sidebar), put \'er here.'
 	);
 	}
 	
-	if(o('dc_sidebars-Banner_Archive')) {
-	dc_registerSidebar(
+	if(o('dc-Banner_Archive')) {
+	dc_register_sidebar(
 		'Banner_Archive',
 		'If you want something to appear huge across the top of an archive page (above the content and Main Sidebar), put \'er here.'
 	);
 	}
 	
-	if(o('dc_sidebars-Footer_Widgets')) {
-	dc_registerSidebar(
+	if(o('dc-Footer_Widgets')) {
+	dc_register_sidebar(
 		'Footer_Widgets',
 		'A place to drop widgets in the site-wide footer.'
 	);
 	}
 	
-	if(o('dc_sidebars-Before_Single')) {
-	dc_registerSidebar(
+	if(o('dc-Before_Single')) {
+	dc_register_sidebar(
 		'Before_Single',
 		'A place to drop widgets above content on single posts.'
 	);
 	}
 	
-	if(o('dc_sidebars-After_Single')) {
-	dc_registerSidebar(
+	if(o('dc-After_Single')) {
+	dc_register_sidebar(
 		'After_Single',
 		'A place to drop widgets below content on single posts.'
 	);
 	}
 	
-	if(o('dc_sidebars-Before_Archive')) {
-	dc_registerSidebar(
+	if(o('dc-Before_Archive')) {
+	dc_register_sidebar(
 		'Before_Archive',
 		'A place to drop widgets above content on lists of posts.'
 	);
 	}
 
-	if(o('dc_sidebars-After_Archive')) {
-	dc_registerSidebar(
+	if(o('dc-After_Archive')) {
+	dc_register_sidebar(
 		'After_Archive',
 		'A place to drop widgets below content on lists of posts.'
 	);
 	}
 	
-	if(o('dc_sidebars-Before_Home')) {
-	dc_registerSidebar(
+	if(o('dc-Before_Home')) {
+	dc_register_sidebar(
 		'Before_Home',
 		'A place to drop widgets above content on the home page.'
 	);
 	}
 }
-add_action( 'widgets_init', 'dc_registerSidebars' );
+add_action( 'widgets_init', 'dc_register_sidebars' );
 ?>

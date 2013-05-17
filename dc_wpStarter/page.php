@@ -4,7 +4,7 @@ get_header();
 
 c('Begin page.php',2);
 
-dc_auxSidebar('Banner_All');
+dc_sidebar('Banner_All');
 
 c('Begin The Loop (page.php)',2);
 

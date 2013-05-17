@@ -248,39 +248,7 @@ $dc_options['js'] -> set('footerJS', array(
 ===========================================*/
 
 
-$dc_options['std'] -> set('sidebars-Header_Widgets', array(
-    'section' => 'sidebars',
-    'title'   => 'Header_Widgets',
-    'desc'    => 'Topmost header on the page, above all content.',
-    'type'    => 'checkbox',
-    'std'     => 1 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('sidebars-Banner_All', array(
-    'section' => 'sidebars',
-    'title'   => 'Banner_All',
-    'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on home, archive, search, post, and page views.',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('sidebars-Banner_Home', array(
-    'section' => 'sidebars',
-    'title'   => 'Banner_Home',
-    'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on is_home().',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('sidebars-Banner_Archive', array(
-    'section' => 'sidebars',
-    'title'   => 'Banner_Archive',
-    'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on is_archive().',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('sidebars-Main_Sidebar', array(
+$dc_options['std'] -> set('dc-Main_Sidebar', array(
     'section' => 'sidebars',
     'title'   => 'Main_Sidebar',
     'desc'    => 'Appears at either left or right of #content.',
@@ -288,7 +256,39 @@ $dc_options['std'] -> set('sidebars-Main_Sidebar', array(
     'std'     => 1 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$dc_options['std'] -> set('sidebars-Footer_Widgets', array(
+$dc_options['std'] -> set('dc-Header_Widgets', array(
+    'section' => 'sidebars',
+    'title'   => 'Header_Widgets',
+    'desc'    => 'Topmost header on the page, above all content.',
+    'type'    => 'checkbox',
+    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
+));
+
+$dc_options['std'] -> set('dc-Banner_All', array(
+    'section' => 'sidebars',
+    'title'   => 'Banner_All',
+    'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on home, archive, search, post, and page views.',
+    'type'    => 'checkbox',
+    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
+));
+
+$dc_options['std'] -> set('dc-Banner_Home', array(
+    'section' => 'sidebars',
+    'title'   => 'Banner_Home',
+    'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on is_home().',
+    'type'    => 'checkbox',
+    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
+));
+
+$dc_options['std'] -> set('dc-Banner_Archive', array(
+    'section' => 'sidebars',
+    'title'   => 'Banner_Archive',
+    'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on is_archive().',
+    'type'    => 'checkbox',
+    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
+));
+
+$dc_options['std'] -> set('dc-Footer_Widgets', array(
     'section' => 'sidebars',
     'title'   => 'Footer_Widgets',
     'desc'    => 'Appears at bottom of #content.',
@@ -296,7 +296,7 @@ $dc_options['std'] -> set('sidebars-Footer_Widgets', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));		
 
-$dc_options['std'] -> set('sidebars-Before_Single', array(
+$dc_options['std'] -> set('dc-Before_Single', array(
     'section' => 'sidebars',
     'title'   => 'Before_Single',
     'desc'    => 'Appears at top of #content on is_single().',
@@ -304,7 +304,7 @@ $dc_options['std'] -> set('sidebars-Before_Single', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$dc_options['std'] -> set('sidebars-After_Single', array(
+$dc_options['std'] -> set('dc-After_Single', array(
     'section' => 'sidebars',
     'title'   => 'After_Single',
     'desc'    => 'Appears at bottom of #content on is_single().',
@@ -312,7 +312,7 @@ $dc_options['std'] -> set('sidebars-After_Single', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$dc_options['std'] -> set('sidebars-Before_Archive', array(
+$dc_options['std'] -> set('dc-Before_Archive', array(
     'section' => 'sidebars',
     'title'   => 'Before_Archive',
     'desc'    => 'Appears at top of #content on is_archive().',
@@ -320,7 +320,7 @@ $dc_options['std'] -> set('sidebars-Before_Archive', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$dc_options['std'] -> set('sidebars-After_Archive', array(
+$dc_options['std'] -> set('dc-After_Archive', array(
     'section' => 'sidebars',
     'title'   => 'After_Archive',
     'desc'    => 'Appears at bottom of #content on is_archive().',
@@ -328,7 +328,7 @@ $dc_options['std'] -> set('sidebars-After_Archive', array(
     'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 ));
 
-$dc_options['std'] -> set('sidebars-Before_Home', array(
+$dc_options['std'] -> set('dc-Before_Home', array(
     'section' => 'sidebars',
     'title'   => 'Before_Home',
     'desc'    => 'Appears at top of #content on is_home().',

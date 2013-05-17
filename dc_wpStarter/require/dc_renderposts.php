@@ -177,8 +177,8 @@ function dc_sidebar($args){
 
 	if (dc_is_active_sidebar($handle)) {
         $x .= c("... Yes.",1,true);
-		$x .= c("Begin sidebar dc_auxSidebar('$handle')",2,true);
-		$x .= '<div id="'.$handle.'" class="clearfix">'."\n";
+		$x .= c("Begin sidebar dc_sidebar('$handle')",2,true);
+		$x .= '<div id="'.$handle.'" class="dc_sidebar clearfix">'."\n";
 		$x .= dc_get_dynamic_sidebar($handle);
 		$x .= "\n".'</div><!--/#'.$handle.'-->'."\n";
         $x .= c("/#$handle",1,true);

@@ -3,8 +3,8 @@
 get_header();
 
 c('Begin search.php',2);
-dc_auxSidebar('Banner_All');
-dc_auxSidebar('Before_Archive');
+dc_sidebar('Banner_All');
+dc_sidebar('Before_Archive');
 
 $allsearch = &new WP_Query("s=$s&showposts=-1"); 
 $key = wp_specialchars($s, 1); 
@@ -39,7 +39,7 @@ c('End The Loop',3);
 
 dc_postNav();
 
-dc_auxSidebar('After_Archive');
+dc_sidebar('After_Archive');
 
 c('End search.php',3);
 

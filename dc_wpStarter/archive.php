@@ -4,9 +4,9 @@ get_header();
 
 c('Begin archive.php',2);
 
-dc_auxSidebar('Banner_All');
+dc_sidebar('Banner_All');
 
-if(is_home()) {dc_auxSidebar('Before_Home');} else if(is_archive()) {dc_auxSidebar('Before_Archive');}
+if(is_home()) {dc_sidebar('Before_Home');} else if(is_archive()) {dc_sidebar('Before_Archive');}
 
 	$post = $posts[0]; // Hack. Set $post so that the_date() works.
 	
@@ -67,7 +67,7 @@ c('End The Loop',3);
 
 dc_postNav();
 
-dc_auxSidebar('After_Archive');
+dc_sidebar('After_Archive');
 
 c('End archive.php',3);
 get_footer(); 

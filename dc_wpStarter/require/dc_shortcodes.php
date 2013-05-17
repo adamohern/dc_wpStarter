@@ -1,76 +1,72 @@
 <?php 
 
-// Shortcodes
-//---------------------------------
-
-function sc_downloads($atts){
+// creates a list of downloads from CSV URLs
+function dc_downloads($atts){
     
-    $classes = $atts[classes];
-    $classes = explode(',',$classes);
-	array_walk($classes,'trim_value');
-    foreach($classes as $class){ $classesString .=' '.$class; }
+    if(isset($atts['classes'])) $classes = implode(' ',dc_commasToArray($atts['classes']));
     
-    $id = $atts[id];
-    if($id) $id = ' id="'.$id.'"';
+    if(isset($atts['id'])) $id = ' id="'.$atts['id'].'"'; 
     
-    $title = $atts[title];
-    if($title) $title = $title; else $title = "downloads";
+    if(isset($atts['title'])) $title = $atts['title'];
+    else $title = "downloads";
     
-    $caption = $atts[caption];
+    if(isset($atts['caption'])) $caption = $atts['caption'];
     
-    $urls = $atts[urls];
-	$urls = explode(',',$urls);
-	array_walk($urls,'trim_value');
+    if(isset($atts['urls'])) $urls = dc_commasToArray($atts['urls']);
     
-    $html = "\n".'<div class="downloads'.$classesString.'"'.$id.'>';
-    if($title) $html .= "\n".'<h3 class="title">'.$title.'</h3>';
-    if($caption) $html .= "\n".'<p class="caption">'.$caption.'</p>';
+    $html = br(3,1).'<div class="downloads'.$classes.'"'.$id.'>'.br(0,1);
+    if($title) $html .= '<h3 class="title">'.$title.'</h3>'.br(0,1);
+    if($caption) $html .= '<p class="caption">'.$caption.'</p>'.br(0,1);
     if($urls){
-        $html .= "\n".'<ul>';
+        $html .= '<ul>';
         foreach($urls as $url){
-            $html .= "\n".'<li><a href="'.$url.'">'.basename($url).'</a></li>';
+            $html .= '<li><a href="'.$url.'">'.basename($url).'</a></li>'.br(0,1);
         }
-        $html .= "\n".'</ul>';
+        $html .= '</ul>';
+    } else {
+    	$html .= c('no URLs provided',1,1);
     }
-    $html .= "\n".'</div>';
+    $html .= '</div>'.br(3,1);
     
     return $html;
 }
-add_shortcode('downloads','sc_downloads');
+add_shortcode('downloads','dc_downloads');
 
-function sc_totalDuration($atts,$content=null){
-    $tags = $atts[tags];
-    return '<span class="duration">'.dc_totalDuration($tags).'</span>';
-}
-add_shortcode('totalDuration','sc_totalDuration');
 
-function sc_count($atts,$content=null){
+
+
+// counts the number of posts with a given set of tags
+function dc_count_shortcode($atts,$content=null){
     $tags = $atts[tags];
     return '<span class="count">'.dc_count($tags).'</span>';
 }
-add_shortcode('count','sc_count');
+add_shortcode('count','dc_count_shortcode');
 
-function sc_j_img($atts,$content=null) {
+
+
+
+// renders a properly formatted shadowbox image link
+function dc_j_img($atts,$content=null) {
     $s = '<a href="'.$content.'" rel="shadowbox"><img class="thumbnail" src="'.$content.'" /></a>';
     return $s;
 } 
-add_shortcode('img', 'sc_j_img');
+add_shortcode('img', 'dc_j_img');
 
-function sc_j_file($atts,$content=null) {
+
+
+
+// renders a properly formatted shadowbox file link
+function dc_j_file($atts,$content=null) {
 	$s = '<a href="'.$content.'">'.basename($content).'</a>';
 	return $s;
 }
-add_shortcode('file', 'sc_j_file');
+add_shortcode('file', 'dc_j_file');
 
-function sc_listByTag($atts) {
-	$tags = $atts[tags];
-	$tagArray = explode(',',$tags);
-	array_walk($tagArray,'trim_value');
-	return dc_postsList($tagArray,'post_tag',o('dc_postListCode'));
-}
-add_shortcode('listByTag', 'sc_listByTag');
 
-function sc_toggle($atts,$content=null) {
+
+
+// renders a properly formatted jquery UI toggle
+function dc_toggle($atts,$content=null) {
 	$title = $atts[title];
 	
 	if(!$title) $title = 'click to expand';
@@ -78,74 +74,33 @@ function sc_toggle($atts,$content=null) {
 	
 	return "<div class='toggle title'>$title</div><div class='peekaboo' style='display:none;'>$content</div>";
 }
-add_shortcode('toggle', 'sc_toggle');
+add_shortcode('toggle', 'dc_toggle');
 
-function sc_camera($atts) {
-	$urls = $atts[urls];
-	$urlArray = explode(',',$urls);
-	array_walk($urlArray,'trim_value');
-	
-	$datafx = $atts[datafx];
-	if(!$datafx) $datafx = 'curtainSliceRight';
-	
-	if(is_array($urlArray)){
-		$html = '<div class="camera">'."\n";
-		foreach($urlArray as $url){
-			$html .= "<div data-src=\"$url\" data-fx=\"$datafx\"></div>\n";
-		}
-		$html .= '</div>'."\n";
-		
-	} else {
-		$html = c('no image URLs provided for Pixedelic Camera',0,true);
-	}
-	return $html;
-}
-add_shortcode('camera', 'sc_camera');
 
-function sc_accordion($atts,$content){
+
+
+// renders a properly formatted jquery UI accordion
+function dc_accordion($atts,$content){
 	$content = wpautop(trim($content));
 	return force_balance_tags("<div class=\"accordion\">$content</div>");
 }
-add_shortcode('accordion', 'sc_accordion');
+add_shortcode('accordion', 'dc_accordion');
 
-function sc_tabs($atts,$content){
+
+
+
+// renders properly formatted jquery UI tabs
+function dc_tabs($atts,$content){
 	$content = wpautop(trim($content));
 	return force_balance_tags("<div class=\"tabs\">$content</div>");
 }
-add_shortcode('tabs', 'sc_tabs');
+add_shortcode('tabs', 'dc_tabs');
 
-function sc_listByTag2($atts) {
-	if($atts[tags]) 			$tags = $atts[tags];
-	if($atts[categories]) 		$categories = $atts[categories];
-	if($atts[title]) 			$title = $atts[title];
-	if($atts[caption]) 			$caption = $atts[caption];
-	if($atts[thumburl]) 		$thumburl = $atts[thumburl];
-	
-	if($atts[order]) 			$order = $atts[order];
-	else						$order = 'asc';
-	
-	if($atts[maxposts]) 		$maxposts = $atts[maxposts];
-	else						$maxposts = 999;
-	
-	if($atts[workinprogress]) 	$workinprogress = $atts[workinprogress];
-	else						$workinprogress = false;
-	
-	if($atts[closed]) 			$closed = $atts[closed];
-	else						$closed = false;
-	
-	if($atts[displaycode]) 		$displaycode = $atts[displaycode];
-	else						$displaycode = o('dc_postListCode');
-    
-    if($atts[tiles]) 		    $tiles = $atts[tiles];
-	else						$tiles = false;
-    
-    if(!$atts[displaycode] && $tiles) $displaycode = o('dc_postListTileCode');
-	
-	return dc_postsList2 ($tags,$categories,$title,$caption,$thumburl,$order,$maxposts,$workinprogress,$closed,$displaycode,$tiles);
-}
-add_shortcode('listByTag2', 'sc_listByTag2');
 
-function sc_dc_query_posts($atts) {
+
+
+// renders a list of post links based on a custom query
+function dc_query_posts_shortcode($atts) {
     if(!$atts[showtitles])     	$atts[showtitles] = true;	
     if(!$atts[order]) 			$atts[order] = 'asc';
 	if(!$atts[maxposts])        $atts[maxposts] = 12;
@@ -155,7 +110,9 @@ function sc_dc_query_posts($atts) {
 	
 	return dc_query_posts ($atts);
 }
-add_shortcode('dc_query_posts', 'sc_dc_query_posts');
+add_shortcode('dc_query_posts', 'dc_query_posts_shortcode');
+
+
 
 
 // Whitelist for comment shortcodes
@@ -181,8 +138,8 @@ function dc_restore_all_shortcodes() {
 
 // Then we initiate the shortcodes we want to whitelist for commenters.
 function dc_shortcodes_whitelist() {
-	add_shortcode('img', 'sc_j_img');
-	add_shortcode('file', 'sc_j_file');
+	add_shortcode('img', 'dc_j_img');
+	add_shortcode('file', 'dc_j_file');
 }
 
 function init_comment_shortcodes() {

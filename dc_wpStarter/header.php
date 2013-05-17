@@ -30,7 +30,7 @@ br();
 c('if present, o(\'indexSEODescription\'), else get_the_excerpt())',1);
 
 if(is_archive()||is_front_page()) { 
-    $description = (strip_tags(o('indexSEODescription'))); $descriptionType = 'dc_indexSEODescription'; 
+    $description = (strip_tags(o('indexSEODescription'))); $descriptionType = 'o(indexSEODescription)'; 
 } else { 
     $description = strip_tags(get_the_excerpt()); $descriptionType = 'get_the_excerpt()'; 
 } 
@@ -43,24 +43,16 @@ e('<meta name="DC.subject" content="'.$description.'" />');
 
 br();
 
-$dc_authorName = o('authorName');
-
 c('o(\'authorName\')',1); 
-e('<meta content="'.$dc_authorName.'" />'); 
+e('<meta content="'.o('authorName').'" />'); 
 
 c('o(\'authorName\').\' \'.date(\'Y\')',1); 
-e('<meta name="Copyright" content="Copyright '.$dc_authorName.' '.date('Y').'. All rights reserved." />'); 
+e('<meta name="Copyright" content="Copyright '.o('authorName').' '.date('Y').'. All rights reserved." />'); 
 
 br();
 
 c('static code',1); 
-e('<meta name="DC.creator" content="destructive-creative" />');
-
-$googleVerification = o('googleVerification');
-if($googleVerification) c('dc_googleVerification:');echo ($googleVerification)."\n"; 
-
-$googleAnalytics = o('googleAnalytics');
-if($googleAnalytics) c('dc_googleAnalytics');echo($googleAnalytics); 
+e('<meta name="DC.creator" content="destructive-creative.com" />');
 
 br(3);
 
@@ -75,7 +67,10 @@ e('<link href="'.get_bloginfo('stylesheet_url').'" rel="stylesheet" />');
 
 br(3);
 
-include 'style_header.php';
+e("apply_filters('dc_cssOverrides',o('cssOverrides'))",1);
+e('<style type="text/css">');
+e(apply_filters('dc_cssOverrides',o('cssOverrides')));
+e('</style>');
 
 br(3);
 
@@ -96,54 +91,37 @@ c('End wp_head()');
 
 br(3);
 
-c('o(\'customJS\')',1);
-e('<script type="text/javascript">'."\n".o('customJS')."\n".'</script>');
+e('<script type="text/javascript">');
+c("apply_filters('dc_customJS',o('customJS'))",1);
+e(apply_filters('dc_customJS',o('customJS')));
+e('</script>');
 
 e("</head>");
 
 br(3);
 
-c('get_body_class() wordpress function',1);
+c("class = implode(' ',get_body_class(o('titleSlug')))",1);
 e('<body class="'.implode(' ',get_body_class(o('titleSlug'))).'">');
 
 c('static code',1);
 e('<div id="everything">');
 
-$dc_headerSidebar = o('headerSidebar');
-if ($dc_headerSidebar!='hidden' && o('sidebars-Header_Widgets')) { 
-    
-    br(3);
-    
-	c('$dc_headerSidebar!=\'hidden\' && o(\'sidebars-Header_Widgets\') tested true',1);
-	c('Begin dc_headerSidebar',1);
-	
-	if (dc_is_active_sidebar('Header_Widgets')) {
-		c('dc_is_active_sidebar(\'Header_Widgets\') tested true',1);
-		
-		if($dc_headerSidebar=='animate') $class = 'class="animate"';
-		echo "<header id=\"headerWrap\"$class>\n".'<div id="headerContent" class="h-lists clearfix">';
-		
-		c('Begin dynamic_sidebar(\'Header_Widgets\')',1);
-		if (function_exists('dynamic_sidebar') && dynamic_sidebar('Header_Widgets')) {}
-		
-		echo '</div>'; c('/#headerContent');
-		echo '</header>';
-	} else { 
-		c('Add widgets to activate header'); 
-	}
-    
-	br(3);
-} 
 
+e('<header id="headerWrap" class="clearfix">');
+	c("dynamic_sidebar('Header_Widgets')",1);
+	dc_sidebar('Header_Widgets');
+e('</header>');
+
+    
 echo '<div id="dc-page-wrap" class="clearfix">'; br();
  
 if(is_home()){ 
     
-    c('Begin dc_auxSidebar(\'Banner_Home\')',1); dc_auxSidebar('Banner_Home'); 
+    c('Begin dc_sidebar(\'Banner_Home\')',1); dc_sidebar('Banner_Home'); 
     
 } else if(is_archive()){ 
     
-    c('Begin dc_auxSidebar(\'Banner_Archive\')',1); dc_auxSidebar('Banner_Archive'); 
+    c('Begin dc_sidebar(\'Banner_Archive\')',1); dc_sidebar('Banner_Archive'); 
     
 } 
 

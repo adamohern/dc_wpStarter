@@ -4,15 +4,15 @@ get_header();
 
 c('Begin index.php',2);
 
-dc_auxSidebar('Banner_All');
+dc_sidebar('Banner_All');
 
 if(is_home()) {
     
-    dc_auxSidebar('Before_Home');
+    dc_sidebar('Before_Home');
     
 } else if(is_archive()) {
     
-    dc_auxSidebar('Before_Archive');
+    dc_sidebar('Before_Archive');
 
 }
 
@@ -37,7 +37,7 @@ c('End The Loop',3);
 
 dc_postNav();
 
-dc_auxSidebar('After_Archive');
+dc_sidebar('After_Archive');
     
 c('End index.php',3);
 
