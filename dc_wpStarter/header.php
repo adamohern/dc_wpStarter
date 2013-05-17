@@ -4,7 +4,7 @@
 e("<!DOCTYPE html>\n");
 
 // c($comment,$mode) defined in require/dc_utilities.php
-c('dc_option(\'debugMode\') is enabled. Enjoy.',1);
+c('o(\'debugMode\') is enabled. Enjoy.',1);
 c('Begin header.php',2); 
 
 c('static code',1);
@@ -27,10 +27,10 @@ e('<meta name="DC.title" content="'.$title.'" />');
 
 br();
 
-c('if present, dc_option(\'indexSEODescription\'), else get_the_excerpt())',1);
+c('if present, o(\'indexSEODescription\'), else get_the_excerpt())',1);
 
 if(is_archive()||is_front_page()) { 
-    $description = (strip_tags(dc_option('indexSEODescription'))); $descriptionType = 'dc_indexSEODescription'; 
+    $description = (strip_tags(o('indexSEODescription'))); $descriptionType = 'dc_indexSEODescription'; 
 } else { 
     $description = strip_tags(get_the_excerpt()); $descriptionType = 'get_the_excerpt()'; 
 } 
@@ -43,12 +43,12 @@ e('<meta name="DC.subject" content="'.$description.'" />');
 
 br();
 
-$dc_authorName = dc_option('authorName');
+$dc_authorName = o('authorName');
 
-c('dc_option(\'authorName\')',1); 
+c('o(\'authorName\')',1); 
 e('<meta content="'.$dc_authorName.'" />'); 
 
-c('dc_option(\'authorName\').\' \'.date(\'Y\')',1); 
+c('o(\'authorName\').\' \'.date(\'Y\')',1); 
 e('<meta name="Copyright" content="Copyright '.$dc_authorName.' '.date('Y').'. All rights reserved." />'); 
 
 br();
@@ -56,21 +56,21 @@ br();
 c('static code',1); 
 e('<meta name="DC.creator" content="destructive-creative" />');
 
-$googleVerification = dc_option('googleVerification');
+$googleVerification = o('googleVerification');
 if($googleVerification) c('dc_googleVerification:');echo ($googleVerification)."\n"; 
 
-$googleAnalytics = dc_option('googleAnalytics');
+$googleAnalytics = o('googleAnalytics');
 if($googleAnalytics) c('dc_googleAnalytics');echo($googleAnalytics); 
 
 br(3);
 
-c('traditional 16x16 favicon - dc_option(\'favicon\')',1);
-e('<link href="'.dc_option('favicon').'" rel="shortcut icon" />');
+c('traditional 16x16 favicon - o(\'favicon\')',1);
+e('<link href="'.o('favicon').'" rel="shortcut icon" />');
 
-c('iOS\'s Web Clip, 114x114, name it \'apple-touch-icon-precomposed.png\', no transparency - dc_option(\'appleicon\')',1);
-e('<link href="'.dc_option('appleicon').'" rel="apple-touch-icon" />');
+c('iOS\'s Web Clip, 114x114, name it \'apple-touch-icon-precomposed.png\', no transparency - o(\'appleicon\')',1);
+e('<link href="'.o('appleicon').'" rel="apple-touch-icon" />');
 
-c('CSS: screen, mobile & print are all in the same file - dc_option(\'stylesheet_url\')',1);
+c('CSS: screen, mobile & print are all in the same file - o(\'stylesheet_url\')',1);
 e('<link href="'.get_bloginfo('stylesheet_url').'" rel="stylesheet" />');
 
 br(3);
@@ -96,25 +96,25 @@ c('End wp_head()');
 
 br(3);
 
-c('dc_option(\'customJS\')',1);
-e('<script type="text/javascript">'."\n".dc_option('customJS')."\n".'</script>');
+c('o(\'customJS\')',1);
+e('<script type="text/javascript">'."\n".o('customJS')."\n".'</script>');
 
 e("</head>");
 
 br(3);
 
 c('get_body_class() wordpress function',1);
-e('<body class="'.implode(' ',get_body_class(dc_option('titleSlug'))).'">');
+e('<body class="'.implode(' ',get_body_class(o('titleSlug'))).'">');
 
 c('static code',1);
 e('<div id="everything">');
 
-$dc_headerSidebar = dc_option('headerSidebar');
-if ($dc_headerSidebar!='hidden' && dc_option('sidebars-Header_Widgets')) { 
+$dc_headerSidebar = o('headerSidebar');
+if ($dc_headerSidebar!='hidden' && o('sidebars-Header_Widgets')) { 
     
     br(3);
     
-	c('$dc_headerSidebar!=\'hidden\' && dc_option(\'sidebars-Header_Widgets\') tested true',1);
+	c('$dc_headerSidebar!=\'hidden\' && o(\'sidebars-Header_Widgets\') tested true',1);
 	c('Begin dc_headerSidebar',1);
 	
 	if (dc_is_active_sidebar('Header_Widgets')) {
@@ -162,11 +162,11 @@ if($fullWidth) $class.=' fullWidth';
 e('<div id="dc-content" class="'.$class.'">');
 e('<div id="contentBody">');
 
-$dc_noscriptMessage = dc_option('noscriptMessage');
+$dc_noscriptMessage = o('noscriptMessage');
 
 if($dc_noscriptMessage) {
     
-    c('dc_option(\'noscriptMessage\') tested true',1);
+    c('o(\'noscriptMessage\') tested true',1);
     e('<noscript><div id="noscriptMessage" class="alert"><h2>Javascript disabled.</h2><p>'.$dc_noscriptMessage.'</p></div></noscript>');
     
 }

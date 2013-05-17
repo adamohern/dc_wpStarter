@@ -1,14 +1,13 @@
 <?php 
 
 c('Begin style_header.php',2);
-global $dc_options;
 
 ?>
 
 
 <STYLE type="text/css">
 
-<?php echo $dc_options['cssOverrides']; ?>
+<?php echo o('cssOverrides'); ?>
 
 </STYLE>
 

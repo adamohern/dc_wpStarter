@@ -18,7 +18,7 @@ if (have_posts()) {
 		
 		e('<article '.get_post_class('clearfix').' id="post-'.get_the_ID().'">');
 		
-        if(dc_option('pageTitles') && !$hideTitle) { e('<h1 class="entry-title">'.get_the_title().'</h1>'); }
+        if(o('pageTitles') && !$hideTitle) { e('<h1 class="entry-title">'.get_the_title().'</h1>'); }
         
         br();
 		

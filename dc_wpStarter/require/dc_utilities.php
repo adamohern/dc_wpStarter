@@ -2,23 +2,27 @@
 
 // loads all theme options into a single array
 function dc_load_options(){
-    global $dc_options;
-    $dc_load_options = array();
+
+    global $dc_options, $dc_options_array;
+    
+    $dc_options_array = array();
+    
     foreach($dc_options as $key => $object){
-        $dc_load_options .= $object->get_all();
+        $dc_options_array = array_merge($dc_options_array,$object->get_all());
     }
-    return $dc_load_options;
+
 }
 
 
+
+
+
 // return a theme option by handle
-function dc_option($handle){
-    global $dc_options;
-    
-    $std = $dc_options['std']->get($handle);
-,,,,,,,    if($std) { return $std; }
-    
-    return false;
+function o($handle){
+
+    global $dc_options_array;
+    return $dc_options_array[$handle];
+
 }
 
 
@@ -49,7 +53,7 @@ function dc_enqueue_script( $handle, $src, $deps='', $ver='', $in_footer='' ){
 
 
 // safely load stylesheets into WP
-function dc_enqueue_style( $handle, $src, $deps, $ver, $media ){
+function dc_enqueue_style( $handle, $src, $deps='', $ver='', $media='' ){
         wp_deregister_style( $handle );  
 		wp_register_style( $handle, $src, $deps, $ver, $media );  
 		wp_enqueue_style( $handle );  
@@ -108,100 +112,6 @@ function dc_count($tags){
     } else {}
     
 	return $count;	
-}
-
-
-
-
-
-
-// gets human-readable duration based on number of seconds in custom field
-function dc_get_duration($disp=2,$before='',$after='') {
-    if(get_post_meta( get_the_ID(), 'duration', true )){
-        $duration = get_post_meta( get_the_ID(), 'duration', true );
-        if($disp==1){
-            $duration = $duration;
-        } else if($disp==2){
-            $duration = secondsToMS($duration);
-        } else if($disp==3){
-            $duration = secondsToHMS($duration);
-        }
-        return c('get_post_meta "duration" for post id "'.$id.'" (dc_renderposts.php)',0,1).$before.$duration.$after;
-    } else { return c('get_post_meta "duration" for post id "'.$id.'" returned nothing (dc_renderposts.php)',0,1); }
-}
-
-
-
-
-
-
-// gets total duration for a set of comma-separated tags
-function dc_totalDuration($tags){
-    
-	$tags = explode(',',$tags);
-	array_walk($tags,'trim_value');
-	
-    foreach ($tags as $key => $tag) {
-        $term = term_exists($tag,'post_tag');
-        if ($term == 0 || $term == null) {
-            unset ($tags[$key]);
-        }
-    }
-    
-    if($tags){
-    	$myquery['tax_query'] = array(
-    		'relation' => 'AND'
-    	);
-    
-    	foreach($tags as $tag) {
-    	$myquery['tax_query'][] =
-    		array(
-    			'taxonomy' => 'post_tag',
-    			'terms' => $tag,
-    			'field' => 'slug'
-    		);
-    	}
-    
-    	$myquery['posts_per_page'] = 99999;
-    	query_posts($myquery);
-        
-        $totalDuration = 0;
-        while (have_posts()) : the_post();
-            if(get_post_meta( get_the_ID(), 'duration', true )) $totalDuration += get_post_meta( get_the_ID(), 'duration', true );
-    	endwhile;
-    	
-    	wp_reset_query();
-    
-    }
-
-	return secondsToHMS($totalDuration);	
-}
-
-
-
-
-
-
-// converts seconds to human-readable
-function secondsToHMS($duration){
-    $seconds = sprintf("%02d",$duration % 60);
-    $duration = ($duration - $seconds) / 60;
-    $minutes = sprintf("%02d",$duration % 60);
-    $hours = sprintf("%02d",($duration - $minutes) / 60);
-    $duration = "$hours:$minutes:$seconds";
-    
-    return $duration;
-}
-
-function secondsToMS($duration){
-    $seconds = sprintf("%02d",$duration % 60);
-    $duration = ($duration - $seconds) / 60;
-    $minutes = sprintf("%02d",$duration % 60);
-    $hours = sprintf("%02d",($duration - $minutes) / 60);
-    if($hours==0) $duration = "$minutes:$seconds";
-    else $duration = "$hours:$minutes:$seconds";
-    
-    return $duration;
 }
 
 
@@ -419,7 +329,7 @@ function br($n=0) {
 
 function c($comment='',$mode=0,$return=false) {
 
-    if ( dc_option('debugMode') == 1 ) {
+    if ( o('debugMode') == 1 ) {
         $source = debug_backtrace();
         $comment = basename( $source[0]['file'] ).' line '.$source[0]['line'].': '.$comment;
         

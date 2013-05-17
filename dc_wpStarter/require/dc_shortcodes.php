@@ -66,7 +66,7 @@ function sc_listByTag($atts) {
 	$tags = $atts[tags];
 	$tagArray = explode(',',$tags);
 	array_walk($tagArray,'trim_value');
-	return dc_postsList($tagArray,'post_tag',dc_option('dc_postListCode'));
+	return dc_postsList($tagArray,'post_tag',o('dc_postListCode'));
 }
 add_shortcode('listByTag', 'sc_listByTag');
 
@@ -134,12 +134,12 @@ function sc_listByTag2($atts) {
 	else						$closed = false;
 	
 	if($atts[displaycode]) 		$displaycode = $atts[displaycode];
-	else						$displaycode = dc_option('dc_postListCode');
+	else						$displaycode = o('dc_postListCode');
     
     if($atts[tiles]) 		    $tiles = $atts[tiles];
 	else						$tiles = false;
     
-    if(!$atts[displaycode] && $tiles) $displaycode = dc_option('dc_postListTileCode');
+    if(!$atts[displaycode] && $tiles) $displaycode = o('dc_postListTileCode');
 	
 	return dc_postsList2 ($tags,$categories,$title,$caption,$thumburl,$order,$maxposts,$workinprogress,$closed,$displaycode,$tiles);
 }

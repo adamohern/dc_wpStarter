@@ -320,8 +320,8 @@ function dc_postsList2 (
         
         if($tiles) $html .= c('tiles=true',0,1);
     	else $html .= c('tiles=false',0,1);
-    	if(!$displaycode && !$tiles) $displaycode = dc_option('dc_postListCode');
-        else if(!$displaycode) $displaycode = dc_option('dc_postListTileCode');
+    	if(!$displaycode && !$tiles) $displaycode = o('dc_postListCode');
+        else if(!$displaycode) $displaycode = o('dc_postListTileCode');
     	$displaycode = '$postsList .= '.$displaycode.';';
     
     	$myquery['tax_query'] = array(

@@ -6,14 +6,14 @@ e('<ul id="copyright_etc">');
 e('<li><small>&copy;'.date("Y").' '.get_bloginfo('name').'</small></li>');
 e('</ul>');
 
-if (dc_option('sidebars-Footer_Widgets')) {
+if (o('sidebars-Footer_Widgets')) {
 c('Begin footer widgets',2);
 if (function_exists('dynamic_sidebar') && dynamic_sidebar('Footer_Widgets')) {} else {};
 c('End footer widgets',3);
 }
 
-c('dc_option(\'customJS_footer\')');
-e('<script type="text/javascript">'."\n".dc_option('customJS_footer')."\n".'</script>');
+c('o(\'customJS_footer\')');
+e('<script type="text/javascript">'."\n".o('customJS_footer')."\n".'</script>');
 
 e('</footer>');
 e('</div>'.c('/contentBody',0,true));

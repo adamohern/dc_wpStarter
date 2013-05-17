@@ -31,12 +31,9 @@ class dc_theme_options {
         
 		add_action( 'admin_menu', array( &$this, 'add_pages' ) );
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
+		add_action( 'after_setup_theme', array( &$this, 'initialize_settings' ) );
+		
         $this -> add_section('Reset "'.$this->pageTitle.'" to Defaults','reset');
-        
-        // loads the Ace js code editor
-		add_action('admin_enqueue_scripts','enqueue_ace');
-        				
-		if (!get_option($this->handle)) { $this->initialize_settings(); }
 
 	}
     
@@ -47,7 +44,13 @@ class dc_theme_options {
     */
 	public function add_pages() {
         
-		$admin_page = add_theme_page( $this->pageTitle, $this->menuTitle, 'manage_options', $this->handle, array( &$this, 'display_page' ) );
+		$admin_page = add_theme_page( 
+			$this->pageTitle, 
+			$this->menuTitle, 
+			'manage_options', 
+			$this->handle, 
+			array( &$this, 'display_page' ) 
+		);
 		
 		add_action( 'admin_print_scripts-' . $admin_page, array( &$this, 'scripts' ) );
 		add_action( 'admin_print_styles-' . $admin_page, array( &$this, 'styles' ) );
@@ -84,14 +87,19 @@ class dc_theme_options {
     // initialize settings to their default values
     */
 	public function initialize_settings() {
-		        
-		$default_settings = array();
-		foreach ( $this->settings as $id => $setting ) {
-			if ( $setting['type'] != 'heading' )
-				$default_settings[$id] = $setting['std'];
-		}
+	
+		if (!get_option($this->handle)) { 
 		
-		update_option( $this->handle, $default_settings );
+			$default_settings = array();
+			
+			foreach ( $this->settings as $id => $setting ) {
+				if ( $setting['type'] != 'heading' )
+					$default_settings[$id] = $setting['std'];
+			}
+		
+			update_option( $this->handle, $default_settings );
+			
+		}
 		
 	}
     
@@ -392,10 +400,8 @@ class dc_theme_options {
     // method for snatching options out of RAM (quicker than a mySQL lookup)
     */
     public function get($h){
-        if($this->options[$h]) return $this->options[$h];
-        else {
-            return false;
-        }
+        $options = get_option($this->handle);
+        return $options[$h];
     }
 	
     
@@ -403,7 +409,7 @@ class dc_theme_options {
     // method for snatching ALL options out of RAM (quicker than a mySQL lookup)
     */    
     public function get_all() {
-        return $this->options;
+        return get_option($this->handle);
     }
     
     

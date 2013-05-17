@@ -34,77 +34,77 @@ function dc_registerSidebar($id,$description) {
 
 function dc_registerSidebars() {
 	
-	if(dc_option('dc_sidebars-Main_Sidebar')) {
+	if(o('dc_sidebars-Main_Sidebar')) {
 	dc_registerSidebar(
 		'Main_Sidebar',
 		'This is where the magic happens.'
 	);
 	}
 	
-	if(dc_option('dc_sidebars-Header_Widgets')) {
+	if(o('dc_sidebars-Header_Widgets')) {
 	dc_registerSidebar(
 		'Header_Widgets',
 		'Stretches across entire top of page. This can be set to be static, animate on mouse-over, or disappear completely in the DC Config.'
 	);
 	}
 
-    if(dc_option('dc_sidebars-Banner_All')) {
+    if(o('dc_sidebars-Banner_All')) {
 	dc_registerSidebar(
 		'Banner_All',
 		'If you want something to appear huge across the top of every post/page/archive on the site (above the content and Main Sidebar), put \'er here.'
 	);
 	}
 
-	if(dc_option('dc_sidebars-Banner_Home')) {
+	if(o('dc_sidebars-Banner_Home')) {
 	dc_registerSidebar(
 		'Banner_Home',
 		'If you want something to appear huge across the top of the home page (above the content and Main Sidebar), put \'er here.'
 	);
 	}
 	
-	if(dc_option('dc_sidebars-Banner_Archive')) {
+	if(o('dc_sidebars-Banner_Archive')) {
 	dc_registerSidebar(
 		'Banner_Archive',
 		'If you want something to appear huge across the top of an archive page (above the content and Main Sidebar), put \'er here.'
 	);
 	}
 	
-	if(dc_option('dc_sidebars-Footer_Widgets')) {
+	if(o('dc_sidebars-Footer_Widgets')) {
 	dc_registerSidebar(
 		'Footer_Widgets',
 		'A place to drop widgets in the site-wide footer.'
 	);
 	}
 	
-	if(dc_option('dc_sidebars-Before_Single')) {
+	if(o('dc_sidebars-Before_Single')) {
 	dc_registerSidebar(
 		'Before_Single',
 		'A place to drop widgets above content on single posts.'
 	);
 	}
 	
-	if(dc_option('dc_sidebars-After_Single')) {
+	if(o('dc_sidebars-After_Single')) {
 	dc_registerSidebar(
 		'After_Single',
 		'A place to drop widgets below content on single posts.'
 	);
 	}
 	
-	if(dc_option('dc_sidebars-Before_Archive')) {
+	if(o('dc_sidebars-Before_Archive')) {
 	dc_registerSidebar(
 		'Before_Archive',
 		'A place to drop widgets above content on lists of posts.'
 	);
 	}
 
-	if(dc_option('dc_sidebars-After_Archive')) {
+	if(o('dc_sidebars-After_Archive')) {
 	dc_registerSidebar(
 		'After_Archive',
 		'A place to drop widgets below content on lists of posts.'
 	);
 	}
 	
-	if(dc_option('dc_sidebars-Before_Home')) {
+	if(o('dc_sidebars-Before_Home')) {
 	dc_registerSidebar(
 		'Before_Home',
 		'A place to drop widgets above content on the home page.'

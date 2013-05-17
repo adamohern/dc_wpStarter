@@ -14,7 +14,7 @@ e('<h2>404: Page not found.</h2>');
 e('<p>\''.get_bloginfo('wpurl').$_SERVER['REQUEST_URI'].'\'</p>');
 
 c('dc_404Message (theme options)'); 
-e('<p>'.dc_option('404Message').'</p>');
+e('<p>'.o('404Message').'</p>');
 
 get_search_form(); br();
 

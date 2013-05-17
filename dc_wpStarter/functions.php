@@ -1,28 +1,15 @@
 <?php
 
-/* 
-// make sure to show verbose PHP warnings if we're in debug mode 
-*/
-ini_set('display_errors', 'On');
 
-
-/*
 // require all .php files in the 'require' directory
-*/
 foreach(glob(get_stylesheet_directory()."/require/*.php") as $file){ require $file; }
 
 
-/*
-// loads all options into a single global array from require/dc_utilities.php
-*/
-global $dc_options_array;
-$dc_options_array = dc_load_options();
-var_dump($dc_options_array);
+// loads options into a global array, making them accessible form the o() function
+add_action('after_setup_theme','dc_load_options');
 
 
-/*
 // turn on extra Wordpress goodies
-*/
 add_theme_support( 'post-formats', array( 'video','status','quote','status','aside' ) );
 add_theme_support( 'post-thumbnails' );
 add_theme_support( 'automatic-feed-links' );
@@ -31,45 +18,44 @@ add_image_size( 'dc_large', 720, 405, true ); // 720 x 405, hard crop mode
 add_image_size( 'dc_huge', 960, 540, true ); // 960 x 540, hard crop mode
 
 
-/*
 // load up our external scripts
-*/
 function dc_loadScripts() {
         
 	if (!is_admin()) {  
         
         // start with the basics
-        /*
         dc_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js' );
         dc_enqueue_script( 'jqueryui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') );
         dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
-        */
-        dc_enqueue_script( 'jquery', '/resources/jquery-1.9.1.min.js' );
-        dc_enqueue_script( 'jqueryui', '/resources/ui/jquery-ui.js', array('jquery') );
-        dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
+        //dc_enqueue_script( 'jquery', '/resources/jquery-1.9.1.min.js' );
+        //dc_enqueue_script( 'jqueryui', '/resources/ui/jquery-ui.js', array('jquery') );
+        //dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
         
         
-        
-        if( dc_option('jqueryui_theme') ) dc_enqueue_style('jqueryui_style', dc_option('jqueryui_theme') );
+        if( o('jqueryui_theme') ) dc_enqueue_style('jqueryui_style', o('jqueryui_theme') );
         
         // load up any custom scripts from the theme options
-        dc_enqueue_scripts( dc_option('headerJS') );
-        dc_enqueue_scripts( dc_option('footerJS'),true);
+        dc_enqueue_scripts( o('headerJS') );
+        dc_enqueue_scripts( o('footerJS'),true);
         
 	}
 }
 add_action('init', 'dc_loadScripts');
 
 
-
-
-/*
 // only load Ace as needed
-*/
 function enqueue_ace(){
     c('enqueue_ace()');
-    //dc_enqueue_script( 'ace', '//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js' );
-    dc_enqueue_script( 'ace', '/resources/ace-builds-master/src-min-noconflict/ace.js' );
+    dc_enqueue_script( 'ace', '//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js' );
+    //dc_enqueue_script( 'ace', '/resources/ace-builds-master/src-min-noconflict/ace.js' );
 }
+add_action('admin_enqueue_scripts','enqueue_ace');
+
+
+// make sure to show verbose PHP warnings if we're in debug mode 
+function dc_display_errors() {
+	if(o('debugMode')) { c("debug mode enabled: ini_set('display_errors', 'On')",1); ini_set('display_errors', 'On'); }
+}
+add_action('after_setup_theme','dc_display_errors');
 
 ?>

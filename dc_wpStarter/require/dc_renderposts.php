@@ -218,7 +218,7 @@ function dc_articleThumb($is_archive=true) {
 		$dc_options['hasThumb'] = true;
         echo '<div class="thumbnail">'; br();
         if ( has_post_thumbnail() ) { 
-            echo '<a href="'.get_permalink().'">'.get_the_post_thumbnail($page->ID, dc_option('dc_thumbsize_archive')).'</a>'; br();
+            echo '<a href="'.get_permalink().'">'.get_the_post_thumbnail($page->ID, o('dc_thumbsize_archive')).'</a>'; br();
         }
         echo apply_filters('dc_thumbOverlay',$overlay); br();
         echo '</div>'; c('/.thumbnail'); br();
@@ -238,10 +238,10 @@ function dc_articleHeader($h1=false,$longmeta=false) {
 	if($h1) echo '</h1>'; else echo '</h2>'; br();
     echo '<div class="meta">'."\n";
 	if($longmeta) {
-		c('dc_option(\'dc_longMeta\')',1);
+		c('o(\'dc_longMeta\')',1);
 		eval($dc_options['dc_longMeta']);
 	} else {
-		c('dc_option(\'dc_shortMeta\')',1);
+		c('o(\'dc_shortMeta\')',1);
 		eval($dc_options['dc_shortMeta']);
 	}
     echo "\n".'</div>'.c('/.meta',1,true)."\n";
@@ -253,10 +253,10 @@ function dc_articleContent() {
 	if($dc_options['dc_homeListContent']!='none') { 
 		echo '<div class="entry">';
 		if($dc_options['dc_homeListContent']=='content') { 
-			c('dc_option(\'dc_homeListContent\') == content; displaying the_content()',1);
+			c('o(\'dc_homeListContent\') == content; displaying the_content()',1);
 			the_content(); 
 		} else { 
-			c('dc_option(\'dc_homeListContent\') == '.$dc_homeListContent.'; displaying the_excerpt()',1);
+			c('o(\'dc_homeListContent\') == '.$dc_homeListContent.'; displaying the_excerpt()',1);
 			the_excerpt(); 
 		} 
 		echo '</div>'; c('/.entry',1);
@@ -277,7 +277,7 @@ function dc_postNav() {
 }
 
 function dc_authorBio() { 
-	if (dc_option('dc_displayBio')){
+	if (o('dc_displayBio')){
 		if ( get_the_author_meta('description') ) {
 			$authorBio = get_the_author_meta('description');
 			c('Begin dc_authorBio() (dc_renderposts.php)',1);
