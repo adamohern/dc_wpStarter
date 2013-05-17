@@ -185,8 +185,8 @@ function dc_archiveLoop() {
 		}
 		echo '</div>'; c('/.articles',1);
 	} else {
-		c('query produced no posts');
-		echo '<h2>Not Found</h2>';
+		c('query produced no results');
+		echo o('404');
 	}
 	c('End The Loop',3);
 }

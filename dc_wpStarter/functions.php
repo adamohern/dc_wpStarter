@@ -1,5 +1,8 @@
 <?php
 
+// only enable for dev!
+ini_set('display_errors', 'On');
+
 
 // require all .php files in the 'require' directory
 foreach(glob(get_stylesheet_directory()."/require/*.php") as $file){ require $file; }
@@ -24,12 +27,12 @@ function dc_loadScripts() {
 	if (!is_admin()) {  
         
         // start with the basics
-        dc_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js' );
-        dc_enqueue_script( 'jqueryui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') );
-        dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
-        //dc_enqueue_script( 'jquery', '/resources/jquery-1.9.1.min.js' );
-        //dc_enqueue_script( 'jqueryui', '/resources/ui/jquery-ui.js', array('jquery') );
+        //dc_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js' );
+        //dc_enqueue_script( 'jqueryui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') );
         //dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
+        dc_enqueue_script( 'jquery', '/resources/jquery-1.9.1.min.js' );
+        dc_enqueue_script( 'jqueryui', '/resources/ui/jquery-ui.js', array('jquery') );
+        dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
         
         
         if( o('jqueryui_theme') ) dc_enqueue_style('jqueryui_style', o('jqueryui_theme') );
@@ -46,16 +49,10 @@ add_action('init', 'dc_loadScripts');
 // only load Ace as needed
 function enqueue_ace(){
     c('enqueue_ace()');
-    dc_enqueue_script( 'ace', '//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js' );
-    //dc_enqueue_script( 'ace', '/resources/ace-builds-master/src-min-noconflict/ace.js' );
+    //dc_enqueue_script( 'ace', '//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js' );
+    dc_enqueue_script( 'ace', '/resources/ace-builds-master/src-min-noconflict/ace.js' );
 }
 add_action('admin_enqueue_scripts','enqueue_ace');
 
-
-// make sure to show verbose PHP warnings if we're in debug mode 
-function dc_display_errors() {
-	if(o('debugMode')) { c("debug mode enabled: ini_set('display_errors', 'On')",1); ini_set('display_errors', 'On'); }
-}
-add_action('after_setup_theme','dc_display_errors');
 
 ?>

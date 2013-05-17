@@ -1,22 +1,15 @@
 <?php 
 
-// loads all theme options into a single array
-function dc_load_options(){
-
-    global $dc_options, $dc_options_array;
-    
-    $dc_options_array = array();
-    
-    foreach($dc_options as $key => $object){
-        $dc_options_array = array_merge($dc_options_array,$object->get_all());
-    }
-
+// elegant echo
+// short, sweet, adds a newline by default
+function e($string,$newline=1){
+    if($newline) echo $string."\n";
+    else echo $string;
 }
 
 
 
-
-
+// elegant theme option
 // return a theme option by handle
 function o($handle){
 
@@ -27,16 +20,103 @@ function o($handle){
 
 
 
+// elegant newline
+// echoes $n newlines, nice for tidying up output code
+function br($n=0,$return=false){ 
+    $string = '';
+	for($i==1;$i<=$n;$i++){
+		$string .= "\n"; 
+	}
+    if($return) return $string;
+    else echo $string;
+}
+
+
+
+
+// elegant code comments
+
+// mode 0 : <!-- comment -->
+// mode 1 : <!-- comment -->\n
+// mode 2 : [begin code block]
+// mode 3 : [end code block]
+
+function c($comment='',$mode=0,$return=false) {
+
+    if (o('debugMode')) {
+        $source = debug_backtrace();
+        $comment = ' '.basename( $source[0]['file'] ).' line '.$source[0]['line'].': '.$comment.' ';
+        
+        $l = strlen($comment); 
+        if($l%2==0) $d=1;
+        
+        $s = '/';
+        
+        $w[0] = max(100,$l+2);
+        $w[1] = round(($w[0]-$l)/2);
+        $w[2] = round((($w[0]-$l)/2)-1+$d);
+
+        $sr[0] = str_repeat($s,$w[0]);
+        $sr[1] = str_repeat($s,$w[1]);
+        $sr[2] = str_repeat($s,$w[2]);
+        	
+		switch($mode){
+            
+            case 0:
+                $html .= '<!-- '.$comment.' -->';
+                break;
+            
+            case 1:
+                $html .= '<!-- '.$comment.' -->'."\n";
+                break;
+            
+            case 2:
+
+                $html .= br(3,1).'<!-- '.$sr[0].' -->'.br(0,1);
+                $html .= '<!-- '.$sr[1].$comment.$sr[2].' -->'.br(3,1);
+                break;
+            
+            case 3:
+            
+                $html .= br(3,1).'<!-- '.$sr[1].$comment.$sr[2].' -->'.br(0,1);            
+                $html .= '<!-- '.$sr[0].' -->'.br(3,1);
+                break;
+            
+        }
+
+		if ($return) return $html;
+		else echo $html;
+	}
+}
+
+
 
 
 // safely load a linebreak-dilimited list of scripts
 function dc_enqueue_scripts ( $list, $footer=false ){
-    $urls = preg_split ('/$\R?^/m', $list);
-    if( is_array($urls) ) {
+    $urls = dc_array_from_lines($list);
+    if(is_array($urls)) {
         foreach($urls as $url) dc_enqueue_script( basename($url), $url, array(), '', $footer );
     }
 }
 
+
+
+// creates an array from linebreak-delimited strings
+function dc_array_from_lines ($string) {
+    $array = preg_split ('/$\R?^/m', $string);
+    if(is_array($array)) return $array;
+    else return false;
+}
+
+
+
+// converts CSV to array
+function dc_commasToArray($wholeString){
+		if (strpos($wholeString,',')) {$pieces = explode(',',$wholeString); foreach($pieces as &$piece) { $piece = trim($piece); }}
+		else {if($wholeString) { $pieces[] = trim($wholeString); } else { $pieces[] = ''; } }
+		return $pieces;
+}
 
 
 
@@ -46,9 +126,6 @@ function dc_enqueue_script( $handle, $src, $deps='', $ver='', $in_footer='' ){
 		wp_register_script( $handle, $src, $deps, $ver, $in_footer );  
 		wp_enqueue_script( $handle );  
 }
-
-
-
 
 
 
@@ -74,67 +151,24 @@ function dc_get_dynamic_sidebar($handle){
 // counts number of posts with a given set of comma-separated tags
 function dc_count($tags){
     
-	$tags = explode(',',$tags);
-	array_walk($tags,'trim_value');
-	
-    foreach ($tags as $key => $tag) {
-        $term = term_exists($tag,'post_tag');
-        if ($term == 0 || $term == null) {
-            unset ($tags[$key]);
-        }
+    $query = dc_tax_query(dc_commasToArray($tags), 'post_tag', 'AND');
+    query_posts($query);
+    
+    $count = 0;
+    while(have_posts()){
+        the_post(); 
+        $count++;
     }
     
-    if($tags){
-    
-    	$myquery['tax_query'] = array(
-    		'relation' => 'AND'
-    	);
-    
-    	foreach($tags as $tag) {
-    	$myquery['tax_query'][] =
-    		array(
-    			'taxonomy' => 'post_tag',
-    			'terms' => $tag,
-    			'field' => 'slug'
-    		);
-    	}
-    
-    	$myquery['posts_per_page'] = 99999;
-    	query_posts($myquery);
-        
-        $count = 0;
-        while (have_posts()) : the_post(); 
-        $count++;
-        endwhile;
-    	
-    	wp_reset_query();
-    
-    } else {}
-    
+    wp_reset_query();
 	return $count;	
 }
 
 
 
 
-
-
-// useful
-function trim_value(&$string) { $string = trim($string); }
-
-
-
-
-
-
-// converts CSV to array
-function commasToArray($wholeString){
-		if (strpos($wholeString,',')) {$pieces = explode(',',$wholeString); foreach($pieces as &$piece) { $piece = trim($piece); }}
-		else {if($wholeString) { $pieces[] = trim($wholeString); } else { $pieces[] = ''; } }
-		return $pieces;
-}
-
-
+// just plain useful
+function dc_trim(&$string) { $string = trim($string); }
 
 
 
@@ -145,8 +179,6 @@ function dc_get_tag_slug($title) {
 	$slug = $wpdb->get_var("SELECT slug FROM $wpdb->terms WHERE name='$title'");
 	return $slug;
 }
-
-
 
 
 
@@ -166,7 +198,6 @@ function dc_tag_links(){
 
 
 
-
 // generates a link for each category on a given post
 function dc_category_links(){
     $categories = get_the_category();
@@ -178,7 +209,6 @@ function dc_category_links(){
     return $html;
     }
 }
-
 
 
 
@@ -198,11 +228,10 @@ function dc_term_exists_array($array=array(),$taxonomy){
 
 
 
-
 // explodes a CSV string and returns an array containing only valid terms
 function dc_commasToTermArray($csv,$taxonomy){
     if($csv){
-        $array = commasToArray($csv);
+        $array = dc_commasToArray($csv);
         $array = dc_term_exists_array($array,$taxonomy);
         return $array;
     } else {
@@ -213,11 +242,10 @@ function dc_commasToTermArray($csv,$taxonomy){
 
 
 
-
 // explodes a CSV string and returns an array of valid post types (i.e. video etc)
 function dc_commasToTypeArray($csv){
     if($csv){
-        $array = commasToArray($csv);
+        $array = dc_commasToArray($csv);
         foreach($array as $key => $item){
             if(!post_type_exists($item)) unset($array[$key]);
         }
@@ -226,7 +254,6 @@ function dc_commasToTypeArray($csv){
         return null;
     }
 }
-
 
 
 
@@ -253,7 +280,6 @@ function dc_termArrayToLinks($array=array(),$taxonomy){
 
 
 
-
 // for parsing shortcode arguments with wildcards
 function dc_superBoolean($superboolean,$data,$default='*'){
     if($superboolean && $superboolean != 'false' && $superboolean != '0' && $data){
@@ -262,7 +288,6 @@ function dc_superBoolean($superboolean,$data,$default='*'){
         return $result;
     }
 }
-
 
 
 
@@ -294,81 +319,18 @@ function dc_tax_query($terms=array(),$taxonomy,$operator=null){
         return $query;
     }
 }
+            
+            
 
 
-
-
-
-
-// elegant echo (short, sweet, adds a newline by default)
-function e($string,$newline=1){
-    if($newline) echo $string."\n";
-    else echo $string;
+// loads all theme options into a single array
+// hooked to after_setup_theme in functions.php
+function dc_load_options(){
+    global $dc_options, $dc_options_array;
+    $dc_options_array = array();
+    foreach($dc_options as $key => $object){
+        $dc_options_array = array_merge($dc_options_array,$object->get_all());
+    }
 }
-
-
-
-
-
-// elegant newline (echoes $n newlines, nice for tidying up output code)
-function br($n=0) { 
-	for($i==1;$i<=$n;$i++){
-		echo "\n"; 
-	}
-}
-
-
-
-
-
-// HTML comments have three modes:
-// 0 : <!-- comment -->
-// 1 : <!-- comment -->\n
-// 2 : [begin code block]
-// 3 : [end code block]
-
-function c($comment='',$mode=0,$return=false) {
-
-    if ( o('debugMode') == 1 ) {
-        $source = debug_backtrace();
-        $comment = basename( $source[0]['file'] ).' line '.$source[0]['line'].': '.$comment;
-        
-        $l = strlen($comment); 
-        if($l%2==0) $d=1; //even numbered strings need a compensation character
-        $w = 100;
-        $s = '/';
-	
-		if ( $mode == 0 ) 
-		{
-			$html = '<!-- '.$comment.' -->';
-		} else if ( $mode == 1 ) 
-		{
-			$html = '<!-- '.$comment.' -->'."\n";
-		} 
-        else if ( $mode == 2 ) 
-		{
-			$html = "\n\n\n".'<!-- ';
-			for($i=1; $i<$w; $i++) { $html .= $s; }
-			$html .= ' -->'."\n".'<!-- ';
-			for($i=1; $i<($w-$l)/2; $i++) { $html .= $s; }
-			$html .= $comment;
-			for($i=1; $i<($w-$l)/2+$d; $i++) { $html .= $s; }
-			$html .= ' -->'."\n\n\n";
-		}
-		else if ( $mode == 3 ) 
-		{
-			$html = "\n\n\n".'<!-- ';
-			for($i=1; $i<($w-$l)/2; $i++) { $html .= $s; }
-			$html .= $comment;
-			for($i=1; $i<($w-$l)/2+$d; $i++) { $html .= $s; }
-			$html .= ' -->'."\n".'<!-- ';
-			for($i=1; $i<$w; $i++) { $html .= $s; }
-			$html .= ' -->'."\n\n\n";
-		}
-
-		if ($return) return $html;
-		else echo $html;
-	}
-}
-
+            
 ?>

@@ -19,7 +19,7 @@ $dc_options['content'] -> add_section('Common Markup','common');
 $dc_options['content'] -> add_section('Special Markup','special');
 
 
-$instructions = '(add special characters using supported wordpress template tags in [shortcode] form, e.g. [the_date])';
+$instructions = '(add supported wordpress template tags in [shortcode] form (e.g. [the_date]) listing arguments by name (e.g. [the_date format="format=\'M d, Y\'"])';
 
 /* CSS
 ===========================================*/
@@ -55,7 +55,72 @@ $dc_options['css'] -> set('cssOverrides', array(
 
 
 /* Content
-===========================================*/
+===========================================*/           
+
+
+$dc_options['content'] -> set('postFormatIndex', array(
+    'title'   => 'post format for index.php',
+    'desc'    => 'HTML to display index posts<br />'.$instructions,
+    'std'     => htmlspecialchars(
+        
+'<article class="[get_post_class]" id="post-[the_ID]">'."\n".
+"\t".'<div class="entry-content">'."\n".
+"\t\t".'<h1>[the_title]</h1>'."\n".
+"\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t\t".'<p>[the_excerpt]</p>'."\n".
+"\t\t".'[dc_sidebar handle="After_Single"]'."\n".
+"\t".'</div><!--/.entry-content-->'."\n".
+'</article>'."\n\n".
+'[comments_template]'
+        
+    ),
+    'type'    => 'html',
+    'section' => 'common',
+    'class'   => 'code'
+)); 
+
+
+$dc_options['content'] -> set('postFormatArchive', array(
+    'title'   => 'post format for archive.php',
+    'desc'    => 'HTML to display archive posts<br />'.$instructions,
+    'std'     => htmlspecialchars(
+        
+'<article class="[get_post_class]" id="post-[the_ID]">'."\n".
+"\t".'<div class="entry-content">'."\n".
+"\t\t".'<h1>[the_title]</h1>'."\n".
+"\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t\t".'<p>[the_excerpt]</p>'."\n".
+"\t\t".'[dc_sidebar handle="After_Single"]'."\n".
+"\t".'</div><!--/.entry-content-->'."\n".
+'</article>'."\n\n"
+        
+    ),
+    'type'    => 'html',
+    'section' => 'common',
+    'class'   => 'code'
+)); 
+
+
+$dc_options['content'] -> set('postFormatSearch', array(
+    'title'   => 'post format for search.php',
+    'desc'    => 'HTML to display search posts<br />'.$instructions,
+    'std'     => htmlspecialchars(
+        
+'<article class="[get_post_class]" id="post-[the_ID]">'."\n".
+"\t".'<div class="entry-content">'."\n".
+"\t\t".'<h1>[the_title]</h1>'."\n".
+"\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t\t".'<p>[the_excerpt]</p>'."\n".
+"\t\t".'[dc_sidebar handle="After_Single"]'."\n".
+"\t".'</div><!--/.entry-content-->'."\n".
+'</article>'."\n\n"
+        
+    ),
+    'type'    => 'html',
+    'section' => 'common',
+    'class'   => 'code'
+)); 
+                    
 
 $dc_options['content'] -> set('postFormatSingle', array(
     'title'   => 'post format for single.php',
@@ -76,11 +141,49 @@ $dc_options['content'] -> set('postFormatSingle', array(
     'type'    => 'html',
     'section' => 'common',
     'class'   => 'code'
-));                      
+));   
+
+
+$dc_options['content'] -> set('postFormatPage', array(
+    'title'   => 'post format for page.php',
+    'desc'    => 'HTML to display pages<br />'.$instructions,
+    'std'     => htmlspecialchars(
+        
+'<article class="[get_post_class]" id="page-[the_ID]">'."\n".
+"\t".'<div class="entry-content">'."\n".
+"\t\t".'<h1>[the_title]</h1>'."\n".
+"\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t\t".'<p>[the_content]</p>'."\n".
+"\t\t".'[dc_sidebar handle="After_Single"]'."\n".
+"\t".'</div><!--/.entry-content-->'."\n".
+'</article>'."\n\n"
+        
+    ),
+    'type'    => 'html',
+    'section' => 'common',
+    'class'   => 'code'
+)); 
+
+
+$dc_options['content'] -> set('404', array(
+    'title'   => 'post format for 404.php and empty queries',
+    'desc'    => 'HTML to display pages<br />'.$instructions,
+    'std'     => htmlspecialchars(
+        
+'<div class="404" id="404">'."\n".
+"\t".'<h2>Oops.</h2>'."\n".
+"\t".'<p>Well that\'s annoying. Looks like we\'re missing something here.</p>'."\n".
+'</div>'.c("/#404",0,1)."\n\n"
+        
+    ),
+    'type'    => 'html',
+    'section' => 'common',
+    'class'   => 'code'
+)); 
+
                                    
-                                   
-$dc_options['std'] -> set('debugMode', array(
-    'section' => 'content',
+$dc_options['content'] -> set('debugMode', array(
+    'section' => 'special',
     'title'   => 'Debug Mode',
     'desc'    => 'Displays helpful comments explaining the HTML output.',
     'type'    => 'radio',
