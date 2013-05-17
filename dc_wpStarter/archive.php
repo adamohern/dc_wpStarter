@@ -43,7 +43,28 @@ if(is_home()) {dc_auxSidebar('Before_Home');} else if(is_archive()) {dc_auxSideb
 }
 
 dc_postNav();
-dc_archiveLoop();
+
+c('Begin The Loop',2); 
+
+if (have_posts()) {
+	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+	e("<div class='articles page-$paged'>");
+	
+	while (have_posts()) { 
+		the_post();
+		c("dc_renderMarkup(o('postFormatArchive'))",1);
+		dc_renderMarkup(o('postFormatArchive'));
+	}
+	
+	e('</div>'.c('/.articles',0,1));
+} else {
+	c('query produced no results',1);
+	c("dc_renderMarkup(o('contentMissing'))",1);
+	dc_renderMarkup(o('contentMissing'));
+}
+
+c('End The Loop',3);
+
 dc_postNav();
 
 dc_auxSidebar('After_Archive');

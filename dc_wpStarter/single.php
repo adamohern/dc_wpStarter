@@ -20,7 +20,7 @@ if (have_posts()) {
             e('<style type="text/css">'."\n".$postCSS[0]."\n".'</style>');
         }
         
-        c('dc_render_markup($dc_options[\'postFormatSingle\'])',1);
+        c('dc_render_markup(o(\'postFormatSingle\'))',1);
         dc_renderMarkup( o('postFormatSingle') );
 	}
 }

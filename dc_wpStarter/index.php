@@ -16,7 +16,24 @@ if(is_home()) {
 
 }
 
-dc_archiveLoop();
+c('Begin The Loop',2); 
+
+if (have_posts()) {
+	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+	e("<div class='articles page-$paged'>");
+	
+	while (have_posts()) { 
+		the_post(); 
+		dc_renderMarkup(o('postFormatIndex'));
+	}
+	
+	e('</div>'.c('/.articles',0,1));
+} else {
+	c('query produced no results');
+	echo o('contentMissing');
+}
+
+c('End The Loop',3);
 
 dc_postNav();
 

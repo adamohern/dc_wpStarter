@@ -19,7 +19,24 @@ wp_reset_query();
 e('</h2>');
 
 dc_postNav();
-dc_archiveLoop();
+
+if (have_posts()) {
+	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+	e("<div class='articles page-$paged'>");
+	
+	while (have_posts()) { 
+		the_post(); 
+		dc_renderMarkup(o('postFormatSearch'));
+	}
+	
+	e('</div>'.c('/.articles',0,1));
+} else {
+	c('query produced no results');
+	echo o('contentMissing');
+}
+
+c('End The Loop',3);
+
 dc_postNav();
 
 dc_auxSidebar('After_Archive');

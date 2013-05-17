@@ -1,18 +1,16 @@
 <?php
 
-/*
 // remove the default theme editor from the admin menu
 // http://www.tcbarrett.com/2011/09/remove-and-disable-wordpress-theme-and-plugin-editors/
-*/
 function tcb_remove_editor_menu() {
   remove_action('admin_menu', '_add_themes_utility_last', 101);
 }
 add_action('admin_menu', 'tcb_remove_editor_menu', 1);
 
 
-/*
+
+
 // clean up the <head>
-*/
 function removeHeadLinks() {
 	remove_action('wp_head', 'rsd_link');
 	remove_action('wp_head', 'wlwmanifest_link');
@@ -23,10 +21,18 @@ remove_action('wp_head', 'wp_generator');
 
 
 
+// when displaying posts, it's nice to let CSS know if the post has a thumbnail
+function dc_post_class($content) {
+	if(get_the_post_thumbnail() != '') $content[] = "has-thumb";
+	return $content;
+}
+add_filter('post_class','dc_post_class');
 
-/*
+
+
+
+
 // includes thumbnail (featured image) in rss
-*/
 function insertThumbnailRSS( $content ) {
 	global $post;
 	if ( has_post_thumbnail( $post->ID ) ) $content = '' . get_the_post_thumbnail( $post->ID, 'rss-thumb' ) . '' . $content;
@@ -40,9 +46,7 @@ add_image_size ( 'rss-thumb', 645, 330, true );
 
 
 
-/*
 // stop WP adding junk (i.e. <br /> and <p></p>) to shortcodes
-*/
 remove_filter( 'the_content', 'wpautop' );
 add_filter( 'the_content', 'wpautop' , 10);
 
@@ -50,9 +54,7 @@ add_filter( 'the_content', 'wpautop' , 10);
 
 
 
-/*
 // <title> tag
-*/
 function dc_archiveTitle() {
 	$title = '';
 	global $page, $paged;

@@ -64,14 +64,14 @@ $dc_options['content'] -> set('postFormatIndex', array(
     'std'     => htmlspecialchars(
         
 '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
+"\t".'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
 "\t".'<div class="entry-content">'."\n".
-"\t\t".'<h1>[the_title]</h1>'."\n".
+"\t\t".'<h1>[the_title link="true"]</h1>'."\n".
 "\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
 "\t\t".'<p>[the_excerpt]</p>'."\n".
 "\t\t".'[dc_sidebar handle="After_Single"]'."\n".
 "\t".'</div><!--/.entry-content-->'."\n".
-'</article>'."\n\n".
-'[comments_template]'
+'</article>'."\n\n"
         
     ),
     'type'    => 'html',
@@ -86,8 +86,9 @@ $dc_options['content'] -> set('postFormatArchive', array(
     'std'     => htmlspecialchars(
         
 '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
+"\t".'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
 "\t".'<div class="entry-content">'."\n".
-"\t\t".'<h1>[the_title]</h1>'."\n".
+"\t\t".'<h1>[the_title link="true"]</h1>'."\n".
 "\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
 "\t\t".'<p>[the_excerpt]</p>'."\n".
 "\t\t".'[dc_sidebar handle="After_Single"]'."\n".
@@ -107,8 +108,9 @@ $dc_options['content'] -> set('postFormatSearch', array(
     'std'     => htmlspecialchars(
         
 '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
+"\t".'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
 "\t".'<div class="entry-content">'."\n".
-"\t\t".'<h1>[the_title]</h1>'."\n".
+"\t\t".'<h1>[the_title link="true"]</h1>'."\n".
 "\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
 "\t\t".'<p>[the_excerpt]</p>'."\n".
 "\t\t".'[dc_sidebar handle="After_Single"]'."\n".
@@ -128,6 +130,7 @@ $dc_options['content'] -> set('postFormatSingle', array(
     'std'     => htmlspecialchars(
         
 '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
+"\t".'<div class="thumb">[the_post_thumbnail size="dc_large"]</div>'."\n".
 "\t".'<div class="entry-content">'."\n".
 "\t\t".'<h1>[the_title]</h1>'."\n".
 "\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
@@ -165,7 +168,7 @@ $dc_options['content'] -> set('postFormatPage', array(
 )); 
 
 
-$dc_options['content'] -> set('404', array(
+$dc_options['content'] -> set('contentMissing', array(
     'title'   => 'post format for 404.php and empty queries',
     'desc'    => 'HTML to display pages<br />'.$instructions,
     'std'     => htmlspecialchars(
@@ -173,7 +176,9 @@ $dc_options['content'] -> set('404', array(
 '<div class="404" id="404">'."\n".
 "\t".'<h2>Oops.</h2>'."\n".
 "\t".'<p>Well that\'s annoying. Looks like we\'re missing something here.</p>'."\n".
-'</div>'.c("/#404",0,1)."\n\n"
+"\t".'<p><small>[request_uri] not found.</small></p>'.
+"</div><!-- /#404 -->\n\n".
+"[searchform]"
         
     ),
     'type'    => 'html',

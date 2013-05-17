@@ -11,11 +11,20 @@ function dc_auxSidebar($sidebarHandle) {
 	if (dc_is_active_sidebar($sidebarHandle)) {
         c("... Yes.",1);
 		c("Begin sidebar dc_auxSidebar('$sidebarHandle') (functions.php)",2);
-		echo '<div id="'.$sidebarHandle.'" class="clearfix">'."\n";
-		if (dynamic_sidebar($sidebarHandle)) {} else {}
-		echo '</div>'.c("/#$sidebarHandle",0,true);
+		
+		e('<div id="'.$sidebarHandle.'" class="clearfix">');
+		
+		if (!dynamic_sidebar($sidebarHandle)) c('dynamic sidebar empty',1);
+		
+		c("/#$sidebarHandle",1);
+		e('</div>'); 
+		
 		c("End sidebar '$sidebarHandle'",3);
-	} else { c("... No.",1); }
+	} 
+	
+	else { 
+		c("... No.",1); 
+	}
 }
 
 function dc_registerSidebar($id,$description) {
