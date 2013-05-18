@@ -2,224 +2,290 @@
 Theme Name: dc_wpStarter
 Theme URI: http://destructive-creative.com/wordpress
 Description: The basis for the destructive-creative.com master template. No bells, no whistles, just clean, validated HTML5.
-Author: A-Dawg
-Version: 130428
+Author: A-Dawg + HTML5 Boilerplate
+Version: 130518
 */
 
-/* Based on the fantastic HTML5 Reset Wordpress Theme (html5reset.org) */
 
-html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, 
-blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, 
-samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, 
-form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, 
-aside, figure, footer, header, hgroup, menu, nav, section, time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-size: 100%;
-	vertical-align: baseline;
-	background: transparent;
-	line-height:1.5em;
-}				
 
-article, aside, figure, footer, header, hgroup, nav, section {display: block;}
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
 
-/* Note: keeping IMG here will cause problems if you're using 
-foreground images as sprites, like, say for Google Maps custom placemarkers. */
-img, object, embed {max-width: 100%;}
-.post img {max-width: 100%; height: auto;} /* Hamilton Boyce CSS to replace image width adjust code */
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
 
-html {overflow-y: scroll;}
-
-ul, li {list-style: none;}
-
-blockquote, q {quotes: none;}
-blockquote:before, 
-blockquote:after, 
-q:before, 
-q:after {content: ''; content: none;}
-
-a, a:hover {margin: 0; padding: 0; font-size: 100%; vertical-align: baseline; background: transparent; text-decoration:none;}
-a:hover, a:active {outline: none;}
-a img, a:hover img, a:active img {outline:none;border:0;}
-
-/* tables still need cellspacing="0" in the markup */
-table {border-collapse: collapse; border-spacing: 0;}
-table {font-size: inherit; font: 100%;}
-th {font-weight: bold; vertical-align: bottom;}
-td {font-weight: normal; vertical-align: top;}
-td, td img {vertical-align: top;} 
-
-hr {display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0;}
-
-input, select {vertical-align: middle;}
-
-pre, code, kbd, samp {font-family: monospace, sans-serif;}
-pre {
-	white-space: pre; /* CSS2 */
-	white-space: pre-wrap; /* CSS 2.1 */
-	white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
-	word-wrap: break-word; /* IE */
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
 }
 
-input[type="radio"] {vertical-align: text-bottom;}
-input[type="checkbox"] {vertical-align: bottom; *vertical-align: baseline;}
-.ie6 input {vertical-align: text-bottom;}
-select, input, textarea {font: 99% sans-serif;}
+body {
+    font-size: 1em;
+    line-height: 1.4;
+}
 
-del {text-decoration: line-through;}
-abbr[title], dfn[title] {border-bottom: 1px dashed #ccc; cursor: help;}
-small {font-size: 85%;}
-strong, th {font-weight: bold;}
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
 
-sub, sup {font-size: 75%; line-height: 0; position: relative;}
-sup {top: -0.5em;}
-sub {bottom: -0.25em;}
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
 
-.clickable,
-label, 
-input[type=button], 
-input[type=submit], 
-button {cursor: pointer;}
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
 
-button, input, select, textarea {margin: 0;}
-button {width: auto; overflow: visible;}
+/*
+ * A better looking default horizontal rule
+ */
 
-::-moz-selection{ text-shadow: none;}
-::selection { text-shadow: none;} 
-ins {color: #000; text-decoration: none;}
-mark {color: #000; font-style: italic; font-weight: bold;}
- 
-.ie7 img {-ms-interpolation-mode: bicubic;}
-.ie6 html {filter: expression(document.execCommand("BackgroundImageCache", false, true));}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
 
-.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
-.clearfix:after { clear: both; }  
-.clearfix { zoom: 1; }  
+/*
+ * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
 
+img {
+    vertical-align: middle;
+}
 
-/* Page Structure
--------------------------------------------------------------------------------*/
+/*
+ * Remove default fieldset styles.
+ */
 
-/*We hide the body by default and then use jQuery to show it when everything's loaded.*/
-body {font: 14px/30px Arial, sans-serif;position:relative;} 
-body, select, input, textarea {color: #333;}
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
 
-a:hover {text-decoration:underline;}
+/*
+ * Allow only vertical resizing of textareas.
+ */
 
-#headerWrap {background-color:#f5f5f5;border-bottom:1px solid #eee;overflow:hidden; margin-bottom:1.5em;height:80px;}
-#headerContent {width:960px;margin:0 auto;}
-#headerContent li {height:20px;padding:30px;float:left;background-color:#f5f5f5;margin-right:0;}
-#headerContent li.hover,
-#headerContent li:hover {background-color:#eee;cursor: pointer;}
-#headerContent li:last-child {float:right;}
-.h-lists div,
-.h-lists ul,
-.h-lists li,
-.h-lists h3 {display:inline;margin-right:.5em;}
-#beforeContent {margin-bottom:1em;padding-bottom:1em;border-bottom:1px solid #eee;}
-#afterContent {padding-top:1em;border-top:1px solid #eee;margin-bottom:1em;}
+textarea {
+    resize: vertical;
+}
 
-#dc-page-wrap {width: 960px; margin: 0 auto 50px auto;position:absolute;top:80px;left:0;right:0;}
-#dc-content {width:720px;position:relative;margin-bottom:2em;}
-#dc-content.fullWidth {width:960px;}
-#sidebar {width:200px;}
-#logo {margin-bottom:2em;}
+/* ==========================================================================
+   Chrome Frame prompt
+   ========================================================================== */
 
-.dc-nav-top {margin-bottom:1em;}
-.dc-nav-bottom {margin-top:1em;}
-.next-posts, .alignleft {float:left;margin-right:1em;}
-.prev-posts, .alignright {float:right;margin-left:1em;}
-.aligncenter {display:block;margin:0 auto 0 auto;}
-.navigation{margin-bottom:1em;}
-
-.caption{margin-right:2em;margin-bottom:1em;font-size:.9em;font-style:italic;color:#999;}
-
-#sLabel {display:block;font-size:.8em;}
-#s {width:150px;}
-
-/* Content Structure
--------------------------------------------------------------------------------*/
-
-article {border-bottom:1px dashed #ccc; position:relative;}
-.page .articles article,
-.single .articles article,
-.articles article {padding:1em;}
-.page article,
-.single article {padding:0;}
-
-article ol, article ul {margin-left:1em;margin-bottom:1em;}
-article ol li {list-style-type:decimal;}
-article ol ol li {list-style-type:lower-alpha;}
-article ol ol ol li {list-style-type:lower-roman;}
-article ul li {list-style-type:disc;}
-article ul ul li {list-style-type:circle;}
-article ul ul ul li {list-style-type:square;}
-article .entry-content ul.raw {margin:0;}
-article .entry-content ul.raw li {list-style-type:none;}
-
-article h1 {font-size:1.5em;font-weight:bold;text-transform:uppercase;}
-article h2, 
-article h3, 
-article h4, 
-article h5, 
-article h6 {font-size:1em;font-weight:normal;}
-article caption {font-size:.8em; font-style:italic;}
-article header {margin-bottom:1em;position:relative;}
-article header h2 {margin-bottom:0;}
-article h2,
-article p,
-article blockquote {margin-bottom:1em;}
-article h2 {font-weight:bold;text-transform:uppercase;line-height:1.3em;}
-article h3 {margin-bottom:0;}
-article blockquote {margin-left:1em; font-style:italic; margin-bottom:1em;}
-article .gallery {margin-bottom:1em!important;border:0;padding:0;}
-article .gallery-item {width:auto!important;margin-right:6px!important;margin-top:0!important;float:left;}
-article .gallery img {width:170px;height:96px;border-width:1px!important;}
-article .meta {font-size:.8em;}
-article .meta,
-article .meta a {color:#999;}
-article footer.meta {margin-top:1.5em;}
-article .squeezeOver {width:410px;float:right;}
-
-article div.thumbnail {width:256px;height:144px;overflow:hidden;}
-ol.commentlist div.thumbnail{width:256px;border:1px solid #ccc;overflow:hidden;}
-ol.commentlist div.thumbnail:hover,
-article div.thumbnail:hover {}
-ol.commentlist div.thumbnail img
-article div.thumbnail img {width:256px;height:144px;}
-
-.accordion {border-top:1px solid #ccc; border-bottom:1px solid #ccc;}
+.chromeframe {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
 
 
-/* Comment Structure
--------------------------------------------------------------------------------*/
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
 
-#respond {margin:1em 0; padding:1em 0;}
-#comment {width:100%;}
-ol.commentlist {margin-bottom:1em;}
-ol.commentlist li.comment {border-bottom: 1px dashed #ccc; padding: 10px;}
-ol.commentlist li.comment div.vcard cite.fn {font-style: normal;}
-ol.commentlist li.comment div.vcard img.avatar {float:right; margin: 0 0 10px 10px;}
-ol.commentlist li.comment div.comment-meta,
-ol.commentlist li.comment div.comment-meta a {font-size:.8em;color:#999;}
-ol.commentlist li.comment div.reply {font-size: 11px;}
-ol.commentlist li.comment div.reply a {font-weight: bold;}
-ol.commentlist li.comment ul.children li {margin: 10px 0 0;}
-ol.commentlist li.comment ul.children li {padding:0;border:0;}
-ol.commentlist li.comment ul.children li.depth-2 {padding-left:1.5em;}
-ol.commentlist li.comment ul.children li.depth-3 {padding-left:1.5em;}
-ol.commentlist li.comment:first-child {border-top: 1px dashed #ccc;}
-ol.commentlist .comment-body ol,
-ol.commentlist .comment-body ul {margin-left:30px;}
-ol.commentlist .comment-body ol li {list-style-type:decimal;}
-ol.commentlist .comment-body ul li {list-style-type:circle;}
-ol.commentlist .comment-body p,
-ol.commentlist .comment-body div,
-ol.commentlist .comment-body ul,
-ol.commentlist .comment-body ol,
-ol.commentlist .comment-body blockquote {margin-bottom:1em;}
-ol.commentlist .comment-body code,
-ol.commentlist .comment-body blockquote {margin:30px 0;padding:15px;background-color:#eee;}
-ol.commentlist .comment-body blockquote {font-style:italic;}
+/*
+ * Image replacement
+ */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-o-min-device-pixel-ratio: 5/4),
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

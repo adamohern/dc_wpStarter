@@ -3,7 +3,6 @@
 
 function dc_renderMarkup($markup) {
     
-    c('dc_renderMarkup()',1);
     e(dc_get_renderMarkup($markup));
     
 }
@@ -11,9 +10,7 @@ function dc_renderMarkup($markup) {
 
 // only works within the loop!
 function dc_get_renderMarkup($markup) {
-     
-    c('dc_get_renderMarkup()',1);
-    
+         
     if($markup){
 
         $shortcodes = array(
@@ -170,20 +167,19 @@ function dc_get_post_class($args=array()){
 
        
 function dc_sidebar($args){
-    $handle = $args['handle'];
-    $x = '';
+	if(isset($args['handle'])) $handle = $args['handle'];
     
-    $x .= c("dc_is_active_sidebar($handle)? ...",1,true);
+    $x = c("dc_is_active_sidebar($handle)? ...",1,1);
 
 	if (dc_is_active_sidebar($handle)) {
-        $x .= c("... Yes.",1,true);
-		$x .= c("Begin sidebar dc_sidebar('$handle')",2,true);
+        $x .= c("... Yes.",1,1);
+		$x .= c("Begin sidebar dc_sidebar('$handle')",2,1);
 		$x .= '<div id="'.$handle.'" class="dc_sidebar clearfix">'."\n";
 		$x .= dc_get_dynamic_sidebar($handle);
 		$x .= "\n".'</div><!--/#'.$handle.'-->'."\n";
-        $x .= c("/#$handle",1,true);
-		$x .= c("End sidebar '$handle'",3,true);
-	} else { c("... No.",1,true); }
+        $x .= c("/#$handle",1,1);
+		$x .= c("End sidebar '$handle'",3,1);
+	} else { c("... No.",1,1); }
 
     return $x;
 }

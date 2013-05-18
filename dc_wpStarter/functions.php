@@ -3,7 +3,6 @@
 // only enable for dev!
 ini_set('display_errors', 'On');
 
-
 // require all .php files in the 'require' directory
 foreach(glob(get_stylesheet_directory()."/require/*.php") as $file){ require $file; }
 
@@ -29,10 +28,11 @@ function dc_loadScripts() {
         // start with the basics
         //dc_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js' );
         //dc_enqueue_script( 'jqueryui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') );
+        dc_enqueue_script( 'modernizr', get_stylesheet_directory_uri().'/js/modernizr-2.6.2.min.js', array('jquery') );
         //dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
         dc_enqueue_script( 'jquery', '/resources/jquery-1.9.1.min.js' );
         dc_enqueue_script( 'jqueryui', '/resources/ui/jquery-ui.js', array('jquery') );
-        dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
+        dc_enqueue_script( 'dc_functions', get_stylesheet_directory_uri().'/js/dc_functions.js', array('jquery'), '0', true );
         
         
         if( o('jqueryui_theme') ) dc_enqueue_style('jqueryui_style', o('jqueryui_theme') );

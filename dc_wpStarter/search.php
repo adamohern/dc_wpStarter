@@ -1,22 +1,17 @@
 <?php 
 
+c('Begin search.php',2);
+
 get_header();
 
-c('Begin search.php',2);
-dc_sidebar('Banner_All');
 dc_sidebar('Before_Archive');
 
 $allsearch = &new WP_Query("s=$s&showposts=-1"); 
 $key = wp_specialchars($s, 1); 
 $count = $allsearch->post_count; 
-
-e('<h2 class="pagetitle">');
-
-e($count.' results for "<span class="search-terms">'.$key.'</span>"'); 
-
 wp_reset_query();
 
-e('</h2>');
+e('<h2 class="pagetitle">'.$count.' results for "<span class="search-terms">'.$key.'</span>"</h2>');
 
 dc_postNav();
 
@@ -41,8 +36,8 @@ dc_postNav();
 
 dc_sidebar('After_Archive');
 
-c('End search.php',3);
-
 get_footer(); 
+
+c('End search.php',3);
 
 ?>

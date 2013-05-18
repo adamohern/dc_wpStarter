@@ -1,6 +1,5 @@
 <?php
 
-
 // widget: dc_image
 // Insert an arbitrary link image into a sidebar
 

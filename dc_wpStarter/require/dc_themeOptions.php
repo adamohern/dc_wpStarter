@@ -186,6 +186,23 @@ $dc_options['content'] -> set('contentMissing', array(
     'class'   => 'code'
 )); 
 
+
+$dc_options['content'] -> set('outdatedBrowser', array(
+    'title'   => 'Outdated browser message',
+    'desc'    => 'Admonish IE 7 users to upgrade.',
+    'std'     => htmlspecialchars(
+        
+'<p class="chromeframe">
+You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.
+</p>'
+        
+    ),
+    'type'    => 'html',
+    'section' => 'common',
+    'class'   => 'code'
+)); 
+
+
                                    
 $dc_options['content'] -> set('debugMode', array(
     'section' => 'special',
