@@ -1,6 +1,5 @@
 <?php 
 
-
 // Based on Alison Barrett's excellent tutorial:
 // http://alisothegeek.com/2011/01/wordpress-settings-api-tutorial-2/
 // (revised significantly to improve object-oriented behavior)
@@ -8,9 +7,7 @@
 // instantiated in dc_themeOptions.php
 
 
-/*
 // class for constructing settings pages
-*/
 class dc_theme_options {
     
 	private $sections, $checkboxes, $pageTitle, $menuTitle, $handle, $settings, $options;

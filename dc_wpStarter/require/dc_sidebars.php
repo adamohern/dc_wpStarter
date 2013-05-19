@@ -1,4 +1,29 @@
 <?php 
+
+function dc_sidebar($args){
+	e(dc_get_sidebar($args));
+}
+       
+       
+function dc_get_sidebar($args){
+	
+	if(isset($args['handle'])) $handle = $args['handle'];
+	else if (is_string($args)) $handle = $args;
+	else $handle = '[missing argument]';
+    
+	if (dc_is_active_sidebar($handle)) {
+		$x .= c("Begin sidebar dc_get_sidebar('$handle')",2,1);
+		$x .= '<div id="'.$handle.'" class="dc_get_sidebar clearfix">'."\n";
+		$x .= dc_get_dynamic_sidebar($handle);
+		$x .= "\n".'</div><!--/#'.$handle.'-->'."\n";
+        $x .= c("/#$handle",1,1);
+		$x .= c("End sidebar '$handle'",3,1);
+	} else { $x .= c("dc_is_active_sidebar($handle): false",1,1); }
+
+    return apply_filters(__FUNCTION__,$x);
+}
+
+
 // adapted from the WP is_active_sidebar() code, but allows for string index
 function dc_is_active_sidebar( $index ) {
 	$sidebars_widgets = wp_get_sidebars_widgets();

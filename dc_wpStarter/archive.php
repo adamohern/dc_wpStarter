@@ -44,7 +44,7 @@ if(is_home()) {dc_sidebar('Before_Home');} else if(is_archive()) {dc_sidebar('Be
 
 dc_postNav();
 
-c('Begin The Loop',2); 
+c('Begin The Loop',1); 
 
 if (have_posts()) {
 	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -63,7 +63,7 @@ if (have_posts()) {
 	dc_render_markup(apply_filters('contentMissing',o('contentMissing')));
 }
 
-c('End The Loop',3);
+c('End The Loop',1);
 
 dc_postNav();
 

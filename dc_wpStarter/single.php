@@ -4,7 +4,7 @@ c('Begin single.php',2);
 
 dc_sidebar('Banner_All');
 
-c('Begin The Loop (single.php)',2);
+c('Begin The Loop',1);
 
 if (have_posts()) { 
 	while (have_posts()) {
@@ -25,7 +25,7 @@ if (have_posts()) {
 	}
 }
 
-c('End The Loop (single.php)',3);
+c('End The Loop',1);
 
 c('End single.php',3);
 	

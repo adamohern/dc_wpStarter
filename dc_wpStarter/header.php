@@ -84,6 +84,9 @@ e('<!--[if lt IE 7]>');
 dc_render_markup(o('outdatedBrowser'));
 e('<![endif]-->');
 
+c('From Boilerplate:');
+e('<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>');
+
 e('<div id="everything">');
 
 e('<header id="Header_Widgets_wrap" class="clearfix">');

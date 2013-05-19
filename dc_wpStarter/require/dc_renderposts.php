@@ -168,34 +168,6 @@ function dc_get_post_class($args=array()){
     return apply_filters(__FUNCTION__,$x);
 }
 
-       
-function dc_sidebar($args){
-	e(dc_get_sidebar($args));
-}
-       
-       
-function dc_get_sidebar($args){
-	
-	if(isset($args['handle'])) $handle = $args['handle'];
-	else if (is_string($args)) $handle = $args;
-	else $handle = '[no sidebar handle provided]';
-    c("dc_get_sidebar($handle)",1);
-    
-    $x = c("dc_is_active_sidebar($handle)? ...",1,1);
-
-	if (dc_is_active_sidebar($handle)) {
-        $x .= c("... Yes.",1,1);
-		$x .= c("Begin sidebar dc_get_sidebar('$handle')",2,1);
-		$x .= '<div id="'.$handle.'" class="dc_get_sidebar clearfix">'."\n";
-		$x .= dc_get_dynamic_sidebar($handle);
-		$x .= "\n".'</div><!--/#'.$handle.'-->'."\n";
-        $x .= c("/#$handle",1,1);
-		$x .= c("End sidebar '$handle'",3,1);
-	} else { $x .= c("... No.",1,1); }
-
-    return apply_filters(__FUNCTION__,$x);
-}
-
 
 function dc_postNav() {
 	c('dc_postNav() (functions.php)',1);

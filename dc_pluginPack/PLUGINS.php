@@ -126,30 +126,6 @@ theme options {
 			'type'    => 'php',
 			'std'     => '\'&#039;&lt;div class=&quot;title&quot;&gt;&lt;a href=&quot;&#039;.get_permalink($post-&gt;ID).&#039;&quot; title=&quot;posted &#039;.get_the_date(&#039;d M,Y&#039;).&#039;&quot;&gt;&#039;.get_the_title($post-&gt;ID).&#039;&lt;/a&gt;&lt;/div&gt;&#039;'
 		);
-        
-    	$this->settings['evd_postListTileCode'] = array(
-			'section' => 'php',
-			'title'   => __( 'Post List Tile Code' ),
-			'desc'    => __( 'Enter valid PHP code for a string defining the content between &lt;li&gt; tags in a evd_postsList2 list where tiles=true.' ),
-			'type'    => 'php',
-			'std'     => '\'&lt;div class=&quot;thumb&quot;&gt;&lt;a href=&quot;&#039;.get_permalink($post-&gt;ID).&#039;&quot;&gt;&#039;.get_the_post_thumbnail($page-&gt;ID, evd_option(\'evd_thumbsize_archive\')).&#039;&lt;/a&gt;&lt;/div&gt;\'.&#039;&lt;div class=&quot;title&quot;&gt;&lt;a href=&quot;&#039;.get_permalink($post-&gt;ID).&#039;&quot; title=&quot;posted &#039;.get_the_date(&#039;d M,Y&#039;).&#039;&quot;&gt;&#039;.get_the_title($post-&gt;ID).&#039;&lt;/a&gt;&lt;/div&gt;&#039;'
-		);
-		
-		$this->settings['evd_shortMeta'] = array(
-			'section' => 'php',
-			'title'   => __( 'Short Meta' ),
-			'desc'    => __( 'Enter valid PHP code for the meta to be displayed in post lists.' ),
-			'type'    => 'php',
-			'std'     => 'edit_post_link(\'Edit\',\'\',\' \'); the_time(\'d M, Y\'); echo \' by \'; the_author(); echo \' in \'; the_category(\', \');'
-		);
-		
-		$this->settings['evd_longMeta'] = array(
-			'section' => 'php',
-			'title'   => __( 'Long Meta' ),
-			'desc'    => __( 'Enter valid PHP code for the meta to be displayed on single posts.' ),
-			'type'    => 'php',
-			'std'     => 'edit_post_link(\'Edit\',\'\',\' \');'."\n".' the_time(\'d M, Y\'); echo \' by \'; the_author(); echo \' in \'; the_category(\', \'); echo \'<br />\'; the_tags();'
-		);
     
 }
 

@@ -6,7 +6,7 @@ get_header();
 
 dc_sidebar('Banner_All');
 
-c('Begin The Loop (page.php)',2);
+c('Begin The Loop',1);
 
 if (have_posts()) { 
 	while (have_posts()) {
@@ -27,7 +27,7 @@ if (have_posts()) {
 	}
 }
 
-c('End The Loop (page.php)',3);
+c('End The Loop',1);
 	
 get_footer(); 
 

@@ -16,6 +16,8 @@ e('<h2 class="pagetitle">'.$count.' results for "<span class="search-terms">'.$k
 dc_postNav();
 
 if (have_posts()) {
+	c('Begin The Loop',1);
+
 	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 	e("<div class='articles page-$paged'>");
 	
@@ -25,12 +27,12 @@ if (have_posts()) {
 	}
 	
 	e('</div>'.c('/.articles',0,1));
+	
+	c('End The Loop',1);
 } else {
 	c('query produced no results');
 	dc_render_markup(apply_filters('contentMissing',o('contentMissing')));
 }
-
-c('End The Loop',3);
 
 dc_postNav();
 
