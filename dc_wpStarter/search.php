@@ -21,13 +21,13 @@ if (have_posts()) {
 	
 	while (have_posts()) { 
 		the_post(); 
-		dc_renderMarkup(o('postFormatSearch'));
+		dc_render_markup(apply_filters('postFormatSearch',o('postFormatSearch')));
 	}
 	
 	e('</div>'.c('/.articles',0,1));
 } else {
 	c('query produced no results');
-	echo o('contentMissing');
+	dc_render_markup(apply_filters('contentMissing',o('contentMissing')));
 }
 
 c('End The Loop',3);

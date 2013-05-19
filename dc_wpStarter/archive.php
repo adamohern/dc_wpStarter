@@ -1,8 +1,8 @@
 <?php 
 
-get_header();
-
 c('Begin archive.php',2);
+
+get_header();
 
 dc_sidebar('Banner_All');
 
@@ -53,14 +53,14 @@ if (have_posts()) {
 	while (have_posts()) { 
 		the_post();
 		c("dc_renderMarkup(o('postFormatArchive'))",1);
-		dc_renderMarkup(o('postFormatArchive'));
+		dc_render_markup(apply_filters('postFormatArchive',o('postFormatArchive')));
 	}
 	
 	e('</div>'.c('/.articles',0,1));
 } else {
 	c('query produced no results',1);
 	c("dc_renderMarkup(o('contentMissing'))",1);
-	dc_renderMarkup(o('contentMissing'));
+	dc_render_markup(apply_filters('contentMissing',o('contentMissing')));
 }
 
 c('End The Loop',3);

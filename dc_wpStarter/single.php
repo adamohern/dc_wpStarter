@@ -21,7 +21,7 @@ if (have_posts()) {
         }
         
         c('dc_render_markup(o(\'postFormatSingle\'))',1);
-        dc_renderMarkup( o('postFormatSingle') );
+        dc_render_markup( apply_filters('postFormatSingle',o('postFormatSingle')) );
 	}
 }
 

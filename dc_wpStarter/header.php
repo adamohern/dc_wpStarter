@@ -81,28 +81,22 @@ e('<body class="'.implode(' ',get_body_class(o('titleSlug'))).'">');
 
 c("Admonish IE 7 users to change their ways. o('outdatedBrowser')",1);
 e('<!--[if lt IE 7]>');
-dc_renderMarkup(o('outdatedBrowser'));
+dc_render_markup(o('outdatedBrowser'));
 e('<![endif]-->');
 
 e('<div id="everything">');
 
 e('<header id="Header_Widgets_wrap" class="clearfix">');
-	c("dynamic_sidebar('Header_Widgets')",1);
 	dc_sidebar('Header_Widgets');
 e('</header>');
 
 e('<div id="dc-page-wrap" class="clearfix">');
  
-c('Begin dc_sidebar(\'Banner_All\')',1); dc_sidebar('Banner_All'); 
- 
-if(is_home()){ 
-    
-    c('Begin dc_sidebar(\'Banner_Home\')',1); dc_sidebar('Banner_Home'); 
-    
+dc_sidebar('Banner_All'); 
+if(is_home()){   
+    dc_sidebar('Banner_Home'); 
 } else if(is_archive()){ 
-    
-    c('Begin dc_sidebar(\'Banner_Archive\')',1); dc_sidebar('Banner_Archive'); 
-    
+    dc_sidebar('Banner_Archive'); 
 } 
 
 $class='clearfix';
@@ -110,6 +104,9 @@ $fullWidth = get_post_meta($post->ID, 'fullWidth');
 if($fullWidth[0]=='true' && is_singular()) $class.=' fullWidth';
 
 e('<div id="dc-content" class="'.$class.'">');
+
+if(o('dc-Main_Sidebar')) get_sidebar();
+
 e('<div id="contentBody">');
 
 c('End header.php',3); 

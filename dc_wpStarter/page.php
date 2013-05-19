@@ -1,8 +1,8 @@
 <?php 
 
-get_header();
-
 c('Begin page.php',2);
+
+get_header();
 
 dc_sidebar('Banner_All');
 
@@ -23,14 +23,14 @@ if (have_posts()) {
         }
         
         c('dc_render_markup(o(\'postFormatPage\'))',1);
-        dc_renderMarkup( o('postFormatPage') );
+        dc_renderMarkup( apply_filters('postFormatPage',o('postFormatPage')) );
 	}
 }
 
 c('End The Loop (page.php)',3);
-
-c('End page.php',3);
 	
 get_footer(); 
+
+c('End page.php',3);
 
 ?>

@@ -178,7 +178,7 @@ $dc_options['content'] -> set('contentMissing', array(
 "\t".'<p>Well that\'s annoying. Looks like we\'re missing something here.</p>'."\n".
 "\t".'<p><small>[request_uri] not found.</small></p>'.
 "</div><!-- /#404 -->\n\n".
-"[searchform]"
+"[get_search_form]"
         
     ),
     'type'    => 'html',
@@ -202,6 +202,25 @@ You are using an <strong>outdated</strong> browser. Please <a href="http://brows
     'class'   => 'code'
 )); 
 
+
+$dc_options['content'] -> set('searchform', array(
+    'title'   => 'Search Form',
+    'desc'    => 'Renders whenever searchform.php is called.',
+    'std'     => htmlspecialchars(
+        
+'<form action="[bloginfo show="siteurl"]" id="searchform" method="get">
+<div>
+<label id="sLabel" for="s" class="screen-reader-text">Search:</label>
+<input type="search" id="s" name="s" value="Search..." onfocus="if (this.value == \'Search...\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'Search...\';}"/>
+<input type="submit" value="Go" id="searchsubmit" />
+</div>
+</form>'
+        
+    ),
+    'type'    => 'html',
+    'section' => 'common',
+    'class'   => 'code'
+)); 
 
                                    
 $dc_options['content'] -> set('debugMode', array(
@@ -230,6 +249,15 @@ $dc_options['js'] -> set('customJS', array(
 ));
 
 
+$dc_options['js'] -> set('customJS_footer', array(
+    'section' => 'js',
+    'title'   => 'Custom Javascript - foot',
+    'desc'    => 'Enter valid jquery-compatible Javascript to insert into the header.',
+    'type'    => 'js',
+    'std'     => ''
+));
+
+
 $dc_options['js'] -> set('headerJS', array(
 
     'title'   => 'External Javascript URLs - header',
@@ -237,15 +265,6 @@ $dc_options['js'] -> set('headerJS', array(
     'std'     => '',
     'type'    => 'textarea',
     'section' => 'js'
-));
-
-
-$dc_options['js'] -> set('customJS_footer', array(
-    'section' => 'js',
-    'title'   => 'Custom Javascript - foot',
-    'desc'    => 'Enter valid jquery-compatible Javascript to insert into the header.',
-    'type'    => 'js',
-    'std'     => ''
 ));
 
 
