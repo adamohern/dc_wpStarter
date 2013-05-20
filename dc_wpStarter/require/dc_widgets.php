@@ -8,8 +8,8 @@ class dc_image extends WP_Widget {
 	function __construct() {
 		parent::WP_Widget( 
 						'dc_image', // Base ID
-						'dc_image', // Name
-						array( 'description' => 'Drop an arbitrary image into a sidebar.' ) );
+						'dc image', // Name
+						array( 'description' => 'Drop an image into a sidebar. (Added by the destructive-creative theme.)' ) );
 	}
 
 	function widget($args, $instance) {

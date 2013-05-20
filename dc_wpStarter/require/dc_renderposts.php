@@ -36,7 +36,8 @@ function dc_get_render_markup($markup) {
             array('comments_template',		'dc_get_comments_template'),
             array('get_post_meta',			'dc_get_post_meta'),
             array('get_post_class',			'dc_get_post_class'),
-            array('dc_sidebar',				'dc_get_sidebar')
+            array('dc_sidebar',				'dc_get_sidebar'),
+            array('dc_google_authorship',	'dc_get_google_authorship')
         );
 
         foreach ($shortcodes as $shortcode){
@@ -166,6 +167,47 @@ function dc_get_post_class($args=array()){
     
     $x = implode(' ',get_post_class($class));
     return apply_filters(__FUNCTION__,$x);
+}
+
+
+function dc_google_authorship_form( $user ) { 
+?>
+<h3><?php _e("Extra profile information", "blank"); ?></h3>
+ 
+<table class="form-table">
+<tr>
+<th><label for="gplus_url"><?php _e("Google+ profile URL"); ?></label></th>
+<td>
+<input type="text" name="gplus_url" id="gplus_url" value="<?php echo esc_attr( get_the_author_meta( 'gplus_url', $user->ID ) ); ?>" class="regular-text" /><br />
+<span class="description"><?php _e("e.g. http://plus.google.com/104457182243197908311<br /><em>(Field added by the dc_wpStarter theme</em> for use with Google authorship recognition.)"); ?></span>
+</td>
+</tr>
+</table>
+<?php 
+}
+add_action( 'show_user_profile', 'dc_google_authorship_form' );
+add_action( 'edit_user_profile', 'dc_google_authorship_form' );
+ 
+ 
+function dc_google_authorship_update( $user_id ) {
+	if ( !current_user_can( 'edit_user', $user_id ) ) { return false; }
+	update_user_meta( $user_id, 'gplus_url', $_POST['gplus_url'] );
+}
+add_action( 'personal_options_update', 'dc_google_authorship_update' );
+add_action( 'edit_user_profile_update', 'dc_google_authorship_update' );
+
+
+function dc_get_google_authorship(){
+	if (get_the_author_meta('gplus_url')&&get_the_author_meta('user_firstname')){
+		$x = ('<p class="dc_google_authorship"><em><a href="'.get_the_author_meta('gplus_url').'?rel=author">'.get_the_author_meta('user_firstname').'</a> on google+</em></p>');
+	} else { $x = c('No Google authorship data has been added for this author. (Users > Profile > Google+ profile URL)',1,1); }
+	return apply_filters(__FUNCTION__,$x);
+}
+
+
+function dc_google_authorship() {
+	c('e(dc_get_google_authorship());',1);
+	e(dc_get_google_authorship());
 }
 
 

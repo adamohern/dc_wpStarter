@@ -16,8 +16,8 @@ c('o(\'customJS_footer\')');
 e('<script type="text/javascript">'."\n".o('customJS_footer')."\n".'</script>');
 
 e('</footer>');
-e('</div>'.c('/contentBody',0,true));
-e('</div>'.c('/content',0,true)); 
+e('</div>'.c('/contentBody',0,1));
+e('</div>'.c('/content',0,1)); 
 
 br(3);
   
@@ -32,8 +32,8 @@ if ( is_single() || is_page() || is_attachment() ){
   
 br(3);
 
-c('/#dc-page-wrap');
-e('</div>');
+
+e('</div>'.c('/#dc-page-wrap',0,1));
 
 br(3);
 
@@ -43,8 +43,16 @@ c('End wp_footer()');
 
 br(3);
 
-c('/#everything');
-e('</div>');
+e('</div>'.c('/#everything',0,1));
+
+br(3);
+
+c("dc_render_markup(o('customJS_footer'));",1);
+e('<script>');
+dc_render_markup(o('customJS_footer'));
+e('</script>');
+
+br(3);
 
 e('</body>');
 e('</html>'); 

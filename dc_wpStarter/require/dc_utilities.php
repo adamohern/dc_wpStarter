@@ -67,7 +67,7 @@ function c($comment='',$mode=0,$return=false) {
                 break;
             
             case 1:
-                $html .= '<!-- '.$comment.' -->'."\n";
+                $html .= "\n".'<!-- '.$comment.' -->'."\n";
                 break;
             
             case 2:

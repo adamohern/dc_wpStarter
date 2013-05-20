@@ -6,7 +6,6 @@ $dc_options['std'] = new dc_theme_options('Theme Options','Theme Options','dc_op
 $dc_options['std'] -> add_section('SEO','seo');
 $dc_options['std'] -> add_section('Icons','icons');
 $dc_options['std'] -> add_section('Sidebars','sidebars');
-$dc_options['std'] -> add_section('Content','content');
 
 $dc_options['css'] = new dc_theme_options('CSS','CSS','dc_css_options');
 $dc_options['css'] -> add_section('CSS','css');
@@ -137,6 +136,7 @@ $dc_options['content'] -> set('postFormatSingle', array(
 "\t\t".'<p>[the_content]</p>'."\n".
 "\t\t".'[dc_sidebar handle="After_Single"]'."\n".
 "\t".'</div><!--/.entry-content-->'."\n".
+"\t".'[dc_google_authorship]'."\n".
 '</article>'."\n\n".
 '[comments_template]'
         
@@ -254,8 +254,14 @@ $dc_options['js'] -> set('customJS_footer', array(
     'title'   => 'Custom Javascript - foot',
     'desc'    => 'Enter valid jquery-compatible Javascript to insert into the header.',
     'type'    => 'js',
-    'std'     => ''
-));
+    'std'     => htmlspecialchars(
+    
+"// Google Analytics: change UA-XXXXX-X to be your site's ID.
+var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src='//www.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));" 
+)));
 
 
 $dc_options['js'] -> set('headerJS', array(
@@ -415,30 +421,7 @@ $dc_options['std'] -> set('jqueryui_theme', array(
 /* SEO Settings
 ===========================================*/
 
-$dc_options['std'] -> set('defaultFocus', array(
-    'title'   => 'Default Focus Keyword',
-    'desc'    => 'Single keyword for use as the default \'focus\' keyword.',
-    'std'     => '',
-    'type'    => 'text',
-    'section' => 'seo'
-));
-
-$dc_options['std'] -> set('useMetaKeywords', array(
-    'section' => 'seo',
-    'title'   => 'Use Meta Keywords Tag?',
-    'desc'    => ' - If you\'re not sure, <a href="http://googlewebmastercentral.blogspot.com/2009/09/google-does-not-use-keywords-meta-tag.html">probably not</a>.',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('globalKeywords', array(
-    'title'   => 'Global Keywords',
-    'desc'    => '(Only used if Use Meta Keywords Tag is enabled.) Comma-delimited keywords for use in the \'keywords\' header meta tag.',
-    'std'     => '',
-    'type'    => 'text',
-    'section' => 'seo'
-));
-        
+  
 $dc_options['std'] -> set('titleSlug', array(
     'title'   => 'Title Slug',
     'desc'    => 'Programmer-friendly site title, used as a class for the <body> element on all pages.',

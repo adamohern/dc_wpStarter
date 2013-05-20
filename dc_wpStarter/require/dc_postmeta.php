@@ -1,20 +1,20 @@
 <?php
 
 // Based on http://wordpress.org/support/topic/add-an-extra-text-input-field-on-admin-post-page
-/*
+
 $dc_default_meta = new dc_meta_box('dc options');
 $dc_default_meta -> add_text_field('customTitle','Custom meta title','Replaces \'title\' and \'meta name\' in <head>');
 $dc_default_meta -> add_boolean_field('displayTitle', 'Display Title','show title on is_single()?','true');
 $dc_default_meta -> add_boolean_field('wpautop', 'Disable Auto-HTML','keep WP from adding <p> tags?','false');
 
 
-class dc_meta_box(){
+class dc_meta_box{
     private $handle;
     private $fields;
     
     public function __construct($handle){
         add_action( 'admin_menu', array( &$this, 'add_meta_box' ) );
-        add_action( 'save_post', array( &$this, 'save_meta', 10, 2 );
+        add_action( 'save_post', array( &$this, 'save_meta', 10, 2 ));
     }
     
     public function add_meta_box(){
@@ -38,14 +38,14 @@ class dc_meta_box(){
         
         e('<p class="dc-admin-meta-field '.$field['type'].'">');
         
-        switch ($field['type']){
-            case ('text'){
+        switch($field['type']){
+            case ('text'):
                 e('<label for="'.$field['handle'].'">'.$field['title'].'<br /><em>'.$field['description'].'</em></label><br />');
                 e('<input type="text" name="'.$field['handle'].'" id="'.$field['handle'].'" value="'.$field['value'].'"/>');
                 e('<input type="hidden" name="dc_meta_box_nonce" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />');
-            }
+            break;
             
-            case ('radio' || 'boolean'){
+            case ('radio' || 'boolean'):
                 
                 e('<label for="'.$field['handle'].'">'.$field['title'].'</label><br />');
                 foreach($field['options'] as $option){
@@ -53,7 +53,7 @@ class dc_meta_box(){
                     e('<input type="radio" name="'.$field['handle'].'" id="'.$field['handle'].'" value="'.$option.'"'.$checked.' /> '.$option.'<br />');
                 }
                 e('<input type="hidden" name="dc_meta_box_nonce" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />');
-            }
+            break;
         }
         
         e('</p>');

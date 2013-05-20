@@ -49,7 +49,7 @@ c('bloginfo(\'pingback_url\')',1);
 e('<link href="'.get_bloginfo('pingback_url').'" rel="pingback" />');
 
 e('<link rel="stylesheet" href="'.get_stylesheet_directory_uri().'/normalize.css">');
-e('<link rel="stylesheet" href="'.get_stylesheet_directory_uri().'/main.css">');
+e('<link rel="stylesheet" href="'.get_stylesheet_directory_uri().'/style.css">');
 
 c("apply_filters('dc_cssOverrides',o('cssOverrides'))",1);
 e('<style type="text/css">');
@@ -84,8 +84,8 @@ e('<!--[if lt IE 7]>');
 dc_render_markup(o('outdatedBrowser'));
 e('<![endif]-->');
 
-c('From Boilerplate:');
-e('<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>');
+c('From Boilerplate:',1);
+e('<script>window.jQuery || document.write(\'<script src="js/vendor/jquery-1.9.1.min.js"><\/script>\')</script>');
 
 e('<div id="everything">');
 

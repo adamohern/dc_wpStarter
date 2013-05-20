@@ -18,7 +18,7 @@ function dc_get_sidebar($args){
 		$x .= "\n".'</div><!--/#'.$handle.'-->'."\n";
         $x .= c("/#$handle",1,1);
 		$x .= c("End sidebar '$handle'",3,1);
-	} else { $x .= c("dc_is_active_sidebar($handle): false",1,1); }
+	} else { $x .= c("dc_is_active_sidebar($handle) = false",1,1); }
 
     return apply_filters(__FUNCTION__,$x);
 }
