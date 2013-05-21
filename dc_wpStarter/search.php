@@ -13,13 +13,15 @@ wp_reset_query();
 
 e('<h2 class="pagetitle">'.$count.' results for "<span class="search-terms">'.$key.'</span>"</h2>');
 
-dc_postNav();
+dc_sidebar('Before_Archive');
+
+dc_post_nav(o('post_nav_next'),o('post_nav_prev'),'top-nav');
 
 if (have_posts()) {
 	c('Begin The Loop',1);
 
 	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-	e("<div class='articles page-$paged'>");
+	e("<div class='articles page-$paged clearfix'>");
 	
 	while (have_posts()) { 
 		the_post(); 
@@ -34,7 +36,7 @@ if (have_posts()) {
 	dc_render_markup(apply_filters('contentMissing',o('contentMissing')));
 }
 
-dc_postNav();
+dc_post_nav(o('post_nav_next'),o('post_nav_prev'),'bottom-nav');
 
 dc_sidebar('After_Archive');
 

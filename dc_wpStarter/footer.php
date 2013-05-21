@@ -1,8 +1,14 @@
 <?php
 
 c('Begin footer.php',2);
-e('<footer id="footer" class="source-org vcard copyright h-lists">');
-e('<ul id="copyright_etc">');
+
+// This is the one sidebar we get from sidebar.php  
+get_sidebar(); 
+
+br(3);
+
+e('<footer id="footer" class="source-org vcard copyright h-lists clearfix">');
+e('<ul id="copyright_etc clearfix">');
 e('<li><small>&copy;'.date("Y").' '.get_bloginfo('name').'</small></li>');
 e('</ul>');
 
@@ -19,16 +25,6 @@ e('</footer>');
 e('</div>'.c('/contentBody',0,1));
 e('</div>'.c('/content',0,1)); 
 
-br(3);
-  
-if ( is_single() || is_page() || is_attachment() ){
-	$fullWidth = get_post_meta($post->ID, 'fullWidth');
-	if($fullWidth[0]!='true') { 
-		get_sidebar(); 
-	}
-} else {
-	get_sidebar(); 
-}
   
 br(3);
 

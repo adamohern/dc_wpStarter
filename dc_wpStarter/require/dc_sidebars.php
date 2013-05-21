@@ -10,15 +10,27 @@ function dc_get_sidebar($args){
 	if(isset($args['handle'])) $handle = $args['handle'];
 	else if (is_string($args)) $handle = $args;
 	else $handle = '[missing argument]';
+	
+	if(o('dc-'.$handle)){
+	
+		if (dc_is_active_sidebar($handle)) { $content .= dc_get_dynamic_sidebar($handle); $class = ' active_sidebar'; } 
+		else { 
+			$content .= '<p>The sidebar "'.$handle.'" is active, but empty. Add widgets!</p>'."\n".
+			c("dc_is_active_sidebar($handle) = false",1,1); 
+			$class = ' empty_sidebar';
+		}
+
     
-	if (dc_is_active_sidebar($handle)) {
 		$x .= c("Begin sidebar dc_get_sidebar('$handle')",2,1);
-		$x .= '<div id="'.$handle.'" class="dc_get_sidebar clearfix">'."\n";
-		$x .= dc_get_dynamic_sidebar($handle);
+		$x .= '<div id="'.$handle.'" class="dc_get_sidebar clearfix'.$class.'">'."\n";
+		$x .= '<div class="liner">'."\n";
+		$x .= $content;
+		$x .= "\n".'</div><!--/.liner-->'."\n";
 		$x .= "\n".'</div><!--/#'.$handle.'-->'."\n";
-        $x .= c("/#$handle",1,1);
+		$x .= c("/#$handle",1,1);
 		$x .= c("End sidebar '$handle'",3,1);
-	} else { $x .= c("dc_is_active_sidebar($handle) = false",1,1); }
+	
+	}
 
     return apply_filters(__FUNCTION__,$x);
 }

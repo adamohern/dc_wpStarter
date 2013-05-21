@@ -15,7 +15,7 @@ add_action('after_setup_theme','dc_load_options');
 add_theme_support( 'post-formats', array( 'video','status','quote','status','aside' ) );
 add_theme_support( 'post-thumbnails' );
 add_theme_support( 'automatic-feed-links' );
-add_image_size( 'dc_thumbnail', 256, 144, true ); // 256 x 144, hard crop mode
+add_image_size( 'dc_thumbnail', 240, 135, true ); // 256 x 144, hard crop mode
 add_image_size( 'dc_large', 720, 405, true ); // 720 x 405, hard crop mode
 add_image_size( 'dc_huge', 960, 540, true ); // 960 x 540, hard crop mode
 

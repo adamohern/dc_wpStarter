@@ -26,9 +26,9 @@ if (have_posts()) {
 }
 
 c('End The Loop',1);
-
-c('End single.php',3);
 	
 get_footer(); 
+
+c('End single.php',3);
 
 ?>

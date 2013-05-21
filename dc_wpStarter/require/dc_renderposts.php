@@ -37,7 +37,8 @@ function dc_get_render_markup($markup) {
             array('get_post_meta',			'dc_get_post_meta'),
             array('get_post_class',			'dc_get_post_class'),
             array('dc_sidebar',				'dc_get_sidebar'),
-            array('dc_google_authorship',	'dc_get_google_authorship')
+            array('dc_google_authorship',	'dc_get_google_authorship'),
+            array('dc_author_bio',			'dc_get_author_bio')
         );
 
         foreach ($shortcodes as $shortcode){
@@ -165,6 +166,8 @@ function dc_get_post_class($args=array()){
     $fullWidth = get_post_meta($post->ID, 'fullWidth'); 
     if($fullWidth[0]=='true') $class[]='fullWidth';
     
+    $class[]='clearfix';
+    
     $x = implode(' ',get_post_class($class));
     return apply_filters(__FUNCTION__,$x);
 }
@@ -211,28 +214,33 @@ function dc_google_authorship() {
 }
 
 
-function dc_postNav() {
-	c('dc_postNav() (functions.php)',1);
-	echo '<div class="navigation clearfix">';
-	echo '<div class="next-posts">';
-	next_posts_link('&laquo; Older Entries',0);
-	echo '</div>';
-	echo '<div class="prev-posts">';
-	previous_posts_link('Newer Entries &raquo;',0);
-	echo '</div>';
-	echo '</div>';
-	c('/dc_postNav()',1);
+function dc_post_nav($next='next',$prev='prev',$class) {
+	if($class) $class = ' '.$class;
+	c('dc_post_nav()',1);
+	e('<div class="navigation clearfix$class">');
+	e('<div class="next-posts">');
+	next_posts_link($next,0);
+	e('</div>');
+	e('<div class="prev-posts'.$class.'">');
+	previous_posts_link($prev,0);
+	e('</div>');
+	e('</div>');
+	c('/dc_post_nav()',1);
 }
 
-function dc_authorBio() { 
+function dc_author_bio() { 
+	e(dc_get_author_bio());
+}
+
+function dc_get_author_bio() {
 	if (o('dc_displayBio')){
-		if ( get_the_author_meta('description') ) {
-			$authorBio = get_the_author_meta('description');
-			c('Begin dc_authorBio() (dc_renderposts.php)',1);
-			echo '<div class="authorBio clearfix '.get_the_author_meta('user_login').'"><div class="avatar">'.get_avatar( get_the_author_meta('ID'), 96 ).'</div><div class="text"><h3>About '.get_the_author_link().'</h3>'.$authorBio.'</div></div>'.c('/.authorBio',0,true);
-			c('End dc_authorBio()',1);	
+		if ( $authorBio = get_the_author_meta('description') ) {
+			$x = c('Begin dc_authorBio() (dc_renderposts.php)',1,1);
+			$x .= '<div class="authorBio clearfix '.get_the_author_meta('user_login').'"><div class="avatar">'.get_avatar( get_the_author_meta('ID'), 96 ).'</div><div class="text"><h3>About '.get_the_author_link().'</h3>'.$authorBio.'</div></div>'.c('/.authorBio',0,1);
+			$x .= c('End dc_authorBio()',1,1);	
 		}
-	}
+	} else { $x = c('No bio found for this author.',1,1); }
+	return $x;
 }
 
 ?>

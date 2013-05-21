@@ -2,18 +2,18 @@
 
 global $dc_options;
 
-$dc_options['std'] = new dc_theme_options('Theme Options','Theme Options','dc_options');
+$dc_options['std'] = new dc_theme_options('Theme Options','dc Options','dc_options');
 $dc_options['std'] -> add_section('SEO','seo');
 $dc_options['std'] -> add_section('Icons','icons');
 $dc_options['std'] -> add_section('Sidebars','sidebars');
 
-$dc_options['css'] = new dc_theme_options('CSS','CSS','dc_css_options');
+$dc_options['css'] = new dc_theme_options('Theme CSS','dc CSS','dc_css_options');
 $dc_options['css'] -> add_section('CSS','css');
 
-$dc_options['js'] = new dc_theme_options('Javascript','Javascript','dc_javascript_options');
+$dc_options['js'] = new dc_theme_options('Theme Javascript','dc Javascript','dc_javascript_options');
 $dc_options['js'] -> add_section('Javascript','js');
 
-$dc_options['content'] = new dc_theme_options('Content','Content','dc_content_options');
+$dc_options['content'] = new dc_theme_options('Theme Content','dc Content','dc_content_options');
 $dc_options['content'] -> add_section('Common Markup','common');
 $dc_options['content'] -> add_section('Special Markup','special');
 
@@ -28,21 +28,31 @@ $dc_options['css'] -> set('cssOverrides', array(
     'desc'    => 'Enter any custom CSS here to apply it to your theme. Hint: copy/paste this into a <a href="http://notepad-plus-plus.org/">CSS editor</a> for editing.',
     'std'     => htmlspecialchars(
 
-'#sidebar{float:left;}'."\n\n".
+'body{ background-color:#f3f3f3; }
 
-'a {color: #ff3c00;}'."\n".
-'a:hover {color: #f13a09;}'."\n".
-'.primaryColor {color: #ff3c00;}'."\n\n".
+#dc-content{ width:960px; margin:80px auto; background-color:#fff; }
+#contentBody {  }
+#Main_Sidebar { width:240px; min-height:400px; float:right; }
+.dc_get_sidebar .liner { margin:20px; }
+.empty_sidebar { font-size:.8em; font-style:italic; color:#999; background-color:#f5f5f5; }
+.articles { width:720px; float:left; }
 
-'::-moz-selection{background: #ffa200;color: #351a00;}'."\n".
-'::selection {background: #ffa200;color: #351a00;}'."\n".
-'a:link {-webkit-tap-highlight-color: #ffa200;}'."\n".
-'ins {background-color: #ffa200;}'."\n".
-'mark {background-color: #ffa200;}'."\n\n".
+.thumb { width:240px; height:135px; background-color:#eee; float:left; }
+.entry-content { float:left; padding:0 20px 0 40px; width:420px; }
 
-'ol.commentlist li.comment ul.children li.depth-2 {border-color:#555;}'."\n".
-'ol.commentlist li.comment ul.children li.depth-3 {border-color:#999;}'."\n".
-'ol.commentlist li.comment ul.children li.depth-4 {border-color:#bbb;}'
+h1, h2, h3, h4 { margin:0; }
+
+#footer ul { padding:0; }
+#footer li { list-style-type:none; float:left; margin-right:1em; }
+
+a {color: #ff3c00;}
+a:hover {color: #f13a09;}
+
+::-moz-selection{background: #ffa200;color: #351a00;}
+::selection {background: #ffa200;color: #351a00;}
+a:link {-webkit-tap-highlight-color: #ffa200;}
+ins {background-color: #ffa200;}
+mark {background-color: #ffa200;}'
     
     ),
     
@@ -56,6 +66,21 @@ $dc_options['css'] -> set('cssOverrides', array(
 /* Content
 ===========================================*/           
 
+$dc_options['content'] -> set('post_nav_next', array(
+    'section' => 'common',
+    'title'   => 'Post Nav: Next',
+    'desc'    => 'Text for pagination links on archive and search pages.',
+    'type'    => 'text',
+    'std'     => '&laquo; Older'
+));
+
+$dc_options['content'] -> set('post_nav_prev', array(
+    'section' => 'common',
+    'title'   => 'Post Nav: Previous',
+    'desc'    => 'Text for pagination links on archive and search pages.',
+    'type'    => 'text',
+    'std'     => 'Newer &raquo;'
+));
 
 $dc_options['content'] -> set('postFormatIndex', array(
     'title'   => 'post format for index.php',
@@ -65,12 +90,10 @@ $dc_options['content'] -> set('postFormatIndex', array(
 '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
 "\t".'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
 "\t".'<div class="entry-content">'."\n".
-"\t\t".'<h1>[the_title link="true"]</h1>'."\n".
-"\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t\t".'<h2>[the_title link="true"]</h2>'."\n".
 "\t\t".'<p>[the_excerpt]</p>'."\n".
-"\t\t".'[dc_sidebar handle="After_Single"]'."\n".
 "\t".'</div><!--/.entry-content-->'."\n".
-'</article>'."\n\n"
+'</article>'
         
     ),
     'type'    => 'html',
@@ -87,12 +110,10 @@ $dc_options['content'] -> set('postFormatArchive', array(
 '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
 "\t".'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
 "\t".'<div class="entry-content">'."\n".
-"\t\t".'<h1>[the_title link="true"]</h1>'."\n".
-"\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t\t".'<h2>[the_title link="true"]</h2>'."\n".
 "\t\t".'<p>[the_excerpt]</p>'."\n".
-"\t\t".'[dc_sidebar handle="After_Single"]'."\n".
 "\t".'</div><!--/.entry-content-->'."\n".
-'</article>'."\n\n"
+'</article>'
         
     ),
     'type'    => 'html',
@@ -109,12 +130,10 @@ $dc_options['content'] -> set('postFormatSearch', array(
 '<article class="[get_post_class]" id="post-[the_ID]">'."\n".
 "\t".'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
 "\t".'<div class="entry-content">'."\n".
-"\t\t".'<h1>[the_title link="true"]</h1>'."\n".
-"\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t\t".'<h2>[the_title link="true"]</h2>'."\n".
 "\t\t".'<p>[the_excerpt]</p>'."\n".
-"\t\t".'[dc_sidebar handle="After_Single"]'."\n".
 "\t".'</div><!--/.entry-content-->'."\n".
-'</article>'."\n\n"
+'</article>'
         
     ),
     'type'    => 'html',
@@ -137,6 +156,7 @@ $dc_options['content'] -> set('postFormatSingle', array(
 "\t\t".'[dc_sidebar handle="After_Single"]'."\n".
 "\t".'</div><!--/.entry-content-->'."\n".
 "\t".'[dc_google_authorship]'."\n".
+"\t".'[dc_author_bio]'."\n".
 '</article>'."\n\n".
 '[comments_template]'
         
@@ -159,7 +179,7 @@ $dc_options['content'] -> set('postFormatPage', array(
 "\t\t".'<p>[the_content]</p>'."\n".
 "\t\t".'[dc_sidebar handle="After_Single"]'."\n".
 "\t".'</div><!--/.entry-content-->'."\n".
-'</article>'."\n\n"
+'</article>'
         
     ),
     'type'    => 'html',

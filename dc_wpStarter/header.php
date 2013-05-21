@@ -108,8 +108,6 @@ if($fullWidth[0]=='true' && is_singular()) $class.=' fullWidth';
 
 e('<div id="dc-content" class="'.$class.'">');
 
-if(o('dc-Main_Sidebar')) get_sidebar();
-
 e('<div id="contentBody">');
 
 c('End header.php',3); 

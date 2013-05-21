@@ -29,7 +29,11 @@
     offset                // int (removes X number of posts from beginning of list)
     paginate              // boolen OR 'previousPageLinkText*nextPageLinkText'
 */
+
 function dc_query_posts ($args) {
+
+    $html = '';
+    $html .= c('begin functions/dc_postsList.php > dc_query_posts',1,1);
     
     global $more; $more = 0;    // use global $more so that <--more--> tags work
     global $paged;              // use global $paged so that pagination works properly
@@ -51,9 +55,6 @@ function dc_query_posts ($args) {
         $nextPageLinkText = '&laquo; next';
         $previousPageLinkText = 'previous &raquo;';
     }
-
-    $html = '';
-    $html .= c('begin functions/dc_postsList.php > dc_query_posts',1,1);
     
 	// Extract tags/cats from CSV
 	$args['tags'] = dc_commasToTermArray($args['tags'],'post_tag');

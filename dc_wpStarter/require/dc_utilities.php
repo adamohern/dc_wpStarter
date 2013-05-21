@@ -91,7 +91,6 @@ function c($comment='',$mode=0,$return=false) {
 
 
 
-
 // safely load a linebreak-dilimited list of scripts
 function dc_enqueue_scripts ( $list, $footer=false ){
     $urls = dc_array_from_lines($list);

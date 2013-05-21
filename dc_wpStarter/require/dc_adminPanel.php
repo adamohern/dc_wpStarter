@@ -1,9 +1,4 @@
 <?php 
-
-// Based on Alison Barrett's excellent tutorial:
-// http://alisothegeek.com/2011/01/wordpress-settings-api-tutorial-2/
-// (revised significantly to improve object-oriented behavior)
-
 // instantiated in dc_themeOptions.php
 
 
@@ -13,9 +8,6 @@ class dc_theme_options {
 	private $sections, $checkboxes, $pageTitle, $menuTitle, $handle, $settings, $options;
     
     
-    /*
-    // runs on instantiation
-    */
 	public function __construct( $pt='Theme Options', $mt='Theme Options', $h='dc_options' ) {
 		        
 		$this->checkboxes = array();
@@ -33,12 +25,31 @@ class dc_theme_options {
         $this -> add_section('Reset "'.$this->pageTitle.'" to Defaults','reset');
 
 	}
+	
+	    
+    // method for adding sections
+    public function add_section($title,$slug){
+        $this->sections[$slug] = $title;
+    }
     
     
+    // method for adding settings
+    public function set($setting,$args=array()){
+        $this->settings[$setting] = $args;
+    }
     
-	/*
-    // add options page to admin UI
-    */
+    // method for grabbing a setting
+    public function get($h){
+        $options = get_option($this->handle);
+        return $options[$h];
+    }
+    
+    // method for grabbing all settings
+    public function get_all() {
+        return get_option($this->handle);
+    }
+	
+    
 	public function add_pages() {
         
 		$admin_page = add_theme_page( 
@@ -49,17 +60,9 @@ class dc_theme_options {
 			array( &$this, 'display_page' ) 
 		);
 		
-		add_action( 'admin_print_scripts-' . $admin_page, array( &$this, 'scripts' ) );
-		add_action( 'admin_print_styles-' . $admin_page, array( &$this, 'styles' ) );
-		
 	}
     
     
-    
-	
-	/*
-	// register settings
-	*/
 	public function register_settings() {
 		
 		register_setting( $this->handle, $this->handle, array ( &$this, 'validate_settings' ) );
@@ -77,12 +80,7 @@ class dc_theme_options {
 		
 	}
     
-    
-    
-    
-    /*
-    // initialize settings to their default values
-    */
+
 	public function initialize_settings() {
 	
 		if (!get_option($this->handle)) { 
@@ -100,14 +98,7 @@ class dc_theme_options {
 		
 	}
     
-    
-    
-    
-    
-	
-	/*
-    // create settings field
-    */
+
 	public function create_setting( $args = array() ) {
         		        
 		$defaults = array(
@@ -141,11 +132,6 @@ class dc_theme_options {
     }
     
     
-    
-	
-	/*
-    // display options page
-    */
 	public function display_page() {
 		
 		e('<div class="wrap">');
@@ -170,40 +156,29 @@ class dc_theme_options {
 	}
 	
     
-    
-    /*
-	** Not currently used, but needs to be here.
-    */
+
 	public function display_section() {
 		//
 	}
     
     
-    
-    /*
-    // HTML snippets for display_setting() functions below
-    */
+    // HTML snippet for display_setting() functions below
     private function description($desc){
-        if ( $desc != '' )
-            echo '<br /><span class="description">' . $desc . '</span>';
+        if ( $desc != '' ) e('<br /><span class="description">' . $desc . '</span>');
     }
     
+    // HTML snippet for display_setting() functions below
     private function acebox($options,$id,$height,$mode,$field_class,$std){
-        echo '<div id="'.$id.'_editor" style="border:1px solid #eee;width:95%;height:'.$height.'px;position:relative;display:block;">'.esc_attr($options[$id]).'</div>'; br();
-        echo '<script>'."\n";
-        echo 'var '.$id.' = ace.edit("'.$id.'_editor"); '.$id.'.setTheme("ace/theme/textmate"); '.$id.'.getSession().setMode("ace/mode/'.$mode.'");'."\n";
-        echo $id.'.getSession().on(\'change\', function(e) { document.getElementById(\''.$id.'\').value = '.$id.'.getSession().getValue(); });'."\n";
-        echo '</script>'."\n";
-        echo '<textarea style="display:none;" class="' . $field_class . '" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" placeholder="' . $std . '" rows="5" cols="30">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
+        e('<div id="'.$id.'_editor" style="border:1px solid #eee;width:95%;height:'.$height.'px;position:relative;display:block;">'.esc_attr($options[$id]).'</div>');
+        e('<script>'."\n");
+        e('var '.$id.' = ace.edit("'.$id.'_editor"); '.$id.'.setTheme("ace/theme/textmate"); '.$id.'.getSession().setMode("ace/mode/'.$mode.'");');
+        e($id.'.getSession().on(\'change\', function(e) { document.getElementById(\''.$id.'\').value = '.$id.'.getSession().getValue(); });');
+        e('</script>');
+        e('<textarea style="display:none;" class="' . $field_class . '" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" placeholder="' . $std . '" rows="5" cols="30">' . wp_htmledit_pre( $options[$id] ) . '</textarea>');
     }
     
-    
-    
-    
-	
-	/*
+
     // HTML output for fields
-    */
 	public function display_setting( $args = array() ) {
 		
 		extract( $args );
@@ -364,13 +339,7 @@ class dc_theme_options {
 	}
 	
 	
-    
-    
-    
-    
-	/*
     // settings and defaults (mostly defined in dc_themeOptions.php)
-    */
 	public function get_settings() {
         
         /* Reset
@@ -389,58 +358,8 @@ class dc_theme_options {
         $this->options = get_option( $this->handle );
 		
 	}
-    
-    
-    
-    
-    /*
-    // method for snatching options out of RAM (quicker than a mySQL lookup)
-    */
-    public function get($h){
-        $options = get_option($this->handle);
-        return $options[$h];
-    }
-	
-    
-    /*
-    // method for snatching ALL options out of RAM (quicker than a mySQL lookup)
-    */    
-    public function get_all() {
-        return get_option($this->handle);
-    }
-    
-    
-    
-	/*
-	// jQuery Tabs
-	*/
-	public function scripts() {
-		
-		wp_print_scripts( 'jquery-ui-tabs' );
-		
-	}
-	
-    
-    
-    
-    
-	/*
-	// Styling for the theme options page
-	*/
-	public function styles() {
-		
-		wp_register_style( 'dc-admin', get_bloginfo( 'stylesheet_directory' ) . '/require/dc_adminPanel.css' );
-		wp_enqueue_style( 'dc-admin' );
-		
-	}
-	
-    
-    
-    
-    
-	/*
-	// Validate settings
-	*/
+
+
 	public function validate_settings( $input ) {
 		
 		if ( ! isset( $input['reset_theme'] ) ) {
@@ -457,26 +376,4 @@ class dc_theme_options {
 		
 	}
     
-    
-    
-    
-    
-    /*
-    // method for adding sections
-    */
-    public function add_section($title,$slug){
-        $this->sections[$slug] = $title;
-    }
-    
-    
-    
-    
-    /*
-    // method for adding settings
-    */
-    public function set($setting,$args=array()){
-        $this->settings[$setting] = $args;
-    }
-    
-	
 }
