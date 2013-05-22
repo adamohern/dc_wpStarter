@@ -2,8 +2,12 @@
 
 c('Begin footer.php',2);
 
-// This is the one sidebar we get from sidebar.php  
-get_sidebar(); 
+if(is_single()) $full_width = get_post_meta($post->ID, 'dc_full_width');
+
+if (o('dc-sidebar01') && !$full_width) dc_sidebar('dc-sidebar01');
+if (o('dc-sidebar02') && !$full_width) dc_sidebar('dc-sidebar02');
+
+if($full_width) c('This post has "dc_full_width" = true. Skipping sidebars.',1);
 
 br(3);
 
@@ -12,18 +16,14 @@ e('<ul id="copyright_etc clearfix">');
 e('<li><small>&copy;'.date("Y").' '.get_bloginfo('name').'</small></li>');
 e('</ul>');
 
-if (o('sidebars-Footer_Widgets')) {
-c('Begin footer widgets',2);
-if (function_exists('dynamic_sidebar') && dynamic_sidebar('Footer_Widgets')) {} else {};
-c('End footer widgets',3);
+if (o('dc-footer')) {
+	dc_sidebar('dc-footer');
 }
 
-c('o(\'customJS_footer\')');
-e('<script type="text/javascript">'."\n".o('customJS_footer')."\n".'</script>');
 
 e('</footer>');
-e('</div>'.c('/contentBody',0,1));
-e('</div>'.c('/content',0,1)); 
+e('</div>'.c('/dc-content-liner',0,1));
+e('</div>'.c('/dc-content',0,1)); 
 
   
 br(3);
@@ -39,13 +39,13 @@ c('End wp_footer()');
 
 br(3);
 
-e('</div>'.c('/#everything',0,1));
+e('</div>'.c('/#dc-everything',0,1));
 
 br(3);
 
-c("dc_render_markup(o('customJS_footer'));",1);
+c("dc_render_markup(o('custom_js_footer'));",1);
 e('<script>');
-dc_render_markup(o('customJS_footer'));
+dc_render_markup(o('custom_js_footer'));
 e('</script>');
 
 br(3);

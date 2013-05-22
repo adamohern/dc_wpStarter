@@ -43,7 +43,7 @@ function br($n=0,$return=false){
 
 function c($comment='',$mode=0,$return=false) {
 
-    if (o('debugMode')) {
+    if (o('debug_mode')) {
         $source = debug_backtrace();
         $comment = ' '.basename( $source[0]['file'] ).' line '.$source[0]['line'].': '.$comment.' ';
         

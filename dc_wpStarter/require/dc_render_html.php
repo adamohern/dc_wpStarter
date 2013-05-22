@@ -214,17 +214,89 @@ function dc_google_authorship() {
 }
 
 
+function dc_the_loop($format){
+
+	c('Begin dc_the_loop()',2);
+	e("<div class='dc-wrapper dc-the-loop'>");
+	e("<div class='dc-liner dc-the-loop-liner'>");
+	dc_sidebar('dc-before-the-loop');
+	dc_post_nav(o('post_nav_next'),o('post_nav_prev'),'top-nav');
+
+	c('Begin The Loop',1); 
+
+	if (have_posts()) {
+		
+		br(5);
+		
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+		e("<div class='dc-wrapper dc-articles page-$paged clearfix'>");
+		e("<div class='dc-liner dc-articles-liner'>");
+		
+		br(5);
+		
+		while (have_posts()) { 
+			the_post(); 
+			
+			if(is_singular()){
+				$disable_wpautop = get_post_meta($post->ID, 'dc_wpautop');
+				if ($disable_wpautop) remove_filter('the_content', 'wpautop');
+			
+				$post_css = get_post_meta($post->ID, 'dc_post_css');
+				
+				if($post_css[0]) {
+					e('<style type="text/css">'."\n".$post_css[0]."\n".'</style>');
+				}
+			}
+			
+			$id = 'post-'.get_the_ID();
+			
+			e('<article id="'.$id.'" class="dc-wrapper '.get_post_class().'">');
+			e('<div class="dc-liner">');
+			dc_render_markup(apply_filters($format,o($format)));
+			e('</div><!--/.post-liner-->');
+			e('</article><!--/'.$id.'-->');
+			br(2);
+		}
+	
+		br(3);
+		
+		e('</div>'.c('/.dc-articles-liner',0,1));
+		e('</div>'.c('/.dc-articles',0,1));
+		
+		br(5);
+		
+	} else {
+	
+		c('query produced no results');
+		echo o('contentMissing');
+	
+	}
+
+	c('End The Loop',1);
+
+	dc_post_nav(o('post_nav_next'),o('post_nav_prev'),'bottom-nav');
+	dc_sidebar('dc-after-the-loop');
+	
+	e("</div><!--/.dc-the-loop-liner-->");
+	e("</div><!--/.dc-the-loop-->");
+	c('End dc_the_loop()',3);
+	
+}
+
+
 function dc_post_nav($next='next',$prev='prev',$class) {
 	if($class) $class = ' '.$class;
 	c('dc_post_nav()',1);
-	e('<div class="navigation clearfix$class">');
-	e('<div class="next-posts">');
+	e('<div class="dc-wrapper dc-navigation clearfix$class">');
+	e('<div class="dc-liner dc-navigation-liner">');
+	e('<div class="dc-next-posts">');
 	next_posts_link($next,0);
-	e('</div>');
-	e('<div class="prev-posts'.$class.'">');
+	e('</div><!--/.dc-next-posts-->');
+	e('<div class="dc-prev-posts'.$class.'">');
 	previous_posts_link($prev,0);
-	e('</div>');
-	e('</div>');
+	e('</div><!--/.dc-prev-posts-->');
+	e('</div><!--/.dc-navigation-liner-->');
+	e('</div><!--/.dc-navigation-->');
 	c('/dc_post_nav()',1);
 }
 
@@ -235,9 +307,17 @@ function dc_author_bio() {
 function dc_get_author_bio() {
 	if (o('dc_displayBio')){
 		if ( $authorBio = get_the_author_meta('description') ) {
-			$x = c('Begin dc_authorBio() (dc_renderposts.php)',1,1);
-			$x .= '<div class="authorBio clearfix '.get_the_author_meta('user_login').'"><div class="avatar">'.get_avatar( get_the_author_meta('ID'), 96 ).'</div><div class="text"><h3>About '.get_the_author_link().'</h3>'.$authorBio.'</div></div>'.c('/.authorBio',0,1);
-			$x .= c('End dc_authorBio()',1,1);	
+			$x = c('Begin dc_get_author_bio() (dc_renderposts.php)',1,1);
+			$x .= '<div class="dc-wrapper dc-author-bio clearfix '.get_the_author_meta('user_login').'">';
+			$x .= '<div class="dc-liner dc-author-bio-liner clearfix '.get_the_author_meta('user_login').'">';
+			$x .= '<div class="avatar">'.get_avatar( get_the_author_meta('ID'), 96 ).'</div><!--/.avatar-->';
+			$x .= '<div class="text"><h3>About '.get_the_author_link().'</h3>';
+			$x .= $authorBio;
+			$x .= '</div><!--/.text-->';
+			$x .= '</div><!--/.dc-author-bio-liner-->';
+			$x .= '</div><!--/.dc-author-bio-->';
+			$x .= c('/.dc-author-bio',0,1);
+			$x .= c('End dc_get_author_bio()',1,1);	
 		}
 	} else { $x = c('No bio found for this author.',1,1); }
 	return $x;

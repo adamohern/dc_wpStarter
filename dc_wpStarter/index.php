@@ -4,30 +4,7 @@ c('Begin index.php',2);
 
 get_header();
 
-dc_post_nav(o('post_nav_next'),o('post_nav_prev'),'top-nav');
-
-c('Begin The Loop',1); 
-
-if (have_posts()) {
-	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-	e("<div class='articles page-$paged clearfix'>");
-	
-	while (have_posts()) { 
-		the_post(); 
-		dc_render_markup(apply_filters('postFormatIndex',o('postFormatIndex')));
-	}
-	
-	e('</div>'.c('/.articles',0,1));
-} else {
-	c('query produced no results');
-	echo o('contentMissing');
-}
-
-c('End The Loop',1);
-
-dc_post_nav(o('post_nav_next'),o('post_nav_prev'),'bottom-nav');
-
-dc_sidebar('After_Archive');
+dc_the_loop('post_format_index');
     
 get_footer(); 
 

@@ -4,8 +4,8 @@ c('Begin 404.php',2);
 
 get_header();
 
-c("dc_renderMarkup(o('contentMissing'))",1);
-dc_render_markup(apply_filters('contentMissing'),o('contentMissing')));
+c("dc_renderMarkup(o('content_missing'))",1);
+dc_render_markup(apply_filters('content_missing'),o('content_missing')));
 
 get_search_form(); br();
 

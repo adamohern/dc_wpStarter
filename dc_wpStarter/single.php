@@ -1,31 +1,10 @@
-<?php get_header(); 
+<?php 
 
 c('Begin single.php',2);
 
-dc_sidebar('Banner_All');
+get_header(); 
 
-c('Begin The Loop',1);
-
-if (have_posts()) { 
-	while (have_posts()) {
-        
-		the_post();
-        
-        $hideWpautop = get_post_meta($post->ID, 'wpautop');
-        if ($hideWpautop) remove_filter('the_content', 'wpautop');
-        
-        $postCSS = get_post_meta($post->ID, 'postCSS');
-                
-        if($postCSS[0]) {
-            e('<style type="text/css">'."\n".$postCSS[0]."\n".'</style>');
-        }
-        
-        c('dc_render_markup(o(\'postFormatSingle\'))',1);
-        dc_render_markup( apply_filters('postFormatSingle',o('postFormatSingle')) );
-	}
-}
-
-c('End The Loop',1);
+dc_the_loop('post_format_single');
 	
 get_footer(); 
 

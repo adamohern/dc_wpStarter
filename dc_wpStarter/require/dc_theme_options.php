@@ -23,38 +23,10 @@ $instructions = '(add supported wordpress template tags in [shortcode] form (e.g
 /* CSS
 ===========================================*/
 
-$dc_options['css'] -> set('cssOverrides', array(
+$dc_options['css'] -> set('css_overrides', array(
     'title'   => 'CSS Overrides',
     'desc'    => 'Enter any custom CSS here to apply it to your theme. Hint: copy/paste this into a <a href="http://notepad-plus-plus.org/">CSS editor</a> for editing.',
-    'std'     => htmlspecialchars(
-
-'body{ background-color:#f3f3f3; }
-
-#dc-content{ width:960px; margin:80px auto; background-color:#fff; }
-#contentBody {  }
-#Main_Sidebar { width:240px; min-height:400px; float:right; }
-.dc_get_sidebar .liner { margin:20px; }
-.empty_sidebar { font-size:.8em; font-style:italic; color:#999; background-color:#f5f5f5; }
-.articles { width:720px; float:left; }
-
-.thumb { width:240px; height:135px; background-color:#eee; float:left; }
-.entry-content { float:left; padding:0 20px 0 40px; width:420px; }
-
-h1, h2, h3, h4 { margin:0; }
-
-#footer ul { padding:0; }
-#footer li { list-style-type:none; float:left; margin-right:1em; }
-
-a {color: #ff3c00;}
-a:hover {color: #f13a09;}
-
-::-moz-selection{background: #ffa200;color: #351a00;}
-::selection {background: #ffa200;color: #351a00;}
-a:link {-webkit-tap-highlight-color: #ffa200;}
-ins {background-color: #ffa200;}
-mark {background-color: #ffa200;}'
-    
-    ),
+    'std'     => htmlspecialchars( '/* custom CSS goes here */' ),
     
     'type'    => 'css_big',
     'section' => 'css',
@@ -82,18 +54,16 @@ $dc_options['content'] -> set('post_nav_prev', array(
     'std'     => 'Newer &raquo;'
 ));
 
-$dc_options['content'] -> set('postFormatIndex', array(
+$dc_options['content'] -> set('post_format_index', array(
     'title'   => 'post format for index.php',
     'desc'    => 'HTML to display index posts<br />'.$instructions,
     'std'     => htmlspecialchars(
         
-'<article class="[get_post_class]" id="post-[the_ID]">'."\n".
-"\t".'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
-"\t".'<div class="entry-content">'."\n".
-"\t\t".'<h2>[the_title link="true"]</h2>'."\n".
-"\t\t".'<p>[the_excerpt]</p>'."\n".
-"\t".'</div><!--/.entry-content-->'."\n".
-'</article>'
+'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
+'<div class="entry-content">'."\n".
+"\t".'<h2>[the_title link="true"]</h2>'."\n".
+"\t".'<p>[the_excerpt]</p>'."\n".
+'</div><!--/.entry-content-->'
         
     ),
     'type'    => 'html',
@@ -102,18 +72,16 @@ $dc_options['content'] -> set('postFormatIndex', array(
 )); 
 
 
-$dc_options['content'] -> set('postFormatArchive', array(
+$dc_options['content'] -> set('post_format_archive', array(
     'title'   => 'post format for archive.php',
     'desc'    => 'HTML to display archive posts<br />'.$instructions,
     'std'     => htmlspecialchars(
         
-'<article class="[get_post_class]" id="post-[the_ID]">'."\n".
-"\t".'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
-"\t".'<div class="entry-content">'."\n".
-"\t\t".'<h2>[the_title link="true"]</h2>'."\n".
-"\t\t".'<p>[the_excerpt]</p>'."\n".
-"\t".'</div><!--/.entry-content-->'."\n".
-'</article>'
+'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
+'<div class="entry-content">'."\n".
+"\t".'<h2>[the_title link="true"]</h2>'."\n".
+"\t".'<p>[the_excerpt]</p>'."\n".
+'</div><!--/.entry-content-->'
         
     ),
     'type'    => 'html',
@@ -122,18 +90,16 @@ $dc_options['content'] -> set('postFormatArchive', array(
 )); 
 
 
-$dc_options['content'] -> set('postFormatSearch', array(
+$dc_options['content'] -> set('post_format_search', array(
     'title'   => 'post format for search.php',
     'desc'    => 'HTML to display search posts<br />'.$instructions,
     'std'     => htmlspecialchars(
         
-'<article class="[get_post_class]" id="post-[the_ID]">'."\n".
-"\t".'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
-"\t".'<div class="entry-content">'."\n".
-"\t\t".'<h2>[the_title link="true"]</h2>'."\n".
-"\t\t".'<p>[the_excerpt]</p>'."\n".
-"\t".'</div><!--/.entry-content-->'."\n".
-'</article>'
+'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
+'<div class="entry-content">'."\n".
+"\t".'<h2>[the_title link="true"]</h2>'."\n".
+"\t".'<p>[the_excerpt]</p>'."\n".
+'</div><!--/.entry-content-->'
         
     ),
     'type'    => 'html',
@@ -142,22 +108,20 @@ $dc_options['content'] -> set('postFormatSearch', array(
 )); 
                     
 
-$dc_options['content'] -> set('postFormatSingle', array(
+$dc_options['content'] -> set('post_format_single', array(
     'title'   => 'post format for single.php',
     'desc'    => 'HTML to display individual posts<br />'.$instructions,
     'std'     => htmlspecialchars(
         
-'<article class="[get_post_class]" id="post-[the_ID]">'."\n".
-"\t".'<div class="thumb">[the_post_thumbnail size="dc_large"]</div>'."\n".
-"\t".'<div class="entry-content">'."\n".
-"\t\t".'<h1>[the_title]</h1>'."\n".
-"\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
-"\t\t".'<p>[the_content]</p>'."\n".
-"\t\t".'[dc_sidebar handle="After_Single"]'."\n".
-"\t".'</div><!--/.entry-content-->'."\n".
-"\t".'[dc_google_authorship]'."\n".
-"\t".'[dc_author_bio]'."\n".
-'</article>'."\n\n".
+'<div class="thumb">[the_post_thumbnail size="dc_large"]</div>'."\n".
+'<div class="entry-content">'."\n".
+"\t".'<h1>[the_title]</h1>'."\n".
+"\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t".'<p>[the_content]</p>'."\n".
+"\t".'[dc_sidebar handle="After_Single"]'."\n".
+'</div><!--/.entry-content-->'."\n".
+'[dc_google_authorship]'."\n".
+'[dc_author_bio]'."\n\n".
 '[comments_template]'
         
     ),
@@ -167,19 +131,17 @@ $dc_options['content'] -> set('postFormatSingle', array(
 ));   
 
 
-$dc_options['content'] -> set('postFormatPage', array(
+$dc_options['content'] -> set('post_format_page', array(
     'title'   => 'post format for page.php',
     'desc'    => 'HTML to display pages<br />'.$instructions,
     'std'     => htmlspecialchars(
         
-'<article class="[get_post_class]" id="page-[the_ID]">'."\n".
-"\t".'<div class="entry-content">'."\n".
-"\t\t".'<h1>[the_title]</h1>'."\n".
-"\t\t".'[dc_sidebar handle="Before_Single"]'."\n".
-"\t\t".'<p>[the_content]</p>'."\n".
-"\t\t".'[dc_sidebar handle="After_Single"]'."\n".
-"\t".'</div><!--/.entry-content-->'."\n".
-'</article>'
+'<div class="entry-content">'."\n".
+"\t".'<h1>[the_title]</h1>'."\n".
+"\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t".'<p>[the_content]</p>'."\n".
+"\t".'[dc_sidebar handle="After_Single"]'."\n".
+'</div><!--/.entry-content-->'
         
     ),
     'type'    => 'html',
@@ -188,7 +150,7 @@ $dc_options['content'] -> set('postFormatPage', array(
 )); 
 
 
-$dc_options['content'] -> set('contentMissing', array(
+$dc_options['content'] -> set('content_missing', array(
     'title'   => 'post format for 404.php and empty queries',
     'desc'    => 'HTML to display pages<br />'.$instructions,
     'std'     => htmlspecialchars(
@@ -207,7 +169,7 @@ $dc_options['content'] -> set('contentMissing', array(
 )); 
 
 
-$dc_options['content'] -> set('outdatedBrowser', array(
+$dc_options['content'] -> set('outdated_browser', array(
     'title'   => 'Outdated browser message',
     'desc'    => 'Admonish IE 7 users to upgrade.',
     'std'     => htmlspecialchars(
@@ -223,7 +185,7 @@ You are using an <strong>outdated</strong> browser. Please <a href="http://brows
 )); 
 
 
-$dc_options['content'] -> set('searchform', array(
+$dc_options['content'] -> set('search_form', array(
     'title'   => 'Search Form',
     'desc'    => 'Renders whenever searchform.php is called.',
     'std'     => htmlspecialchars(
@@ -243,7 +205,7 @@ $dc_options['content'] -> set('searchform', array(
 )); 
 
                                    
-$dc_options['content'] -> set('debugMode', array(
+$dc_options['content'] -> set('debug_mode', array(
     'section' => 'special',
     'title'   => 'Debug Mode',
     'desc'    => 'Displays helpful comments explaining the HTML output.',
@@ -260,7 +222,7 @@ $dc_options['content'] -> set('debugMode', array(
 /* JS
 ===========================================*/
 
-$dc_options['js'] -> set('customJS', array(
+$dc_options['js'] -> set('custom_js', array(
     'section' => 'js',
     'title'   => 'Custom Javascript - head',
     'desc'    => 'Enter valid jquery-compatible Javascript to insert into the header.',
@@ -269,7 +231,7 @@ $dc_options['js'] -> set('customJS', array(
 ));
 
 
-$dc_options['js'] -> set('customJS_footer', array(
+$dc_options['js'] -> set('custom_js_footer', array(
     'section' => 'js',
     'title'   => 'Custom Javascript - foot',
     'desc'    => 'Enter valid jquery-compatible Javascript to insert into the header.',
@@ -284,7 +246,7 @@ s.parentNode.insertBefore(g,s)}(document,'script'));"
 )));
 
 
-$dc_options['js'] -> set('headerJS', array(
+$dc_options['js'] -> set('header_js', array(
 
     'title'   => 'External Javascript URLs - header',
     'desc'    => 'URLs of external javascript files to be enqueued in wp_header, separated by line break',
@@ -294,7 +256,7 @@ $dc_options['js'] -> set('headerJS', array(
 ));
 
 
-$dc_options['js'] -> set('footerJS', array(
+$dc_options['js'] -> set('footer_js', array(
     'title'   => 'External Javascript URLs - footer',
     'desc'    => 'URLs of external javascript files to be enqueued in wp_footer, separated by line break',
     'std'     => '',
@@ -310,97 +272,17 @@ $dc_options['js'] -> set('footerJS', array(
 ===========================================*/
 
 
-$dc_options['std'] -> set('dc-Main_Sidebar', array(
-    'section' => 'sidebars',
-    'title'   => 'Main_Sidebar',
-    'desc'    => 'Appears at either left or right of #content.',
-    'type'    => 'checkbox',
-    'std'     => 1 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
+global $dc_sidebars;
 
-$dc_options['std'] -> set('dc-Header_Widgets', array(
-    'section' => 'sidebars',
-    'title'   => 'Header_Widgets',
-    'desc'    => 'Topmost header on the page, above all content.',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('dc-Banner_All', array(
-    'section' => 'sidebars',
-    'title'   => 'Banner_All',
-    'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on home, archive, search, post, and page views.',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('dc-Banner_Home', array(
-    'section' => 'sidebars',
-    'title'   => 'Banner_Home',
-    'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on is_home().',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('dc-Banner_Archive', array(
-    'section' => 'sidebars',
-    'title'   => 'Banner_Archive',
-    'desc'    => 'Full-width sidebar below Header_Widgets but above #content and Main_Sidebar on is_archive().',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('dc-Footer_Widgets', array(
-    'section' => 'sidebars',
-    'title'   => 'Footer_Widgets',
-    'desc'    => 'Appears at bottom of #content.',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));		
-
-$dc_options['std'] -> set('dc-Before_Single', array(
-    'section' => 'sidebars',
-    'title'   => 'Before_Single',
-    'desc'    => 'Appears at top of #content on is_single().',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('dc-After_Single', array(
-    'section' => 'sidebars',
-    'title'   => 'After_Single',
-    'desc'    => 'Appears at bottom of #content on is_single().',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('dc-Before_Archive', array(
-    'section' => 'sidebars',
-    'title'   => 'Before_Archive',
-    'desc'    => 'Appears at top of #content on is_archive().',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('dc-After_Archive', array(
-    'section' => 'sidebars',
-    'title'   => 'After_Archive',
-    'desc'    => 'Appears at bottom of #content on is_archive().',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-$dc_options['std'] -> set('dc-Before_Home', array(
-    'section' => 'sidebars',
-    'title'   => 'Before_Home',
-    'desc'    => 'Appears at top of #content on is_home().',
-    'type'    => 'checkbox',
-    'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
-));
-
-
-
-
+foreach($dc_sidebars as $sidebar){
+	$dc_options['std'] -> set($sidebar['id'], array(
+		'section' => 'sidebars',
+		'title' => $sidebar['name'],
+		'desc' => $sidebar['description'],
+		'type' => 'checkbox',
+		'std' => 0
+	));
+}
 
 
 
@@ -442,7 +324,7 @@ $dc_options['std'] -> set('jqueryui_theme', array(
 ===========================================*/
 
   
-$dc_options['std'] -> set('titleSlug', array(
+$dc_options['std'] -> set('title_slug', array(
     'title'   => 'Title Slug',
     'desc'    => 'Programmer-friendly site title, used as a class for the <body> element on all pages.',
     'std'     => preg_replace("/[^a-zA-Z0-9]/", "",get_bloginfo('name')),
@@ -450,7 +332,7 @@ $dc_options['std'] -> set('titleSlug', array(
     'section' => 'seo'
 ));
 
-$dc_options['std'] -> set('authorName', array(
+$dc_options['std'] -> set('author_name', array(
     'title'   => 'Author Name',
     'desc'    => 'Used for copyright and author meta tags.',
     'std'     => get_bloginfo('name'),
@@ -458,7 +340,7 @@ $dc_options['std'] -> set('authorName', array(
     'section' => 'seo'
 ));
 
-$dc_options['std'] -> set('indexSEODescription', array(
+$dc_options['std'] -> set('index_seo_description', array(
 
     'title'   => 'Index SEO Description',
     'desc'    => '70 chars describing the site. Will be used by default for index and archive pages. On single posts or pages, the excerpt is used.',
