@@ -236,7 +236,7 @@ class dc_theme_options {
 				break;
 			
 			case 'textarea':
-				echo '<textarea class="' . $field_class . '" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" placeholder="' . $std . '" rows="5" cols="100">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
+				echo '<textarea style="width:95%" class="' . $field_class . '" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" placeholder="' . $std . '" rows="5" cols="200">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
 				
 				$this->description($desc);
 				

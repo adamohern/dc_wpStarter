@@ -20,7 +20,7 @@ $dc_sidebars = array(
 );
 
 foreach($dc_sidebars as $key => $array){
-	
+    
 	$array['name'] = $array[0];
 	unset($array[0]);
 	$array['id'] = $array[1];
@@ -31,19 +31,18 @@ foreach($dc_sidebars as $key => $array){
 	$dc_sidebars[$key] = $array;
 }
 
-
 function dc_sidebar($args){
 	e(dc_get_sidebar($args));
 }
        
 
 function dc_get_sidebar($args){
-	
-	if(isset($args['handle'])) $handle = $args['handle'];
-	else if (is_string($args)) $handle = $args;
+    
+    if (is_string($args)) $handle = $args;
+	else if(is_array($args) && isset($args['id'])) $handle = str_replace('"','',htmlspecialchars_decode($args['id']));
 	else $handle = '[missing argument]';
 	
-	if(o('dc-'.$handle)){
+	if(o($handle)){
 	
 		if (dc_is_active_sidebar($handle)) { $content .= dc_get_dynamic_sidebar($handle); $class = ' dc-active-sidebar'; } 
 		else { 
@@ -54,7 +53,7 @@ function dc_get_sidebar($args){
 
     
 		$x .= c("Begin sidebar dc_get_sidebar('$handle')",2,1);
-		$x .= '<div id="'.$handle.'" class="dc-get-sidebar clearfix'.$class.'">'."\n";
+		$x .= '<div id="'.$handle.'" class="dc-get-sidebar dc-wrapper clearfix'.$class.'">'."\n";
 		$x .= '<div class="dc-liner">'."\n";
 		$x .= $content;
 		$x .= "\n".'</div><!--/.dc-liner-->'."\n";
@@ -62,7 +61,14 @@ function dc_get_sidebar($args){
 		$x .= c("/#$handle",1,1);
 		$x .= c("End sidebar '$handle'",3,1);
 	
-	}
+	} else {
+        
+        ob_start();
+        var_dump($handle);
+        $handle_dump = ob_get_clean();
+        $x .= c('sidebar skipped: o('.$handle.') returned false. var_dump = '.$handle_dump,1,1);
+        
+    }
 
     return apply_filters(__FUNCTION__,$x);
 }
@@ -104,112 +110,6 @@ function dc_register_sidebars() {
 			);
 		}
 	}
-
-/*	
-	if(o('dc-sidebar01')) {
-	dc_register_sidebar(
-		'dc Sidebar 01',
-		'dc-sidebar01',
-		'Typical Wordpress sidebar.'
-	);
-	}
-	
-	if(o('dc-sidebar02')) {
-	dc_register_sidebar(
-		'dc Sidebar 02',
-		'dc-sidebar02',
-		'In case you want a 3-column layout (i.e. second sidebar).'
-	);
-	}
-	
-	if(o('dc-header-widgets')) {
-	dc_register_sidebar(
-		'dc Header',
-		'dc-header',
-		'Stretches across entire top of page. This can be set to be static, animate on mouse-over, or disappear completely in the DC Config.'
-	);
-	}
-
-    if(o('dc-banner-all')) {
-	dc_register_sidebar(
-		'dc Banner (all)',
-		'dc-banner-all',
-		'If you want something to appear huge across the top of every post/page/archive on the site (above the content and Main Sidebar), put \'er here.'
-	);
-	}
-
-	if(o('dc-banner-home')) {
-	dc_register_sidebar(
-		'dc Banner (home)',
-		'dc-banner-home',
-		'If you want something to appear huge across the top of the home page (above the content and Main Sidebar), put \'er here.'
-	);
-	}
-	
-	if(o('dc-banner-archive')) {
-	dc_register_sidebar(
-		'dc Banner (archive)',
-		'dc-banner-archive',
-		'If you want something to appear huge across the top of an archive page (above the content and Main Sidebar), put \'er here.'
-	);
-	}
-	
-	if(o('dc-banner-single')) {
-	dc_register_sidebar(
-		'dc Banner (single)',
-		'dc-banner-single',
-		'If you want something to appear huge across the top of a single post or page (above the content and Main Sidebar), put \'er here.'
-	);
-	}
-	
-	if(o('dc-footer')) {
-	dc_register_sidebar(
-		'dc Footer',
-		'dc-footer',
-		'A place to drop widgets in the site-wide footer.'
-	);
-	}
-	
-	if(o('dc-before-single')) {
-	dc_register_sidebar(
-		'dc Before Single',
-		'dc-before-single',
-		'A place to drop widgets above content on single posts.'
-	);
-	}
-	
-	if(o('dc-after-single')) {
-	dc_register_sidebar(
-		'dc After Single',
-		'dc-after-single',
-		'A place to drop widgets below content on single posts.'
-	);
-	}
-	
-	if(o('dc-before-archive')) {
-	dc_register_sidebar(
-		'dc Before Archive',
-		'dc-before-archive',
-		'A place to drop widgets above content on lists of posts.'
-	);
-	}
-
-	if(o('dc-after-archive')) {
-	dc_register_sidebar(
-		'dc After Archive',
-		'dc-after-archive',
-		'A place to drop widgets below content on lists of posts.'
-	);
-	}
-	
-	if(o('dc-before-home')) {
-	dc_register_sidebar(
-		'dc After Archive',
-		'dc-before-home',
-		'A place to drop widgets above content on the home page.'
-	);
-	}
-	*/
 }
 add_action( 'widgets_init', 'dc_register_sidebars' );
 ?>

@@ -67,6 +67,11 @@ c('End wp_head()');
 
 br(3);
 
+c("apply_filters('dc_custom_head',o('custom_head'))",1);
+e(apply_filters('dc_custom_head',o('custom_head')));
+
+br(3);
+
 e('<script type="text/javascript">');
 c("apply_filters('dc_custom_js',o('custom_js'))",1);
 e(apply_filters('dc_custom_js',o('custom_js')));

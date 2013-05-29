@@ -20,13 +20,36 @@ $dc_options['content'] -> add_section('Special Markup','special');
 
 $instructions = '(add supported wordpress template tags in [shortcode] form (e.g. [the_date]) listing arguments by name (e.g. [the_date format="format=\'M d, Y\'"])';
 
+
+
+
+
+
+
+
+
 /* CSS
 ===========================================*/
 
 $dc_options['css'] -> set('css_overrides', array(
     'title'   => 'CSS Overrides',
     'desc'    => 'Enter any custom CSS here to apply it to your theme. Hint: copy/paste this into a <a href="http://notepad-plus-plus.org/">CSS editor</a> for editing.',
-    'std'     => htmlspecialchars( '/* custom CSS goes here */' ),
+    'std'     => htmlspecialchars( 
+        
+"/* custom CSS goes here */
+
+body{ font-family:'Source Sans Pro' sans-serif; font-weight:300; }
+
+a {color: #ff3c00;}
+a:hover {color: #f13a09;}
+
+::-moz-selection{background: #ffa200;color: #351a00;}
+::selection {background: #ffa200;color: #351a00;}
+a:link {-webkit-tap-highlight-color: #ffa200;}
+ins {background-color: #ffa200;}
+mark {background-color: #ffa200;}"
+    
+    ),
     
     'type'    => 'css_big',
     'section' => 'css',
@@ -35,23 +58,25 @@ $dc_options['css'] -> set('css_overrides', array(
 
 
 
+
+
+
+
+
 /* Content
-===========================================*/           
+===========================================*/       
 
-$dc_options['content'] -> set('post_nav_next', array(
-    'section' => 'common',
-    'title'   => 'Post Nav: Next',
-    'desc'    => 'Text for pagination links on archive and search pages.',
-    'type'    => 'text',
-    'std'     => '&laquo; Older'
-));
+$dc_options['content'] -> set('custom_head', array(
 
-$dc_options['content'] -> set('post_nav_prev', array(
-    'section' => 'common',
-    'title'   => 'Post Nav: Previous',
-    'desc'    => 'Text for pagination links on archive and search pages.',
-    'type'    => 'text',
-    'std'     => 'Newer &raquo;'
+    'title'   => htmlspecialchars('Custom <head> html'),
+    'desc'    => htmlspecialchars('loaded at the bottom of the <head>, just after wp_head()'),
+    'std'     =>
+
+        "<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>"."\n"
+        
+        ,
+    'type'    => 'textarea',
+    'section' => 'common'
 ));
 
 $dc_options['content'] -> set('post_format_index', array(
@@ -116,9 +141,9 @@ $dc_options['content'] -> set('post_format_single', array(
 '<div class="thumb">[the_post_thumbnail size="dc_large"]</div>'."\n".
 '<div class="entry-content">'."\n".
 "\t".'<h1>[the_title]</h1>'."\n".
-"\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t".'[dc_sidebar id="dc-before-single"]'."\n".
 "\t".'<p>[the_content]</p>'."\n".
-"\t".'[dc_sidebar handle="After_Single"]'."\n".
+"\t".'[dc_sidebar id="dc-after-single"]'."\n".
 '</div><!--/.entry-content-->'."\n".
 '[dc_google_authorship]'."\n".
 '[dc_author_bio]'."\n\n".
@@ -138,9 +163,27 @@ $dc_options['content'] -> set('post_format_page', array(
         
 '<div class="entry-content">'."\n".
 "\t".'<h1>[the_title]</h1>'."\n".
-"\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t".'[dc_sidebar id="dc-before-single"]'."\n".
 "\t".'<p>[the_content]</p>'."\n".
-"\t".'[dc_sidebar handle="After_Single"]'."\n".
+"\t".'[dc_sidebar id="dc-after-single"]'."\n".
+'</div><!--/.entry-content-->'
+        
+    ),
+    'type'    => 'html',
+    'section' => 'common',
+    'class'   => 'code'
+)); 
+
+
+$dc_options['content'] -> set('post_format_dc_query_posts', array(
+    'title'   => 'post format for dc_query_posts.php',
+    'desc'    => 'HTML to display custom queries in shortcodes<br />'.$instructions,
+    'std'     => htmlspecialchars(
+        
+'<div class="thumb">[the_post_thumbnail link="true"]</div>'."\n".
+'<div class="entry-content">'."\n".
+"\t".'<h2>[the_title link="true"]</h2>'."\n".
+"\t".'<p>[the_excerpt]</p>'."\n".
 '</div><!--/.entry-content-->'
         
     ),
@@ -204,6 +247,23 @@ $dc_options['content'] -> set('search_form', array(
     'class'   => 'code'
 )); 
 
+
+$dc_options['content'] -> set('post_nav_next', array(
+    'section' => 'common',
+    'title'   => 'Post Nav: Next',
+    'desc'    => 'Text for pagination links on archive and search pages.',
+    'type'    => 'text',
+    'std'     => '&laquo; Older'
+));
+
+$dc_options['content'] -> set('post_nav_prev', array(
+    'section' => 'common',
+    'title'   => 'Post Nav: Previous',
+    'desc'    => 'Text for pagination links on archive and search pages.',
+    'type'    => 'text',
+    'std'     => 'Newer &raquo;'
+));
+
                                    
 $dc_options['content'] -> set('debug_mode', array(
     'section' => 'special',
@@ -217,6 +277,11 @@ $dc_options['content'] -> set('debug_mode', array(
     )
 ));                       
                                    
+
+
+
+
+
 
 
 /* JS
@@ -268,6 +333,11 @@ $dc_options['js'] -> set('footer_js', array(
 
 
 
+
+
+
+
+
 /* Sidebars
 ===========================================*/
 
@@ -283,6 +353,11 @@ foreach($dc_sidebars as $sidebar){
 		'std' => 0
 	));
 }
+
+
+
+
+
 
 
 
@@ -313,6 +388,10 @@ $dc_options['std'] -> set('jqueryui_theme', array(
     'type'    => 'text',
     'std'     => 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/smoothness/jquery-ui.css'
 ));
+
+
+
+
 
 
 
