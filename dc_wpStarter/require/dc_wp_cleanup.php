@@ -23,7 +23,8 @@ remove_action('wp_head', 'wp_generator');
 
 // when displaying posts, it's nice to let CSS know if the post has a thumbnail
 function dc_post_class($content) {
-	if(get_the_post_thumbnail() != '') $content[] = "has-thumb";
+	if(get_the_post_thumbnail() != '') $content[] = "dc-has-thumb";
+    $content[] = "clearfix";
 	return $content;
 }
 add_filter('post_class','dc_post_class');

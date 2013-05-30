@@ -47,7 +47,51 @@ a:hover {color: #f13a09;}
 ::selection {background: #ffa200;color: #351a00;}
 a:link {-webkit-tap-highlight-color: #ffa200;}
 ins {background-color: #ffa200;}
-mark {background-color: #ffa200;}"
+mark {background-color: #ffa200;}
+
+#searchform #sLabel {display:none;}
+#searchform input {   
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border-width: 0;
+    border-style: solid;
+    border-color:#eee;
+    color:#999;
+    font-family:'Source Sans Pro' sans-serif;
+}
+
+#searchform #s {   
+    width:78%;
+}
+#searchform #searchsubmit{
+    width:19%;
+    margin-left:1%;
+}
+
+#dc-sidebars .dc-liner {padding:0 1em;}
+#dc-sidebars .widget {margin-bottom:1em;}
+
+#footer {margin-top:2em;}
+
+@media only screen 
+and (min-width : 641px) {
+    .dc-the-loop{width:66%;float:left;}
+    #dc-sidebars{width:33%;float:left;}
+    #dc-sidebar01,#dc-sidebar02{margin-left:1%;}
+}
+
+@media only screen 
+and (min-width : 1025px) {
+    .dc-the-loop{width:60%;}
+    #dc-sidebars{width:40%;}
+    #dc-sidebar01,#dc-sidebar02{width:49%;float:right;margin-left:1%;max-width:30em;}
+    .single article{max-width:40em;margin:0 auto;}
+}
+
+@media only screen 
+and (min-width : 1281px) {
+    .dc-articles article{width:49%;float:left;margin-right:1%}
+}"
     
     ),
     
@@ -70,13 +114,15 @@ $dc_options['content'] -> set('custom_head', array(
 
     'title'   => htmlspecialchars('Custom <head> html'),
     'desc'    => htmlspecialchars('loaded at the bottom of the <head>, just after wp_head()'),
-    'std'     =>
+    'std'     => htmlspecialchars(
 
-        "<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>"."\n"
+        "<!-- Everybody loves custom fonts! -->\n".
+        "<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>"
         
-        ,
-    'type'    => 'textarea',
-    'section' => 'common'
+    ),
+    'type'    => 'html',
+    'section' => 'common',
+    'class'   => 'code'
 ));
 
 $dc_options['content'] -> set('post_format_index', array(

@@ -227,7 +227,7 @@ function dc_get_the_loop($format){
 			
 			$id = 'post-'.get_the_ID();
 			
-			$x .= '<article id="'.$id.'" class="dc-wrapper '.get_post_class().'">';
+			$x .= '<article id="'.$id.'" class="dc-wrapper '.implode(' ',get_post_class()).'">';
 			$x .= '<div class="dc-liner">';
 			$x .= dc_get_render_markup(apply_filters($format,o($format)));
 			$x .= '</div><!--/.post-liner-->';
