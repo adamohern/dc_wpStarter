@@ -111,7 +111,7 @@ function dc_array_from_lines ($string) {
 
 
 // converts CSV to array
-function dc_commasToArray($wholeString){
+function dc_commas_to_array($wholeString){
 		if (strpos($wholeString,',')) {$pieces = explode(',',$wholeString); foreach($pieces as &$piece) { $piece = trim($piece); }}
 		else {if($wholeString) { $pieces[] = trim($wholeString); } else { $pieces[] = ''; } }
 		return $pieces;
@@ -150,7 +150,7 @@ function dc_get_dynamic_sidebar($handle){
 // counts number of posts with a given set of comma-separated tags
 function dc_count($tags){
     
-    $query = dc_tax_query(dc_commasToArray($tags), 'post_tag', 'AND');
+    $query = dc_tax_query(dc_commas_to_array($tags), 'post_tag', 'AND');
     query_posts($query);
     
     $count = 0;
@@ -228,9 +228,9 @@ function dc_term_exists_array($array=array(),$taxonomy){
 
 
 // explodes a CSV string and returns an array containing only valid terms
-function dc_commasToTermArray($csv,$taxonomy){
+function dc_commas_to_term_array($csv,$taxonomy){
     if($csv){
-        $array = dc_commasToArray($csv);
+        $array = dc_commas_to_array($csv);
         $array = dc_term_exists_array($array,$taxonomy);
         return $array;
     } else {
@@ -242,9 +242,9 @@ function dc_commasToTermArray($csv,$taxonomy){
 
 
 // explodes a CSV string and returns an array of valid post types (i.e. video etc)
-function dc_commasToTypeArray($csv){
+function dc_commas_to_type_array($csv){
     if($csv){
-        $array = dc_commasToArray($csv);
+        $array = dc_commas_to_array($csv);
         foreach($array as $key => $item){
             if(!post_type_exists($item)) unset($array[$key]);
         }
@@ -258,7 +258,7 @@ function dc_commasToTypeArray($csv){
 
 
 // converts a valid array of terms to an array of valid term links
-function dc_termArrayToLinks($array=array(),$taxonomy){
+function dc_term_array_to_links($array=array(),$taxonomy){
     if(is_array($array)){
         $links = '';
         $i=1;
@@ -280,11 +280,11 @@ function dc_termArrayToLinks($array=array(),$taxonomy){
 
 
 // for parsing shortcode arguments with wildcards
-function dc_superBoolean($superboolean,$data,$default='*'){
+function dc_super_boolean($hook,$superboolean,$data,$default='*'){
     if($superboolean && $superboolean != 'false' && $superboolean != '0' && $data){
         if(strpos($superboolean,'*')===false) $superboolean=$default;
         $result = str_replace('*',$data,$superboolean);
-        return $result;
+        return apply_filters($hook,$result);
     }
 }
 

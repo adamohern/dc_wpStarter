@@ -116,9 +116,9 @@ $dc_options['content'] -> set('post_format_single', array(
 '<div class="thumb">[the_post_thumbnail size="dc_large"]</div>'."\n".
 '<div class="entry-content">'."\n".
 "\t".'<h1>[the_title]</h1>'."\n".
-"\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t".'[dc_sidebar handle="dc-before-single"]'."\n".
 "\t".'<p>[the_content]</p>'."\n".
-"\t".'[dc_sidebar handle="After_Single"]'."\n".
+"\t".'[dc_sidebar handle="dc-after-single"]'."\n".
 '</div><!--/.entry-content-->'."\n".
 '[dc_google_authorship]'."\n".
 '[dc_author_bio]'."\n\n".
@@ -138,9 +138,26 @@ $dc_options['content'] -> set('post_format_page', array(
         
 '<div class="entry-content">'."\n".
 "\t".'<h1>[the_title]</h1>'."\n".
-"\t".'[dc_sidebar handle="Before_Single"]'."\n".
+"\t".'[dc_sidebar handle="dc-before-single"]'."\n".
 "\t".'<p>[the_content]</p>'."\n".
-"\t".'[dc_sidebar handle="After_Single"]'."\n".
+"\t".'[dc_sidebar handle="dc-after-single"]'."\n".
+'</div><!--/.entry-content-->'
+        
+    ),
+    'type'    => 'html',
+    'section' => 'common',
+    'class'   => 'code'
+)); 
+
+
+$dc_options['content'] -> set('post_format_dc_query_posts', array(
+    'title'   => 'post format for [dc_query_posts] shortcode',
+    'desc'    => 'HTML to display [dc_query_posts] shortcode within a post or page.<br />'.$instructions,
+    'std'     => htmlspecialchars(
+        
+'<div class="entry-content">'."\n".
+"\t".'<h1>[the_title]</h1>'."\n".
+"\t".'<p>[the_content]</p>'."\n".
 '</div><!--/.entry-content-->'
         
     ),
