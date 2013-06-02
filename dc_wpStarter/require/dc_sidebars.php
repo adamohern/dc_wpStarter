@@ -20,7 +20,7 @@ $dc_sidebars = array(
 );
 
 foreach($dc_sidebars as $key => $array){
-	
+    
 	$array['name'] = $array[0];
 	unset($array[0]);
 	$array['id'] = $array[1];
@@ -31,19 +31,18 @@ foreach($dc_sidebars as $key => $array){
 	$dc_sidebars[$key] = $array;
 }
 
-
 function dc_sidebar($args){
 	e(dc_get_sidebar($args));
 }
        
 
 function dc_get_sidebar($args){
-	
-	if(isset($args['handle'])) $handle = $args['handle'];
-	else if (is_string($args)) $handle = $args;
+    
+    if (is_string($args)) $handle = $args;
+	else if(is_array($args) && isset($args['id'])) $handle = str_replace('"','',htmlspecialchars_decode($args['id']));
 	else $handle = '[missing argument]';
 	
-	if(o('dc-'.$handle)){
+	if(o($handle)){
 	
 		if (dc_is_active_sidebar($handle)) { $content .= dc_get_dynamic_sidebar($handle); $class = ' dc-active-sidebar'; } 
 		else { 
@@ -54,7 +53,7 @@ function dc_get_sidebar($args){
 
     
 		$x .= c("Begin sidebar dc_get_sidebar('$handle')",2,1);
-		$x .= '<div id="'.$handle.'" class="dc-get-sidebar clearfix'.$class.'">'."\n";
+		$x .= '<div id="'.$handle.'" class="dc-get-sidebar dc-wrapper clearfix'.$class.'">'."\n";
 		$x .= '<div class="dc-liner">'."\n";
 		$x .= $content;
 		$x .= "\n".'</div><!--/.dc-liner-->'."\n";
@@ -62,7 +61,14 @@ function dc_get_sidebar($args){
 		$x .= c("/#$handle",1,1);
 		$x .= c("End sidebar '$handle'",3,1);
 	
-	}
+	} else {
+        
+        ob_start();
+        var_dump($handle);
+        $handle_dump = ob_get_clean();
+        $x .= c('sidebar skipped: o('.$handle.') returned false. var_dump = '.$handle_dump,1,1);
+        
+    }
 
     return apply_filters(__FUNCTION__,$x);
 }

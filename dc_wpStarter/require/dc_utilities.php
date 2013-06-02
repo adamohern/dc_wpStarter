@@ -280,7 +280,11 @@ function dc_term_array_to_links($array=array(),$taxonomy){
 
 
 // for parsing shortcode arguments with wildcards
+<<<<<<< HEAD
 function dc_super_boolean($hook,$superboolean,$data,$default='*'){
+=======
+function dc_super_boolean($superboolean,$data,$default='*'){
+>>>>>>> f03a03a4874adb293636864e5738cfffa02e9c19
     if($superboolean && $superboolean != 'false' && $superboolean != '0' && $data){
         if(strpos($superboolean,'*')===false) $superboolean=$default;
         $result = str_replace('*',$data,$superboolean);

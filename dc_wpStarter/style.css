@@ -1,32 +1,49 @@
-body{ background-color:#f3f3f3; }
-
-.dc-wrapper { overflow:auto; }
-
-#dc-page{ width:360px; margin:0 auto; background-color:#fff; }
-#dc-page-liner { margin:20px; }
-
 /*
+Theme Name: destructive-creative
+Theme URI: http://destructive-creative.com/wordpress
+Description: clean HTML5 for wordpress networks
+Author: A-Dizzle
+Version: 0.1
+tags: flippin' sweet
 
-#contentBody {  }
-#Main_Sidebar { width:240px; min-height:400px; float:right; }
-.dc_get_sidebar .liner { margin:20px; }
-.empty_sidebar { font-size:.8em; font-style:italic; color:#999; background-color:#f5f5f5; }
-.articles { width:720px; float:left; }
+License: GPL 3.0
+License URI: http://opensource.org/licenses/GPL-3.0
 
-.thumb { width:240px; height:135px; background-color:#eee; float:left; }
-.entry-content { float:left; padding:0 20px 0 40px; width:420px; }
-
-
-
-#footer ul { padding:0; }
-#footer li { list-style-type:none; float:left; margin-right:1em; }
-
-a {color: #ff3c00;}
-a:hover {color: #f13a09;}
-
-::-moz-selection{background: #ffa200;color: #351a00;}
-::selection {background: #ffa200;color: #351a00;}
-a:link {-webkit-tap-highlight-color: #ffa200;}
-ins {background-color: #ffa200;}
-mark {background-color: #ffa200;}
+Rock it.
 */
+
+body {background-color:#f5f5f5;}
+
+.dc-wrapper {overflow:visible;}
+
+#dc-header, #dc-page {min-width:360px;}
+#dc-page {max-width:1920px;}
+
+#dc-page {margin:0 auto;background-color:#fff;}
+#dc-page-liner {padding:20px;border:1px solid #ccc;}
+
+a {text-decoration:none;}
+
+h1,h2,h3 {line-height:1em;}
+h1 {font-size:3em;}
+h2 {font-size:2em;}
+h3 {font-size:1em;}
+
+input {padding: 5px;border: 0;outline:0;background: #f5f5f5;border:0;-webkit-appearance: none;display:inline-block;}
+
+
+input[type="search"]::-webkit-search-cancel-button{
+  -webkit-appearance: none;
+}
+
+textarea {width:98%;}
+
+article {padding:1em 0 2em;}
+
+.dc-get-sidebar li {display:inline-block;margin-right:1em;}
+#dc-sidebars li {display:block;margin:0;}
+
+/* only used for empty sidebars */
+.dc-empty-sidebar {font-size:.8em;font-style:italic;color:#999;background-color:#f5f5f5;margin:.5em 0;}
+.dc-empty-sidebar .dc-liner {padding:1em;}
+#dc-header.dc-empty-sidebar {background-color:#ddd;margin:0;}

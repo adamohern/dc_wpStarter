@@ -2,13 +2,12 @@
 
 
 function dc_render_markup($markup) {
-    
     e(dc_get_render_markup($markup));
-    
 }
 
 
-// only works within the loop!
+// Our way of allowing users to access Wordpress template tags
+// without the danger of eval() statements.
 function dc_get_render_markup($markup) {
          
     if($markup){
@@ -58,35 +57,35 @@ function dc_get_the_post_thumbnail($args){
 		if(isset($args['size'])) $size = $args['size']; else $size = 'dc_thumbnail';
 		$x = get_the_post_thumbnail(get_the_ID(),$size);
 		if(isset($args['link']) && $args['link']) $x = "<a href=\"".get_permalink()."\">$x</a>";
-		return apply_filters(__FUNCTION__,$x);
+		return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 	} else return false;
 }
 
 function dc_get_request_uri($args){
 	$x = get_bloginfo('wpurl').$_SERVER['REQUEST_URI'];
-	return apply_filters(__FUNCTION__,$x);
+	return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_search_form($args){
 	$x = get_search_form(false);
-	return apply_filters(__FUNCTION__,$x);
+	return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_the_author_posts_link($args){
     $x = '<a class="author the-author-posts-link" href="'.get_author_posts_url( get_the_author_meta( 'ID' ) ).'">'.the_author_meta( 'display_name' ).'</a>';
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_the_title($args){
 	$x = get_the_title();
 	if(isset($args['link']) && $args['link']) $x = "<a href=\"".get_permalink()."\">$x</a>";
-	return apply_filters(__FUNCTION__,$x);
+	return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_the_date($args){
     if(!$d = $args['d']) $d = get_option('date_format','d F, Y');
     $x = get_the_date($d);
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_the_content($args){
@@ -95,23 +94,23 @@ function dc_get_the_content($args){
     $x = get_the_content($more_link_text,$stripteaser);
 	$x = apply_filters('the_content', $x);
     
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_the_tags($args){
     $x = get_the_tags();
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_the_category($args){
     $x = get_the_category();
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_bloginfo($args){
 	if(isset($args['show'])){
 		$x = get_bloginfo($args['show']);
-		return apply_filters(__FUNCTION__,$x);
+		return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
     } else {
     	return false;
     }
@@ -119,41 +118,41 @@ function dc_get_bloginfo($args){
 
 function dc_get_the_author_meta($args){
     $x = get_the_author_meta();
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_the_terms($args){
     $x = get_the_terms();
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_the_permalink($args){
     $x = get_the_permalink();
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_the_shortlink($args){
     $x = get_the_shortlink();
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_the_time($args){
     $x = get_the_time();
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_comments_template($args){
     ob_start();
     comments_template();
     $x = ob_get_clean();
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 function dc_get_post_meta($args){
     if(!$key=$args['key']) $key = null;
     if(!$single=$args['single']) $single = null;
     $x = get_post_meta(get_the_ID(),$key,$single);
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
        
 
@@ -169,42 +168,16 @@ function dc_get_post_class($args=array()){
     $class[]='clearfix';
     
     $x = implode(' ',get_post_class($class));
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
-
-function dc_google_authorship_form( $user ) { 
-?>
-<h3><?php _e("Extra profile information", "blank"); ?></h3>
- 
-<table class="form-table">
-<tr>
-<th><label for="gplus_url"><?php _e("Google+ profile URL"); ?></label></th>
-<td>
-<input type="text" name="gplus_url" id="gplus_url" value="<?php echo esc_attr( get_the_author_meta( 'gplus_url', $user->ID ) ); ?>" class="regular-text" /><br />
-<span class="description"><?php _e("e.g. http://plus.google.com/104457182243197908311<br /><em>(Field added by the dc_wpStarter theme</em> for use with Google authorship recognition.)"); ?></span>
-</td>
-</tr>
-</table>
-<?php 
-}
-add_action( 'show_user_profile', 'dc_google_authorship_form' );
-add_action( 'edit_user_profile', 'dc_google_authorship_form' );
- 
- 
-function dc_google_authorship_update( $user_id ) {
-	if ( !current_user_can( 'edit_user', $user_id ) ) { return false; }
-	update_user_meta( $user_id, 'gplus_url', $_POST['gplus_url'] );
-}
-add_action( 'personal_options_update', 'dc_google_authorship_update' );
-add_action( 'edit_user_profile_update', 'dc_google_authorship_update' );
 
 
 function dc_get_google_authorship(){
 	if (get_the_author_meta('gplus_url')&&get_the_author_meta('user_firstname')){
 		$x = ('<p class="dc_google_authorship"><em><a href="'.get_the_author_meta('gplus_url').'?rel=author">'.get_the_author_meta('user_firstname').'</a> on google+</em></p>');
 	} else { $x = c('No Google authorship data has been added for this author. (Users > Profile > Google+ profile URL)',1,1); }
-	return apply_filters(__FUNCTION__,$x);
+	return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 
@@ -215,24 +188,28 @@ function dc_google_authorship() {
 
 
 function dc_the_loop($format){
+    e(dc_get_the_loop($format));
+}
+    
+function dc_get_the_loop($format){
 
-	c('Begin dc_the_loop()',2);
-	e("<div class='dc-wrapper dc-the-loop'>");
-	e("<div class='dc-liner dc-the-loop-liner'>");
-	dc_sidebar('dc-before-the-loop');
-	dc_post_nav(o('post_nav_next'),o('post_nav_prev'),'top-nav');
+	$x = c('Begin dc_the_loop()',2,1);
+	$x .= "<div class='dc-wrapper dc-the-loop'>";
+	$x .= "<div class='dc-liner dc-the-loop-liner'>";
+	$x .= dc_get_sidebar('dc-before-the-loop');
+	$x .= dc_get_post_nav(o('post_nav_next'),o('post_nav_prev'),'top-nav');
 
-	c('Begin The Loop',1); 
+	$x .= c('Begin The Loop',1,1); 
 
 	if (have_posts()) {
 		
-		br(5);
+		$x .= br(5,1);
 		
 		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-		e("<div class='dc-wrapper dc-articles page-$paged clearfix'>");
-		e("<div class='dc-liner dc-articles-liner'>");
+		$x .= "<div class='dc-wrapper dc-articles page-$paged clearfix'>";
+		$x .= "<div class='dc-liner dc-articles-liner'>";
 		
-		br(5);
+		$x .= br(5,1);
 		
 		while (have_posts()) { 
 			the_post(); 
@@ -244,65 +221,79 @@ function dc_the_loop($format){
 				$post_css = get_post_meta($post->ID, 'dc_post_css');
 				
 				if($post_css[0]) {
-					e('<style type="text/css">'."\n".$post_css[0]."\n".'</style>');
+					$x .= '<style type="text/css">'."\n".$post_css[0]."\n".'</style>';
 				}
 			}
 			
 			$id = 'post-'.get_the_ID();
 			
-			e('<article id="'.$id.'" class="dc-wrapper '.get_post_class().'">');
-			e('<div class="dc-liner">');
-			dc_render_markup(apply_filters($format,o($format)));
-			e('</div><!--/.post-liner-->');
-			e('</article><!--/'.$id.'-->');
-			br(2);
+			$x .= '<article id="'.$id.'" class="dc-wrapper '.implode(' ',get_post_class()).'">';
+			$x .= '<div class="dc-liner">';
+			$x .= dc_get_render_markup(apply_filters($format,o($format)));
+			$x .= '</div><!--/.post-liner-->';
+			$x .= '</article><!--/'.$id.'-->';
+			$x .= br(2,1);
 		}
 	
-		br(3);
+		$x .= br(3,1);
 		
-		e('</div>'.c('/.dc-articles-liner',0,1));
-		e('</div>'.c('/.dc-articles',0,1));
+		$x .= '</div>'.c('/.dc-articles-liner',0,1);
+		$x .= '</div>'.c('/.dc-articles',0,1);
 		
-		br(5);
+		$x .= br(5,1);
 		
 	} else {
 	
-		c('query produced no results');
-		echo o('contentMissing');
+		$x .= c('query produced no results',0,1);
+		$x .= o('contentMissing');
 	
 	}
 
-	c('End The Loop',1);
+	$x .= c('End The Loop',1,1);
 
-	dc_post_nav(o('post_nav_next'),o('post_nav_prev'),'bottom-nav');
-	dc_sidebar('dc-after-the-loop');
+	$x .= dc_get_post_nav(o('post_nav_next'),o('post_nav_prev'),'bottom-nav');
+	$x .= dc_get_sidebar('dc-after-the-loop');
 	
-	e("</div><!--/.dc-the-loop-liner-->");
-	e("</div><!--/.dc-the-loop-->");
-	c('End dc_the_loop()',3);
+	$x .= "</div><!--/.dc-the-loop-liner-->";
+	$x .= "</div><!--/.dc-the-loop-->";
+	$x .= c('End dc_the_loop()',3,1);
+    
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 	
 }
 
 
 function dc_post_nav($next='next',$prev='prev',$class) {
-	if($class) $class = ' '.$class;
-	c('dc_post_nav()',1);
-	e('<div class="dc-wrapper dc-navigation clearfix$class">');
-	e('<div class="dc-liner dc-navigation-liner">');
-	e('<div class="dc-next-posts">');
-	next_posts_link($next,0);
-	e('</div><!--/.dc-next-posts-->');
-	e('<div class="dc-prev-posts'.$class.'">');
-	previous_posts_link($prev,0);
-	e('</div><!--/.dc-prev-posts-->');
-	e('</div><!--/.dc-navigation-liner-->');
-	e('</div><!--/.dc-navigation-->');
-	c('/dc_post_nav()',1);
+    e(dc_get_post_nav($next='next',$prev='prev',$class));
 }
+
+
+function dc_get_post_nav($next='next',$prev='prev',$class) {
+    
+	if($class) $class = ' '.$class;
+    
+	$x = c('dc_post_nav()',1,1);
+	$x .= '<div class="dc-wrapper dc-navigation clearfix$class">';
+	$x .= '<div class="dc-liner dc-navigation-liner">';
+	$x .= '<div class="dc-next-posts">';
+	$x .= get_next_posts_link($next,0);
+	$x .= '</div><!--/.dc-next-posts-->';
+	$x .= '<div class="dc-prev-posts'.$class.'">';
+	$x .= get_previous_posts_link($prev,0);
+	$x .= '</div><!--/.dc-prev-posts-->';
+	$x .= '</div><!--/.dc-navigation-liner-->';
+	$x .= '</div><!--/.dc-navigation-->';
+	$x .= c('/dc_post_nav()',1,1);
+    
+    return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
+    
+}
+
 
 function dc_author_bio() { 
 	e(dc_get_author_bio());
 }
+
 
 function dc_get_author_bio() {
 	if (o('dc_displayBio')){
@@ -320,7 +311,7 @@ function dc_get_author_bio() {
 			$x .= c('End dc_get_author_bio()',1,1);	
 		}
 	} else { $x = c('No bio found for this author.',1,1); }
-	return $x;
+	return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 ?>

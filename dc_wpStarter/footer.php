@@ -4,15 +4,25 @@ c('Begin footer.php',2);
 
 if(is_single()) $full_width = get_post_meta($post->ID, 'dc_full_width');
 
-if (o('dc-sidebar01') && !$full_width) dc_sidebar('dc-sidebar01');
-if (o('dc-sidebar02') && !$full_width) dc_sidebar('dc-sidebar02');
+if(!$full_width){
+    if(o('dc-sidebar01') || o('dc-sidebar02')){
+        e('<div id="dc-sidebars" class="clearfix">');
+        if (o('dc-sidebar01')) dc_sidebar('dc-sidebar01');
+        if (o('dc-sidebar02')) dc_sidebar('dc-sidebar02');
+        e('</div><!--/#dc-sidebars-->');
+    }
+}
+else c('This post has "dc_full_width" = true. Skipping sidebars.',1);
 
-if($full_width) c('This post has "dc_full_width" = true. Skipping sidebars.',1);
+br(3);
+
+e('</div>'.c('/dc-content-liner',0,1));
+e('</div>'.c('/dc-content',0,1)); 
 
 br(3);
 
 e('<footer id="footer" class="source-org vcard copyright h-lists clearfix">');
-e('<ul id="copyright_etc clearfix">');
+e('<ul id="copyright-etc" class="clearfix">');
 e('<li><small>&copy;'.date("Y").' '.get_bloginfo('name').'</small></li>');
 e('</ul>');
 
@@ -22,9 +32,6 @@ if (o('dc-footer')) {
 
 
 e('</footer>');
-e('</div>'.c('/dc-content-liner',0,1));
-e('</div>'.c('/dc-content',0,1)); 
-
   
 br(3);
 
@@ -43,7 +50,6 @@ e('</div>'.c('/#dc-everything',0,1));
 
 br(3);
 
-c("dc_render_markup(o('custom_js_footer'));",1);
 e('<script>');
 dc_render_markup(o('custom_js_footer'));
 e('</script>');

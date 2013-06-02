@@ -31,27 +31,18 @@ if(is_archive()||is_front_page()) {
 c('description type: '.$descriptionType,1); 
 e('<meta name="description" content="'.$description.'" />'); 
 
-c('o(\'author_name\')',1); 
 e('<meta content="'.o('author_name').'" />'); 
-
-c('o(\'author_name\').\' \'.date(\'Y\')',1); 
 e('<meta name="Copyright" content="Copyright '.o('author_name').' '.date('Y').'. All rights reserved." />'); 
-
 e('<meta name="viewport" content="width=device-width">');
 
-c('traditional 16x16 favicon - o(\'favicon\')',1);
 e('<link href="'.o('favicon').'" rel="shortcut icon" />');
-
-c('iOS\'s Web Clip, 114x114, name it \'apple-touch-icon-precomposed.png\', no transparency - o(\'appleicon\')',1);
 e('<link href="'.o('appleicon').'" rel="apple-touch-icon" />');
 
-c('bloginfo(\'pingback_url\')',1);
 e('<link href="'.get_bloginfo('pingback_url').'" rel="pingback" />');
 
 e('<link rel="stylesheet" href="'.get_stylesheet_directory_uri().'/reset.css">');
 e('<link rel="stylesheet" href="'.get_stylesheet_directory_uri().'/style.css">');
 
-c("apply_filters('dc_css_overrides',o('css_overrides'))",1);
 e('<style type="text/css">');
 e(apply_filters('dc_css_overrides',o('css_overrides')));
 e('</style>');
@@ -67,8 +58,11 @@ c('End wp_head()');
 
 br(3);
 
+e(apply_filters('dc_custom_head',dc_get_render_markup(o('custom_head'))));
+
+br(3);
+
 e('<script type="text/javascript">');
-c("apply_filters('dc_custom_js',o('custom_js'))",1);
 e(apply_filters('dc_custom_js',o('custom_js')));
 e('</script>');
 
@@ -76,15 +70,12 @@ e("</head>");
 
 br(3);
 
-c("class = implode(' ',get_body_class(o('title_slug')))",1);
 e('<body class="'.implode(' ',get_body_class(o('title_slug'))).'">');
 
-c("Admonish IE 7 users to change their ways. o('outdated_browser')",1);
 e('<!--[if lt IE 7]>');
 dc_render_markup(o('outdated_browser'));
 e('<![endif]-->');
 
-c('From Boilerplate:',1);
 e('<script>window.jQuery || document.write(\'<script src="js/vendor/jquery-1.9.1.min.js"><\/script>\')</script>');
 
 e('<div id="dc-everything">');
