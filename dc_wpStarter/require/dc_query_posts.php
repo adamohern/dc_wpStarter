@@ -1,5 +1,7 @@
 <?php
 
+// This is a big huge nasty function. But it works.
+
 // lists recent posts with a given taxonomy
 /*  accepted args:
     tags                  // comma-delimited
@@ -15,14 +17,6 @@
 	maxposts = 12         // int
 	classes               // space delimited strings
     id                    // string
-    showtitles=true       // boolean OR prefix*suffix
-    showcontent           // boolean OR 'excerpt' or 'content' or 'morestring...'
-    showauthors           // boolean OR 'prefix*suffix'
-    showdates             // boolean OR 'prefix*suffix'
-    dateformat='d F, Y'   // PHP date format
-    showtags              // boolean OR 'prefix*suffix'
-    showcategories        // boolean OR 'prefix*suffix'
-    showthumbs            // boolean OR wp image size ('thumb' 'medium', 'large', 'dc_thumbnail', 'dc_large', 'dc_huge')
     showbrowselinks       // boolean OR 'prefix*suffix'
     workinprogress        // boolean OR string (e.g. '<em>More coming soon!</em>')
     offset                // int (removes X number of posts from beginning of list)
@@ -31,29 +25,41 @@
 
 function dc_query_posts ($args) {
 
-    $html = '';
-    $html .= c('begin dc_query_posts()',1,1);
+    $x = '';
+    $x .= c('begin functions/dc_postsList.php > dc_query_posts',1,1);
     
     global $more; $more = 0;    // use global $more so that <--more--> tags work
     global $paged;              // use global $paged so that pagination works properly
     
-    if( get_query_var( 'paged' ) ) $paged = get_query_var( 'paged' );
-    elseif( get_query_var( 'page' ) ) $paged = get_query_var( 'page' );
+    if( get_query_var( 'paged' ) ) 
+        $paged = get_query_var( 'paged' );
+    elseif( get_query_var( 'page' ) ) 
+        $paged = get_query_var( 'page' );
     else $paged = 1;
+    
 	set_query_var( 'paged', $paged );
     set_query_var( 'page', $paged );
 
-    if(!$args['paginate'] && $paged!=1) return c("This query not paginated; there is no page $paged.",1,1);
-    if(!$args['showtitles']) $args['showtitles'] = true;
+    if(!$args['paginate'] && $paged!=1) 
+        return c("This query not paginated; there is no page $paged.",1,1);
     
     if(strpos($args['paginate'],'*')!==false){
+        
         $linktext = explode('*',$args['paginate']);
         $nextPageLinkText = $linktext[0];
         $previousPageLinkText = $linktext[1];
+        
     } else {
-        $nextPageLinkText = '&laquo; next';
-        $previousPageLinkText = 'previous &raquo;';
+        
+        $nextPageLinkText = o('post_nav_next');
+        $previousPageLinkText = o('post_nav_prev');
+    
     }
+    
+    
+    
+    
+    
     
 	// Extract tags/cats from CSV
 	$args['tags'] = dc_commas_to_term_array($args['tags'],'post_tag');
@@ -61,16 +67,23 @@ function dc_query_posts ($args) {
     $args['excludetags'] = dc_commas_to_term_array($args['excludetags'],'post_tag');
     $args['excludecategories'] = dc_commas_to_term_array($args['excludecategories'],'category');
     
-    if($args['types']) $args['types'] = dc_commas_to_type_array($args['types']);
+    
+    
+    if($args['types']) 
+        $args['types'] = dc_commas_to_type_array($args['types']);
     else if($args['excludetypes']) {
         $args['types'] = get_post_types();
         $args['excludetypes'] = dc_commas_to_type_array($args['excludetypes']);
         $args['types'] = array_diff($args['types'],$args['excludetypes']);
     }
     
-    if($args['bannerurl']=='false' || $args['bannerurl']=='0') $args['bannerurl']=null;
-    if($args['showthumbs']=='true' || $args['showthumbs']=='1') $args['showthumbs'] = 'dc_thumbnail';
-    if($args['paginate'] && $paged!=1) $args['offset']=0;
+    if($args['bannerurl']=='false' || $args['bannerurl']=='0') 
+        $args['bannerurl']=null;
+    
+    if($args['paginate'] && $paged!=1) 
+        $args['offset']=0;
+    
+    
     
 	// Build query
 	$query_args['tax_query'] = array( 'relation' => 'AND' );
@@ -83,15 +96,27 @@ function dc_query_posts ($args) {
         );
 	$query_args['order'] = $args['order'];
 	$query_args['posts_per_page'] = $args['maxposts']+$args['offset'];
-    if(is_array($args['types'])) $query_args['post_type'] = $args['types'];
-    if($args['paginate']) $query_args['paged'] = $paged;
+    
+    if(is_array($args['types'])) 
+        $query_args['post_type'] = $args['types'];
+    
+    if($args['paginate']) 
+        $query_args['paged'] = $paged;
+    
+    
     
     // use $wp_query global so that pagination works properly
     global $wp_query;
-    $html .= c('query:'.print_r($query_args,true),1,1);
+    $x .= c('query:'.print_r($query_args,true),1,1);
     $temp = $wp_query;
     $wp_query = null;
 	$wp_query = new WP_Query($query_args);
+    
+    
+    
+    
+    
+    
     
     // run the loop before assembling HTML so we can 
     // collect html, total the durations, and grab the top thumb in the same loop
@@ -99,103 +124,135 @@ function dc_query_posts ($args) {
     $postsList = '';
     $firstthumburl = '';
     $i=0; $j=0;
+    
     while ($wp_query->have_posts()) : $wp_query->the_post();
+    
         if($i>=$args['offset']){
-            if(get_post_meta( get_the_ID(), 'duration', true )) $totalDuration += get_post_meta( get_the_ID(), 'duration', true );
+            
+            if(get_post_meta( get_the_ID(), 'duration', true )) 
+                $totalDuration += get_post_meta( get_the_ID(), 'duration', true );
         	
             $current_post = 'article-'.get_the_ID();
             $list_number = 'list-'.$j;
-            if($j % 2 == 0) $evenodd = 'even'; else $evenodd = 'odd';
-            if($j % 3 == 0) $third = ' third'; else $third = '';
+            
+            if($j % 2 == 0) 
+                $evenodd = 'even'; 
+            else $evenodd = 'odd';
+            
+            if($j % 3 == 0) 
+                $third = ' third'; 
+            else $third = '';
+            
             $post_format = 'format-'.get_post_format();
             $post_type = 'type-'.get_post_type();
-            $articleClasses = "clearfix $current_post $list_number $evenodd$third $post_format $post_type dc-wrapper";
+            $articleClasses = "clearfix $current_post $list_number $evenodd$third $post_format $post_type";
             
-        	$postsList .= '<li class="'.$articleClasses.'">'."\n";
-            $postsList .= '<div class="dc-liner">'."\n";
-            if($args['showthumbs'] && $args['showthumbs']!='false' && $args['showthumbs']!='0') {
-                $args['thumburl']=wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), $args['showthumbs'] );
-                $args['thumburl']=$args['thumburl'][0];
-                if($args['thumburl']) $postsList .= apply_filters('dc_thumb',"<div class=\"thumb $showthumbs\"><a href=\"".get_permalink().'"><img src="'.$args['thumburl'].'" title="'.get_the_title().'" /></a></div>');
-                else $postsList .= c('no thumbnail found',0,1);
-            }
-            if($args['bannerurl']=='first' && $i==$args['offset']) {
-                $postsList .= c('using first thumbnail as banner',0,1);
-                $args['bannerurl'] = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), $args['showthumbs'] );
-                $args['bannerurl'] = $args['bannerurl'][0];
-            }
-            $postsList .= dc_super_boolean('showtitles',$args['showtitles'],'<a href="'.get_permalink().'" target="_blank">'.get_the_title().'</a>','<div class="title"><h4>*</h4></div>');
-            $postsList .= dc_super_boolean('showauthors',$args['showauthors'],get_the_author(),'<div class="author meta">*</div>');
-            $postsList .= dc_super_boolean('showdates',$args['showdates'],get_the_date($dateformat),'<div class="date meta">*</div>');
-            $postsList .= dc_super_boolean('showtags',$args['showtags'],dc_tag_links(),'<div class="tags meta">tags: *</div>');
-            $postsList .= dc_super_boolean('showcategories',$args['showcategories'],dc_category_links(),'<div class="categories meta">categories: *</div>');
-            if($args['showcontent'] && $args['showcontent']!='false' && $args['showcontent']!='0') {
-                if ($args['showcontent'] == 'excerpt') $postsList .= '<div class="excerpt">'.get_the_excerpt().'</div>';
-                else { 
-                    if($args['showcontent'] != 'content') $morestring = $args['showcontent']; else $morestring = 'more...';
-                    $postsList .= '<div class="content">'.get_the_content($morestring).'</div>'; 
-                }
-            }
-            $postsList .= '</div><!--/dc-liner-->'."\n";
-        	$postsList .= '</li><!--'.$current_post.'-->'."\n";
+        	$postsList .= '<li class="'.$articleClasses.'">';
+            
+            $postsList .= apply_filters('post_format_dc_query_posts',dc_get_render_markup(o('post_format_dc_query_posts')));
+            
+        	$postsList .= '</li>'."\n";
             
             $j++;
+            
         }
+    
         $i++;
+    
 	endwhile;
 	
-    // Render html
-    if($args['classes']) $args['classes'] = " ".$args['classes']; else $args['classes']='';
-    if($args['bannerurl']) $args['classes'] .= ' hasthumb';
-    if($args['id']) $args['id'] = 'id="'.$args['id'].'" '; else $args['id']='';
     
-	$html .= '<div '.$args['id'].'class="dc-query-posts dc-wrapper '.$args['classes'].'">'."\n";
-	$html .= '<div class="dc-liner">'."\n";
-	$html .= '<div class="titleBar clearfix">'."\n";
+    
+    
+    
+    
+    
+    // Render html
+    if($args['classes']) 
+        $args['classes'] = " ".$args['classes']; 
+    else $args['classes']='';
+    
+    if($args['bannerurl']) 
+        $args['classes'] .= ' hasthumb';
+    
+    if($args['id']) 
+        $args['id'] = 'id="'.$args['id'].'" '; 
+    else 
+        $args['id']='';
+    
+	$x .= '<div '.$args['id'].'class="dc_query_posts'.$args['classes'].'">'."\n";
+	$x .= '<div class="titleBar clearfix">'."\n";
+    
+	if($args['bannerurl']) 
+        $x .= '<img class="banner" src="'.$args['bannerurl'].'" />'."\n";
 	
-	if($args['bannerurl']) $html .= '<img class="thumb" src="'.$args['bannerurl'].'" />'."\n";
-	$html .= '<div class="titleBlock">';
-	if($args['title']) 		$html .= '<h3>'.$args['title'].$args['totalDuration'].'</h3>';
-	if($args['caption']) 	$html .= '<p>'.$args['caption'].'</p>';
+    $x .= '<div class="titleBlock">';
+    
+	if($args['title']) 		
+        $x .= '<h3>'.$args['title'].$args['totalDuration'].'</h3>';
+	
+    if($args['caption']) 	
+        $x .= '<p>'.$args['caption'].'</p>';
     
     // Build (Browse: link) text
     if($args['showbrowselinks']){
+        
         $args['browselinks']='';
-        if($args['categories']) $args['browselinks'] .= 'categories:'.dc_term_array_to_links($args['categories'],'category');
-        if($args['categories'] && $args['tags']) { $args['browselinks'] .= "; "; }
-        if($args['tags']) $args['browselinks'] .= 'tags:'.dc_term_array_to_links($args['tags'],'post_tag');
-        $html .= dc_super_boolean('showbrowselinks',$showbrowselinks,$args['browselinks'],'<div class="browselinks">(Browse *)</div>');
+        
+        if($args['categories']) 
+            $args['browselinks'] .= 'categories:'.dc_term_array_to_links($args['categories'],'category');
+        
+        if($args['categories'] && $args['tags']) 
+            $args['browselinks'] .= "; ";
+        
+        if($args['tags']) 
+            $args['browselinks'] .= 'tags:'.dc_term_array_to_links($args['tags'],'post_tag');
+        
+        $x .= dc_super_boolean($showbrowselinks,$args['browselinks'],'<div class="browselinks">(Browse *)</div>');
+        
     }
 	
-    $html .= '</div><!--.titleBlock-->'."\n";
-	$html .= '</div><!--.titleBar-->'."\n";	
+    $x .= '</div><!--.titleBlock-->'."\n";
+	$x .= '</div><!--.titleBar-->'."\n";	
     
-    if($args['paginate']){
-        $html .= '<div class="dc-nav-top clearfix"><div class="prev-posts">'.get_previous_posts_link($previousPageLinkText).'</div><div class="next-posts">'.get_next_posts_link($nextPageLinkText).'</div></div>';
-    }
-	$html .= '<ul class="clearfix">'."\n";
-    $html .= $postsList;
+    $x = apply_filters('dc_query_posts_titleBar',$x);
+    
+    if($args['paginate'])
+        $x .= '<div class="dc-nav-top clearfix"><div class="prev-posts">'.get_previous_posts_link($previousPageLinkText).'</div><div class="next-posts">'.get_next_posts_link($nextPageLinkText).'</div></div>';
+    
+	$x .= '<ul class="dc_query_posts clearfix">'."\n";
+    $x .= $postsList;
 	
 	if($args['workinprogress']) {
-        if(gettype($args['workinprogress'])!='string') $args['workinprogress'] = 'Series in progress. More coming soon!';
-        $html .= '<li class="clearfix workinprogress">'.$args['workinprogress'].'</li>'."\n";
+        
+        if(gettype($args['workinprogress'])!='string') 
+            $args['workinprogress'] = 'Series in progress. More coming soon!';
+        
+        $x .= '<li class="clearfix workinprogress">'.$args['workinprogress'].'</li>'."\n";
+        
 	}
 	
-	$html .= '</ul>'."\n";
-    if($args['paginate']){
-        $html .= '<div class="dc-nav-bottom clearfix"><div class="prev-posts">'.get_previous_posts_link($previousPageLinkText).'</div><div class="next-posts">'.get_next_posts_link($nextPageLinkText).'</div></div>';
-    }
-    $html .= '</div><!--/.dc-liner-->'."\n";
-	$html .= '</div><!--/#'.$args['id'].'-->'."\n";
+	$x .= '</ul><!--ul.dc_postsList-->'."\n";
+    
+    if($args['paginate'])
+        $x .= '<div class="dc-nav-bottom clearfix"><div class="prev-posts">'.get_previous_posts_link($previousPageLinkText).'</div><div class="next-posts">'.get_next_posts_link($nextPageLinkText).'</div></div>';
+    
+	$x .= '</div><!--div.dc_postsList-->'."\n";
 	
+    
+    
+    
+    
+    
+    
 	// clean up after ourselves
     $wp_query = null; $wp_query = $temp;
 	wp_reset_postdata();
     wp_reset_query();
 
 
-    $html .= c('end dc_query_posts()',1,1);
-	return apply_filters('dc-query-posts',$html);
+    $x .= c('end functions/dc_postsList.php > dc_postsList2',1,1);
+	return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
 }
 
 ?>

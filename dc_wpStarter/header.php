@@ -20,7 +20,7 @@ c('Header is adapted from HTML5 Boilerplate, with a few additions.',1);
 
 <?php 
 
-e("<title>".dc_archive_title()."</title>");
+e("<title>".dc_archiveTitle()."</title>");
 
 if(is_archive()||is_front_page()) { 
     $description = (strip_tags(o('index_seo_description'))); $descriptionType = 'o(index_seo_description)'; 

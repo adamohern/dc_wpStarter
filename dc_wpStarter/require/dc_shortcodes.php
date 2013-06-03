@@ -3,7 +3,7 @@
 // creates a list of downloads from CSV URLs
 function dc_downloads($atts){
     
-    if(isset($atts['classes'])) $classes = implode(' ',dc_commas_to_array($atts['classes']));
+    if(isset($atts['classes'])) $classes = implode(' ',dc_commasToArray($atts['classes']));
     
     if(isset($atts['id'])) $id = ' id="'.$atts['id'].'"'; 
     
@@ -12,7 +12,7 @@ function dc_downloads($atts){
     
     if(isset($atts['caption'])) $caption = $atts['caption'];
     
-    if(isset($atts['urls'])) $urls = dc_commas_to_array($atts['urls']);
+    if(isset($atts['urls'])) $urls = dc_commasToArray($atts['urls']);
     
     $html = br(3,1).'<div class="downloads'.$classes.'"'.$id.'>'.br(0,1);
     if($title) $html .= '<h3 class="title">'.$title.'</h3>'.br(0,1);
