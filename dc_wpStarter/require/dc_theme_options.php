@@ -49,6 +49,14 @@ a:link {-webkit-tap-highlight-color: #ffa200;}
 ins {background-color: #ffa200;}
 mark {background-color: #ffa200;}
 
+#dc-header.dc-get-sidebar {margin:0;}
+#dc-header .widget {padding:.5em 20px;}
+
+.thumb {display:none;}
+.dc-has-thumb .thumb {display:block;}
+.thumb img {width:100%;height:auto;}
+
+.widget_search {max-width:500px;}
 #searchform #sLabel {display:none;}
 #searchform input {   
     -webkit-border-radius: 3px;
@@ -58,6 +66,7 @@ mark {background-color: #ffa200;}
     border-color:#eee;
     color:#999;
     font-family:'Source Sans Pro' sans-serif;
+    background-color:#e9e9e9;
 }
 
 #searchform #s {   
@@ -68,16 +77,28 @@ mark {background-color: #ffa200;}
     margin-left:1%;
 }
 
-#dc-sidebars .dc-liner {padding:0 1em;}
+.dc-get-sidebar {margin-bottom:1em;}
 #dc-sidebars .widget {margin-bottom:1em;}
 
+#dc-before-the-loop,
+#dc-before-single {display:none;}
+
 #footer {margin-top:2em;}
+
+@media only screen 
+and (min-width : 480px) {
+    .thumb {width:33%;margin:0 1em 1em 0;}
+    .thumb {float:left;}
+    #dc-before-the-loop,
+    #dc-before-single {display:block;}
+}
 
 @media only screen 
 and (min-width : 641px) {
     .dc-the-loop{width:66%;float:left;}
     #dc-sidebars{width:33%;float:left;}
     #dc-sidebar01,#dc-sidebar02{margin-left:1%;}
+    #dc-sidebars .dc-liner {padding:0 1em;}
 }
 
 @media only screen 
@@ -279,7 +300,7 @@ $dc_options['content'] -> set('search_form', array(
     'desc'    => 'Renders whenever searchform.php is called.',
     'std'     => htmlspecialchars(
         
-'<form action="[bloginfo show="siteurl"]" id="searchform" method="get">
+'<form action="[bloginfo show=\'wpurl\']" id="searchform" method="get">
 <div>
 <label id="sLabel" for="s" class="screen-reader-text">Search:</label>
 <input type="search" id="s" name="s" value="Search..." onfocus="if (this.value == \'Search...\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'Search...\';}"/>

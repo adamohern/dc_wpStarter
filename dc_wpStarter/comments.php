@@ -8,7 +8,7 @@ if ( post_password_required() ) { echo 'This post is password protected. Enter t
 
 if ( have_comments() ) {
 
-	echo '<h2 id="comments">'; comments_number('No Responses', 'One Response', '% Responses' ); echo '</h2>'; br();
+	echo '<h3 id="comments">'; comments_number('No Responses', 'One Response', '% Responses' ); echo '</h3>'; br();
 	
 	echo '<div class="navigation">'; br();
 	echo '<div class="next-posts">'; previous_comments_link(); echo '</div>'; br();
@@ -37,7 +37,7 @@ if ( have_comments() ) {
 if ( comments_open() ) {
 
     echo '<div id="respond">'; br();
-    echo '<h2>'; comment_form_title( 'Leave a Reply', 'Leave a Reply to %s' ); echo '</h2>'; br();
+    echo '<h3>'; comment_form_title( 'Leave a Reply', 'Leave a Reply to %s' ); echo '</h3>'; br();
     echo '<div class="cancel-comment-reply">';
     cancel_comment_reply_link();
     echo '</div>';

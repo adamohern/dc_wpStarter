@@ -54,7 +54,7 @@ function dc_get_sidebar($args){
     
 		$x .= c("Begin sidebar dc_get_sidebar('$handle')",2,1);
 		$x .= '<div id="'.$handle.'" class="dc-get-sidebar dc-wrapper clearfix'.$class.'">'."\n";
-		$x .= '<div class="dc-liner">'."\n";
+		$x .= '<div class="dc-liner clearfix">'."\n";
 		$x .= $content;
 		$x .= "\n".'</div><!--/.dc-liner-->'."\n";
 		$x .= "\n".'</div><!--/#'.$handle.'-->'."\n";
