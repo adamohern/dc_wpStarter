@@ -33,7 +33,7 @@ e('<meta name="description" content="'.$description.'" />');
 
 e('<meta content="'.o('author_name').'" />'); 
 e('<meta name="Copyright" content="Copyright '.o('author_name').' '.date('Y').'. All rights reserved." />'); 
-e('<meta name="viewport" content="width=device-width">');
+e('<meta name="viewport" content="'.o('meta_viewport').'" />');
 
 e('<link href="'.o('favicon').'" rel="shortcut icon" />');
 e('<link href="'.o('appleicon').'" rel="apple-touch-icon" />');

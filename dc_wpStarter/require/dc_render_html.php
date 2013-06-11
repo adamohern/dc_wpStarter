@@ -54,7 +54,7 @@ function dc_get_render_markup($markup) {
 
 function dc_get_the_post_thumbnail($args){
 	if(get_the_post_thumbnail()!=''){
-		if(isset($args['size'])) $size = $args['size']; else $size = 'dc_thumbnail';
+		if(isset($args['size'])) $size = $args['size']; else $size = 'medium';
 		$x = get_the_post_thumbnail(get_the_ID(),$size);
 		if(isset($args['link']) && $args['link']) $x = "<a href=\"".get_permalink()."\">$x</a>";
 		return apply_filters(__FUNCTION__,$x);
@@ -196,7 +196,9 @@ function dc_get_the_loop($format){
 	$x = c('Begin dc_the_loop()',2,1);
 	$x .= "<div class='dc-wrapper dc-the-loop'>";
 	$x .= "<div class='dc-liner dc-the-loop-liner'>";
-	$x .= dc_get_sidebar('dc-before-the-loop');
+	
+	if(!is_single()) $x .= dc_get_sidebar('dc-before-the-loop');
+	
 	$x .= dc_get_post_nav(o('post_nav_next'),o('post_nav_prev'),'top-nav');
 
 	$x .= c('Begin The Loop',1,1); 
@@ -252,7 +254,8 @@ function dc_get_the_loop($format){
 	$x .= c('End The Loop',1,1);
 
 	$x .= dc_get_post_nav(o('post_nav_next'),o('post_nav_prev'),'bottom-nav');
-	$x .= dc_get_sidebar('dc-after-the-loop');
+	
+	if(!is_single()) $x .= dc_get_sidebar('dc-after-the-loop');
 	
 	$x .= "</div><!--/.dc-the-loop-liner-->";
 	$x .= "</div><!--/.dc-the-loop-->";

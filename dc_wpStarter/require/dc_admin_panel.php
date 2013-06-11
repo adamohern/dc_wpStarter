@@ -253,7 +253,7 @@ class dc_theme_options {
 			
 			case 'text':
 			default:
-		 		echo '<input class="regular-text' . $field_class . '" type="text" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" placeholder="' . $std . '" value="' . esc_attr( $options[$id] ) . '" />';
+		 		echo '<input class="regular-text' . $field_class . '" style="width:95%;" type="text" id="' . $id . '" name="'.$this->handle.'[' . $id . ']" placeholder="' . $std . '" value="' . esc_attr( $options[$id] ) . '" />';
 				
 		 		$this->description($desc);
 		 		

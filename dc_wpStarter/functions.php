@@ -1,6 +1,6 @@
 <?php
 
-// only enable for dev!
+// Enable manually as-needed. Only enable during active dev, as it's a security risk (not to mention ugly).
 // ini_set('display_errors', 'On');
 
 // require all .php files in the 'require' directory
@@ -15,9 +15,6 @@ add_action('after_setup_theme','dc_load_options');
 add_theme_support( 'post-formats', array( 'video','status','quote','status','aside' ) );
 add_theme_support( 'post-thumbnails' );
 add_theme_support( 'automatic-feed-links' );
-add_image_size( 'dc_thumbnail', 240, 135, true ); // 256 x 144, hard crop mode
-add_image_size( 'dc_large', 720, 405, true ); // 720 x 405, hard crop mode
-add_image_size( 'dc_huge', 960, 540, true ); // 960 x 540, hard crop mode
 
 
 // load up our external scripts
@@ -26,14 +23,10 @@ function dc_loadScripts() {
 	if (!is_admin()) {  
         
         // start with the basics
-        dc_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js' );
-        dc_enqueue_script( 'jqueryui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') );
-        dc_enqueue_script( 'modernizr', get_stylesheet_directory_uri().'/js/modernizr-2.6.2.min.js', array('jquery') );
+        dc_enqueue_script( 'jquery', o('jquery_url') );
+        dc_enqueue_script( 'jqueryui', o('jqueryui_url'), array('jquery') );
+        dc_enqueue_script( 'modernizr', o('modernizr_url'), array('jquery') );
         dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );
-        //dc_enqueue_script( 'jquery', '/resources/jquery-1.9.1.min.js' );
-        //dc_enqueue_script( 'jqueryui', '/resources/ui/jquery-ui.js', array('jquery') );
-        //dc_enqueue_script( 'dc_functions', get_stylesheet_directory_uri().'/js/dc_functions.js', array('jquery'), '0', true );
-        
         
         if( o('jqueryui_theme') ) dc_enqueue_style('jqueryui_style', o('jqueryui_theme') );
         
@@ -49,8 +42,7 @@ add_action('init', 'dc_loadScripts');
 // only load Ace as needed
 function enqueue_ace(){
     c('enqueue_ace()');
-    dc_enqueue_script( 'ace', '//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js' );
-    //dc_enqueue_script( 'ace', '/resources/ace-builds-master/src-min-noconflict/ace.js' );
+    dc_enqueue_script( 'ace', o('ace_url') );
 }
 add_action('admin_enqueue_scripts','enqueue_ace');
 

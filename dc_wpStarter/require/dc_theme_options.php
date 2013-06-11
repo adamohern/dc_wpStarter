@@ -57,25 +57,16 @@ mark {background-color: #ffa200;}
 .thumb img {width:100%;height:auto;}
 
 .widget_search {max-width:500px;}
-#searchform #sLabel {display:none;}
-#searchform input {   
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    border-width: 0;
-    border-style: solid;
-    border-color:#eee;
-    color:#999;
-    font-family:'Source Sans Pro' sans-serif;
-    background-color:#e9e9e9;
-}
 
-#searchform #s {   
-    width:78%;
-}
-#searchform #searchsubmit{
-    width:19%;
-    margin-left:1%;
-}
+#searchform {max-width:400px;}
+#searchform #sLabel {display:none;}
+#searchform #s { width:78%; }
+#searchform #searchsubmit{ width:19%; margin-left:1%;}
+#searchform input {-webkit-border-radius: 3px;border-radius: 3px;border-width: 0;
+    border-style: solid;border-color:#eee;color:#999;font-family:'Source Sans Pro' sans-serif;
+    background-color:#e9e9e9;}
+    
+.dc-the-loop #searchform {margin-bottom:1em;}
 
 .dc-get-sidebar {margin-bottom:1em;}
 #dc-sidebars .widget {margin-bottom:1em;}
@@ -87,31 +78,41 @@ mark {background-color: #ffa200;}
 
 @media only screen 
 and (min-width : 480px) {
+    
     .thumb {width:33%;margin:0 1em 1em 0;}
     .thumb {float:left;}
+    .single .thumb {float:none;width:100%;}
     #dc-before-the-loop,
     #dc-before-single {display:block;}
+
 }
 
 @media only screen 
 and (min-width : 641px) {
+
     .dc-the-loop{width:66%;float:left;}
     #dc-sidebars{width:33%;float:left;}
     #dc-sidebar01,#dc-sidebar02{margin-left:1%;}
     #dc-sidebars .dc-liner {padding:0 1em;}
+
 }
 
 @media only screen 
 and (min-width : 1025px) {
+
     .dc-the-loop{width:60%;}
     #dc-sidebars{width:40%;}
     #dc-sidebar01,#dc-sidebar02{width:49%;float:right;margin-left:1%;max-width:30em;}
     .single article{max-width:40em;margin:0 auto;}
+
 }
 
 @media only screen 
 and (min-width : 1281px) {
+    
     .dc-articles article{width:49%;float:left;margin-right:1%}
+    .thumb {width:auto;margin:0;float:none;}
+    
 }"
     
     ),
@@ -120,6 +121,14 @@ and (min-width : 1281px) {
     'section' => 'css',
     'class'   => 'cssOverrides code'
 ));   
+
+$dc_options['css'] -> set('meta_viewport', array(
+    'section' => 'css',
+    'title'   => 'meta viewport settings',
+    'desc'    => 'Sets the meta tag that controls default mobile zooming, etc: <meta name="viewport" content="..." />',
+    'type'    => 'text',
+    'std'     => 'width=device-width, initial-scale=1, maximum-scale=1'
+));
 
 
 
@@ -205,7 +214,7 @@ $dc_options['content'] -> set('post_format_single', array(
     'desc'    => 'HTML to display individual posts<br />'.$instructions,
     'std'     => htmlspecialchars(
         
-'<div class="thumb">[the_post_thumbnail size="dc_large"]</div>'."\n".
+'<div class="thumb">[the_post_thumbnail size="large"]</div>'."\n".
 '<div class="entry-content">'."\n".
 "\t".'<h1>[the_title]</h1>'."\n".
 "\t".'[dc_sidebar id="dc-before-single"]'."\n".
@@ -397,8 +406,37 @@ $dc_options['js'] -> set('footer_js', array(
 ));
 
 
+$dc_options['js'] -> set('jquery_url', array(
+    'section' => 'js',
+    'title'   => 'jquery',
+    'desc'    => 'Required. Enter the URL for jquery. (Loads from google APIs by default, ideal for performance.)',
+    'type'    => 'text',
+    'std'     => '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js'
+));
 
+$dc_options['js'] -> set('jqueryui_url', array(
+    'section' => 'js',
+    'title'   => 'jqueryui',
+    'desc'    => 'Required. Enter the URL for jqueryui. (Loads from google APIs by default.)',
+    'type'    => 'text',
+    'std'     => '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js'
+));
 
+$dc_options['js'] -> set('modernizr_url', array(
+    'section' => 'js',
+    'title'   => 'modernizr',
+    'desc'    => 'Required. Enter the URL for modernizr. (Loads from local copy by default.)',
+    'type'    => 'text',
+    'std'     => get_stylesheet_directory_uri().'/js/modernizr-2.6.2.min.js'
+));
+
+$dc_options['js'] -> set('ace_url', array(
+    'section' => 'js',
+    'title'   => 'ace',
+    'desc'    => 'Required. Enter the URL for the ace text editor. (Loads from ace\'s servers by default.)',
+    'type'    => 'text',
+    'std'     => '//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js'
+));
 
 
 
