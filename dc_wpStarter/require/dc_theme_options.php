@@ -38,7 +38,7 @@ $dc_options['css'] -> set('css_overrides', array(
         
 "/* custom CSS goes here */
 
-body{ font-family:'Source Sans Pro' sans-serif; font-weight:300; }
+body{ font-family:'Source Sans Pro' sans-serif; font-weight:300; font-size:1.3em; }
 
 a {color: #ff3c00;}
 a:hover {color: #f13a09;}
@@ -127,7 +127,7 @@ $dc_options['css'] -> set('meta_viewport', array(
     'title'   => 'meta viewport settings',
     'desc'    => 'Sets the meta tag that controls default mobile zooming, etc: <meta name="viewport" content="..." />',
     'type'    => 'text',
-    'std'     => 'width=device-width, initial-scale=1, maximum-scale=1'
+    'std'     => 'width=device-width'
 ));
 
 
