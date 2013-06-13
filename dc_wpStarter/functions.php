@@ -46,5 +46,7 @@ function enqueue_ace(){
 }
 add_action('admin_enqueue_scripts','enqueue_ace');
 
+do_action('dc_theme_ready');
+
 
 ?>

@@ -31,6 +31,10 @@ foreach($dc_sidebars as $key => $array){
 	$dc_sidebars[$key] = $array;
 }
 
+
+
+
+
 function dc_sidebar($args){
 	e(dc_get_sidebar($args));
 }
@@ -40,7 +44,7 @@ function dc_get_sidebar($args){
     
     if (is_string($args)) $handle = $args;
 	else if(is_array($args) && isset($args['id'])) $handle = str_replace('"','',htmlspecialchars_decode($args['id']));
-	else $handle = '[missing argument]';
+	else $handle = 'missing_argument';
 	
 	if(o($handle)){
 	
@@ -70,7 +74,7 @@ function dc_get_sidebar($args){
         
     }
 
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,apply_filters($handle,$x));
 }
 
 

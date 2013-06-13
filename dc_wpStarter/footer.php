@@ -23,7 +23,8 @@ br(3);
 
 e('<footer id="footer" class="source-org vcard copyright h-lists clearfix">');
 e('<ul id="copyright-etc" class="clearfix">');
-e('<li><small>&copy;'.date("Y").' '.get_bloginfo('name').'</small></li>');
+if(o('copyright'))
+	e('<li><small>&copy;'.date("Y").' '.o('copyright').'</small></li>');
 e('</ul>');
 
 if (o('dc-footer')) {
@@ -51,7 +52,7 @@ e('</div>'.c('/#dc-everything',0,1));
 br(3);
 
 e('<script>');
-dc_render_markup(o('custom_js_footer'));
+e(apply_filters('custom_js_footer',dc_get_render_markup(o('custom_js_footer'))));
 e('</script>');
 
 br(3);

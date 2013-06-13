@@ -252,7 +252,7 @@ function dc_query_posts ($args) {
 
 
     $x .= c('end functions/dc_postsList.php > dc_postsList2',1,1);
-	return apply_filters(__FUNCTION__,c('filter hook = '.__FUNCTION__,1,1).$x);
+	return apply_filters(__FUNCTION__,$x);
 }
 
 ?>

@@ -29,7 +29,7 @@ h1 {font-size:3em;}
 h2 {font-size:2em;}
 h3 {font-size:1em;}
 
-input {padding: 5px;border: 0;outline:0;background: #f5f5f5;border:0;-webkit-appearance: none;display:inline-block;}
+textarea, input {padding: 5px;border: 0;outline:0;background: #f5f5f5;border:0;-webkit-appearance: none;display:inline-block;}
 
 
 input[type="search"]::-webkit-search-cancel-button{
@@ -38,7 +38,7 @@ input[type="search"]::-webkit-search-cancel-button{
 
 textarea {width:98%;}
 
-article {padding:1em 0;}
+article {padding:0 0 1em 0;}
 
 .dc-get-sidebar .widget {float:left; margin-right:1em;}
 .dc-get-sidebar li {display:inline-block;margin-right:1em;}
@@ -49,5 +49,19 @@ article {padding:1em 0;}
 .dc-empty-sidebar {font-size:.8em;font-style:italic;color:#999;background-color:#f5f5f5;margin:.5em 0;}
 .dc-empty-sidebar .dc-liner {padding:1em;}
 #dc-header.dc-empty-sidebar {background-color:#ddd;margin:0;}
+#dc-after-single, 
+#dc-after-the-loop {margin-top:1em;}
 
 #copyright-etc {margin-bottom:1em;}
+
+h3#comments,
+#respond h3,
+#respond p,
+#commentform div {margin-bottom:.5em;}
+#commentform input {margin-right:1em;}
+
+li.comment {list-style-type:none;background-color:#f5f5f5;margin-bottom:1em;}
+li.comment .comment-body {margin-bottom:.5em;padding:1em;border-bottom:1px solid #ccc;}
+li.comment li .comment-body {padding-left:2em;}
+li.comment li li .comment-body {padding-left:3em;}
+.comment-meta, .reply {font-size:.8em;}

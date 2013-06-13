@@ -12,6 +12,8 @@ dc_css_overrides			outputs CSS from theme options panel
 dc_custom_head				outputs custom head html from theme options
 dc_custom_js				outputs custom header js from theme options
 dc_search_form				outputs search form from theme content options
+custom_js_footer			outputs custom footer js from theme options
+
 
 dc_query_posts_titleBar		output for dc_query_posts title block
 post_format_dc_query_posts	output for dc_query_posts individual post blocks
@@ -43,6 +45,7 @@ dc_get_the_loop $format		output for specific format (e.g. 'post_format_index')
 dc_get_post_nav
 dc_get_author_bio
 dc_search_title
+dc_archive_title
 
 dc_get_sidebar
 

@@ -51,18 +51,18 @@ if ( comments_open() ) {
 			echo '<a href="'.wp_logout_url(get_permalink()).'" title="Log out of this account">Log out &raquo;</a></p>'; br();
 		} else {
             echo '<div>'; br();
-            echo '<input type="text" name="author" id="author" value="<?php echo esc_attr($comment_author); ?>" size="22" tabindex="1" '; if ($req) echo "aria-required='true'"; echo ' />'; br();
-            echo '<label for="author">Name <?php if ($req) echo "(required)"; ?></label>'; br();
+            echo '<input type="text" name="author" id="author" value="'.esc_attr($comment_author).'" size="22" tabindex="1" '; if ($req) echo "aria-required='true'"; echo ' />'; br();
+            echo '<label for="author">name<?php if ($req) echo "*"; ?></label>'; br();
             echo '</div>'; br();
             
             echo '<div>'; br();
-            echo '<input type="text" name="email" id="email" value="<?php echo esc_attr($comment_author_email); ?>" size="22" tabindex="2"'; if ($req) echo "aria-required='true'"; echo ' />'; br();
-            echo '<label for="email">Mail (will not be published) <?php if ($req) echo "(required)"; ?></label>'; br();
+            echo '<input type="text" name="email" id="email" value="'.esc_attr($comment_author_email).'" size="22" tabindex="2"'; if ($req) echo "aria-required='true'"; echo ' />'; br();
+            echo '<label for="email">email'; if ($req) echo "*"; echo '</label>'; br();
             echo '</div>'; br();
             
             echo '<div>'; br();
-            echo '<input type="text" name="url" id="url" value="<?php echo esc_attr($comment_author_url); ?>" size="22" tabindex="3" />'; br();
-            echo '<label for="url">Website</label>'; br();
+            echo '<input type="text" name="url" id="url" value="'.esc_attr($comment_author_url).'" size="22" tabindex="3" />'; br();
+            echo '<label for="url">website</label>'; br();
             echo '</div>'; br();
         }
         

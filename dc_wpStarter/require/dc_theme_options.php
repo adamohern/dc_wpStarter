@@ -39,7 +39,7 @@ $dc_options['css'] -> set('css_overrides', array(
         
 "/* custom CSS goes here */
 
-body{ font-family:'Source Sans Pro' sans-serif; font-weight:300; font-size:1.3em; }
+body{ font-family:'Source Sans Pro','Arial',sans-serif; font-weight:300; }
 
 a {color: #ff3c00;}
 a:hover {color: #f13a09;}
@@ -52,17 +52,16 @@ mark {background-color: #ffa200;}
 
 #dc-header.dc-get-sidebar {margin:0;}
 #dc-header .widget {padding:.5em 20px;}
+#dc-header .widget_search {width:320px;float:right;margin:0;}
 
 .thumb {display:none;}
 .dc-has-thumb .thumb {display:block;}
 .thumb img {width:100%;height:auto;}
 
-.widget_search {max-width:500px;}
 
-#searchform {max-width:400px;}
 #searchform #sLabel {display:none;}
-#searchform #s { width:78%; }
-#searchform #searchsubmit{ width:19%; margin-left:1%;}
+#searchform #s { width:75%; }
+#searchform #searchsubmit{ width:19%; float:right;}
 #searchform input {-webkit-border-radius: 3px;border-radius: 3px;border-width: 0;
     border-style: solid;border-color:#eee;color:#999;font-family:'Source Sans Pro' sans-serif;
     background-color:#e9e9e9;}
@@ -74,6 +73,13 @@ mark {background-color: #ffa200;}
 
 #dc-before-the-loop,
 #dc-before-single {display:none;}
+
+#respond #submit,
+#respond input,
+#respond textarea {-webkit-border-radius: 3px;border-radius: 3px;}
+#respond #submit {padding:1em;background-color:#ff3c00;color:#fff;}
+#respond #submit:hover {background-color:#f13a09;}
+.avatar {float:left;margin-right:1em;margin-bottom:1em;}
 
 #footer {margin-top:2em;}
 
@@ -111,7 +117,8 @@ and (min-width : 1025px) {
 @media only screen 
 and (min-width : 1281px) {
     
-    .dc-articles article{width:49%;float:left;margin-right:1%}
+    article{width:49%;float:left;margin-right:1%}
+    .single article {width:auto;float:none;margin-top:5%}
     .thumb {width:auto;margin:0;float:none;}
     
 }"
@@ -339,6 +346,14 @@ $dc_options['content'] -> set('post_nav_prev', array(
     'desc'    => 'Text for pagination links on archive and search pages.',
     'type'    => 'text',
     'std'     => 'Newer &raquo;'
+));
+
+$dc_options['content'] -> set('copyright', array(
+    'section' => 'common',
+    'title'   => 'copyright text',
+    'desc'    => 'Appears at the foot of the page, just above the footer widgets.',
+    'type'    => 'text',
+    'std'     => get_bloginfo('name')
 ));
 
                                    

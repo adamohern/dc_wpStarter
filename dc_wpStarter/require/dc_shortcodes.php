@@ -28,7 +28,7 @@ function dc_downloads($atts){
     }
     $html .= '</div>'.br(3,1);
     
-    return $html;
+    return apply_filters(__FUNCTION__,$html);
 }
 add_shortcode('downloads','dc_downloads');
 
@@ -38,7 +38,7 @@ add_shortcode('downloads','dc_downloads');
 // counts the number of posts with a given set of tags
 function dc_count_shortcode($atts,$content=null){
     $tags = $atts[tags];
-    return '<span class="count">'.dc_count($tags).'</span>';
+    return apply_filters(__FUNCTION__,'<span class="count">'.dc_count($tags).'</span>');
 }
 add_shortcode('count','dc_count_shortcode');
 
@@ -48,7 +48,7 @@ add_shortcode('count','dc_count_shortcode');
 // renders a properly formatted shadowbox image link
 function dc_j_img($atts,$content=null) {
     $s = '<a href="'.$content.'" rel="shadowbox"><img class="thumbnail" src="'.$content.'" /></a>';
-    return $s;
+    return apply_filters(__FUNCTION__,$s);
 } 
 add_shortcode('img', 'dc_j_img');
 
@@ -58,7 +58,7 @@ add_shortcode('img', 'dc_j_img');
 // renders a properly formatted shadowbox file link
 function dc_j_file($atts,$content=null) {
 	$s = '<a href="'.$content.'">'.basename($content).'</a>';
-	return $s;
+	return apply_filters(__FUNCTION__,$s);
 }
 add_shortcode('file', 'dc_j_file');
 
@@ -72,7 +72,7 @@ function dc_toggle($atts,$content=null) {
 	if(!$title) $title = 'click to expand';
 	if(!$content) $content = 'Lorem ipsum dolor sit amet.';
 	
-	return "<div class='toggle title'>$title</div><div class='peekaboo' style='display:none;'>$content</div>";
+	return apply_filters(__FUNCTION__,"<div class='toggle title'>$title</div><div class='peekaboo' style='display:none;'>$content</div>");
 }
 add_shortcode('toggle', 'dc_toggle');
 
@@ -82,7 +82,7 @@ add_shortcode('toggle', 'dc_toggle');
 // renders a properly formatted jquery UI accordion
 function dc_accordion($atts,$content){
 	$content = wpautop(trim($content));
-	return force_balance_tags("<div class=\"accordion\">$content</div>");
+	return apply_filters(__FUNCTION__,force_balance_tags("<div class=\"accordion\">$content</div>"));
 }
 add_shortcode('accordion', 'dc_accordion');
 
@@ -92,7 +92,7 @@ add_shortcode('accordion', 'dc_accordion');
 // renders properly formatted jquery UI tabs
 function dc_tabs($atts,$content){
 	$content = wpautop(trim($content));
-	return force_balance_tags("<div class=\"tabs\">$content</div>");
+	return apply_filters(__FUNCTION__,force_balance_tags("<div class=\"tabs\">$content</div>"));
 }
 add_shortcode('tabs', 'dc_tabs');
 
@@ -108,7 +108,7 @@ function dc_query_posts_shortcode($atts) {
     if(!$atts[offset])          $atts[offset] = 0;
     if(!$atts[paginate])        $atts[paginate] = false;
 	
-	return dc_query_posts ($atts);
+	return dc_query_posts($atts);
 }
 add_shortcode('dc_query_posts', 'dc_query_posts_shortcode');
 
