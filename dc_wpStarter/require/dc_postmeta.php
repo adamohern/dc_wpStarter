@@ -1,15 +1,18 @@
 <?php
 
 // add a few common options for posts and pages
-$dc_default_meta = new dc_meta_box('dc_post_options', 'dc meta');
-$dc_default_meta -> add_text_field('dc_custom_title','Custom meta title','Replaces \'title\' and \'meta name\' in <head>');
-$dc_default_meta -> add_boolean_field('dc_hide_title', 'Hide Title','hide title on is_single()?','true');
-$dc_default_meta -> add_boolean_field('dc_full_width', 'Full Width','hide sidebars and add the .full-width class?','false');
-$dc_default_meta -> add_boolean_field('dc_wpautop', 'Disable Auto-HTML','keep WP from adding html tags?','false');
+$dc_postmeta['default'] = new dc_meta_box('dc_post_options', 'dc meta');
+$dc_postmeta['default'] -> add_text_field('dc_custom_title','Custom meta title','Replaces \'title\' and \'meta name\' in <head>');
+$dc_postmeta['default'] -> add_boolean_field('dc_hide_title', 'Hide Title','hide title on is_single()?','true');
+$dc_postmeta['default'] -> add_boolean_field('dc_full_width', 'Full Width','hide sidebars and add the .full-width class?','false');
+$dc_postmeta['default'] -> add_boolean_field('dc_wpautop', 'Disable Auto-HTML','keep WP from adding html tags?','false');
 
 // add a CSS box for custom post-level CSS
-$dc_css_meta = new dc_meta_box('dc_post_css','dc post-level CSS',array('post','page'),'normal','default');
-$dc_css_meta -> add_code_field('dc_post_css_field','arbitrary CSS','Inline CSS added to header for this post only.','css','//code here');
+$dc_postmeta['css'] = new dc_meta_box('dc_post_css','dc post-level CSS',array('post','page'),'normal','default');
+$dc_postmeta['css'] -> add_code_field('dc_post_css_field','arbitrary CSS','Inline CSS added to header for this post only.','css','//code here');
+
+do_action('dc_postmeta',$dc_postmeta);
+
 
 
 

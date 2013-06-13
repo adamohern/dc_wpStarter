@@ -77,7 +77,7 @@ if ( comments_open() ) {
         comment_id_fields();
         echo '</div>'; br();
         
-        do_action('comment_form', $post->ID);
+        do_action('dc_comment_form', $post->ID);
         
         echo '</form>'; br();
     

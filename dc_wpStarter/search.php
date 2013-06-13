@@ -9,7 +9,7 @@ $key = wp_specialchars($s, 1);
 $count = $allsearch->post_count; 
 wp_reset_query();
 
-e('<h2 class="pagetitle">'.$count.' results for "<span class="search-terms">'.$key.'</span>"</h2>');
+e(apply_filters('dc_search_title','<h2 class="pagetitle">'.$count.' results for "<span class="search-terms">'.$key.'</span>"</h2>'));
 
 dc_the_loop('post_format_search');
 

@@ -261,7 +261,7 @@ function dc_get_the_loop($format){
 	$x .= "</div><!--/.dc-the-loop-->";
 	$x .= c('End dc_the_loop()',3,1);
     
-    return apply_filters(__FUNCTION__,$x);
+    return apply_filters(__FUNCTION__,apply_filters($format,$x));
 	
 }
 

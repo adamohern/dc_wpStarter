@@ -17,6 +17,7 @@ $dc_options['content'] = new dc_theme_options('Theme Content','dc Content','dc_c
 $dc_options['content'] -> add_section('Common Markup','common');
 $dc_options['content'] -> add_section('Special Markup','special');
 
+do_action('dc_options',$dc_options);
 
 $instructions = '(add supported wordpress template tags in [shortcode] form (e.g. [the_date]) listing arguments by name (e.g. [the_date format="format=\'M d, Y\'"])';
 
