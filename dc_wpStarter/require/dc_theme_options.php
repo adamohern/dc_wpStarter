@@ -17,6 +17,9 @@ $dc_options['content'] = new dc_theme_options('Theme Content','dc Content','dc_c
 $dc_options['content'] -> add_section('Common Markup','common');
 $dc_options['content'] -> add_section('Special Markup','special');
 
+$dc_options['help'] = new dc_theme_options('Theme Help','dc Documentation','dc_help');
+$dc_options['help'] -> add_section('The Basics','overview');
+
 do_action('dc_options',$dc_options);
 
 $instructions = '(add supported wordpress template tags in [shortcode] form (e.g. [the_date]) listing arguments by name (e.g. [the_date format="format=\'M d, Y\'"])';
@@ -39,7 +42,7 @@ $dc_options['css'] -> set('css_overrides', array(
         
 "/* custom CSS goes here */
 
-body{ font-family:'Source Sans Pro','Arial',sans-serif; font-weight:300; }
+body{ font-family:'Source Sans Pro','Helvetica Neue','Helvetica','Arial',sans-serif; font-weight:300; }
 
 a {color: #ff3c00;}
 a:hover {color: #f13a09;}
@@ -548,5 +551,54 @@ $dc_options['std'] -> set('index_seo_description', array(
     'type'    => 'textarea',
     'section' => 'seo'
 ));
+
+
+
+
+
+
+
+
+
+
+/* Documentation
+===========================================*/
+
+$dc_options['help'] -> set('overview01', array(
+    'section' => 'overview',
+    'title' => 'Overview',
+    'type' => 'readme',
+    'std' => 
+    
+    "<h3 style='margin-top:0;'>With great power... comes great help docs.</h3>
+    <p>This theme does a lot of stuff. We've tried to keep it simple, but there's still a lot to know!</p>
+    <p>This theme is intended for web designers who want a flexible framework for rapid development. 
+    It <em>is not intended for beginners</em>. If you want an out-of-box solution or don't have a strong grasp of HTML/CSS, this theme is not for you.</p>
+    <h3>What's so special about this theme?</h3>
+    <p>We run a bunch of wordpress sites in a Wordpress Network, and managing individual themes for all of them was a nightmare. 
+    Our solution was to build a single theme that we could use across all of our sites, but build in enough flexibility so that 
+    it would be easy to customize each site visually without changing the core-code. 
+    <p>That's what this theme is all about: 
+    a clean, powerful, flexible code base for use across multiple sites.</p>
+    <h3>Conventions</h3>
+    <p>This is more than just a theme: it's an entire package full of powerful CMS-style features for professional bloggers. 
+    We've added lots of functionality to the Wordpress admin panel as well as the front-end appearance.</p>
+    <p>As a rule, pretty much everything we add has 'dc' as a prefix: CSS classes, PHP variables, menus, post meta boxes... if it starts with 'dc', 
+    we probably added it (and it will therefor go away if you switch themes).</p>
+    <p>Keep in mind that making heavy use of dc-specific features may make it more difficult to switch themes later on. 
+    We recommend spending some time getting used to this theme before committing to using it long term.</p>"
+    
+));
+
+$dc_options['help'] -> set('quickstart', array(
+    'section' => 'overview',
+    'title' => 'Getting Started',
+    'type' => 'readme',
+    'std' => 
+    
+    "<h3 style='margin-top:0;'>Getting Started</h3>
+    <p>Start by poking around in the theme options.</p>"
+));
+
 
 ?>

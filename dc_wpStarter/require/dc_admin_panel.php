@@ -200,6 +200,11 @@ class dc_theme_options {
 				echo '</td></tr><tr valign="top"><td colspan="2"><h4>' . $desc . '</h4>';
 				br(1);
 				break;
+				
+			case 'readme':
+				echo $std;
+				br(1);
+				break;
 			
 			case 'checkbox':
 				
