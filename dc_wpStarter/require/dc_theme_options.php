@@ -571,22 +571,31 @@ $dc_options['help'] -> set('overview01', array(
     'std' => 
     
     "<h3 style='margin-top:0;'>With great power... comes great help docs.</h3>
-    <p>This theme does a lot of stuff. We've tried to keep it simple, but there's still a lot to know!</p>
-    <p>This theme is intended for web designers who want a flexible framework for rapid development. 
-    It <em>is not intended for beginners</em>. If you want an out-of-box solution or don't have a strong grasp of HTML/CSS, this theme is not for you.</p>
+    <p>In reality it isn't really a 'theme' so much as a flexible framework for rapid theme development.
+    It <em>is not intended for beginners</em>. If you want an out-of-box solution or don't 
+    have a strong grasp of HTML/CSS, this theme is not for you.</p>
     <h3>What's so special about this theme?</h3>
-    <p>We run a bunch of wordpress sites in a Wordpress Network, and managing individual themes for all of them was a nightmare. 
-    Our solution was to build a single theme that we could use across all of our sites, but build in enough flexibility so that 
+    <p>We run a bunch of wordpress sites in a Wordpress Network, and managing individual 
+    themes for each of them was a nightmare. 
+    Our solution was to build a single theme that we could use across all of our sites, 
+    but build in enough flexibility so that 
     it would be easy to customize each site visually without changing the core-code. 
     <p>That's what this theme is all about: 
-    a clean, powerful, flexible code base for use across multiple sites.</p>
+    a clean, powerful, flexible code base for use across multiple sites. The core theme 
+    is really just a simple, semantic, compliant HTML5 framework with a robust Wordpress feature 
+    set, ready for pretty much anything. We then store all of your pretty CSS, custom scripts, 
+    and external resources as Wordpress theme options. That makes it easy to customize the 
+    CSS in real-time--without FTP--and to have a single theme that looks and behaves differently across 
+    multiple wordpress installs (or multiple sites in a Wordpress Network, as in our case).</p>
     <h3>Conventions</h3>
-    <p>This is more than just a theme: it's an entire package full of powerful CMS-style features for professional bloggers. 
-    We've added lots of functionality to the Wordpress admin panel as well as the front-end appearance.</p>
-    <p>As a rule, pretty much everything we add has 'dc' as a prefix: CSS classes, PHP variables, menus, post meta boxes... if it starts with 'dc', 
+    <p>We've added lots of CMS-like features for professional bloggers to the Wordpress 
+    admin panel as well as the front-end appearance.</p>
+    <p>As a rule, pretty much everything we add has 'dc' as a prefix: CSS classes, 
+    PHP variables, menus, post meta boxes... if it starts with 'dc', 
     we probably added it (and it will therefor go away if you switch themes).</p>
-    <p>Keep in mind that making heavy use of dc-specific features may make it more difficult to switch themes later on. 
-    We recommend spending some time getting used to this theme before committing to using it long term.</p>"
+    <p>Keep in mind that making heavy use of dc-specific features may make it more 
+    difficult to switch themes later on. We recommend spending some time getting used 
+    to this theme before committing to using it long term.</p>"
     
 ));
 

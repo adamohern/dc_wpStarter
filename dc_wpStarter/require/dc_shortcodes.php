@@ -30,7 +30,7 @@ function dc_downloads($atts){
     
     return apply_filters(__FUNCTION__,$html);
 }
-add_shortcode('downloads','dc_downloads');
+add_shortcode('dc_downloads','dc_downloads');
 
 
 
@@ -40,7 +40,7 @@ function dc_count_shortcode($atts,$content=null){
     $tags = $atts[tags];
     return apply_filters(__FUNCTION__,'<span class="count">'.dc_count($tags).'</span>');
 }
-add_shortcode('count','dc_count_shortcode');
+add_shortcode('dc_count','dc_count_shortcode');
 
 
 
@@ -50,7 +50,7 @@ function dc_j_img($atts,$content=null) {
     $s = '<a href="'.$content.'" rel="shadowbox"><img class="thumbnail" src="'.$content.'" /></a>';
     return apply_filters(__FUNCTION__,$s);
 } 
-add_shortcode('img', 'dc_j_img');
+add_shortcode('dc_img', 'dc_j_img');
 
 
 
@@ -60,7 +60,7 @@ function dc_j_file($atts,$content=null) {
 	$s = '<a href="'.$content.'">'.basename($content).'</a>';
 	return apply_filters(__FUNCTION__,$s);
 }
-add_shortcode('file', 'dc_j_file');
+add_shortcode('dc_file', 'dc_j_file');
 
 
 
@@ -74,7 +74,7 @@ function dc_toggle($atts,$content=null) {
 	
 	return apply_filters(__FUNCTION__,"<div class='toggle title'>$title</div><div class='peekaboo' style='display:none;'>$content</div>");
 }
-add_shortcode('toggle', 'dc_toggle');
+add_shortcode('dc_toggle', 'dc_toggle');
 
 
 
@@ -84,7 +84,7 @@ function dc_accordion($atts,$content){
 	$content = wpautop(trim($content));
 	return apply_filters(__FUNCTION__,force_balance_tags("<div class=\"accordion\">$content</div>"));
 }
-add_shortcode('accordion', 'dc_accordion');
+add_shortcode('dc_accordion', 'dc_accordion');
 
 
 
@@ -94,7 +94,7 @@ function dc_tabs($atts,$content){
 	$content = wpautop(trim($content));
 	return apply_filters(__FUNCTION__,force_balance_tags("<div class=\"tabs\">$content</div>"));
 }
-add_shortcode('tabs', 'dc_tabs');
+add_shortcode('dc_tabs', 'dc_tabs');
 
 
 
