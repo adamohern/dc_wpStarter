@@ -11,9 +11,16 @@ foreach(glob(get_stylesheet_directory()."/require/*.php") as $file){ require $fi
 add_action('after_setup_theme','dc_load_options');
 
 
+// stop WP adding junk (i.e. <br /> and <p></p>) to shortcodes
+remove_filter( 'the_content', 'wpautop' );
+if(o('wpautop_global_toggle')){
+    add_filter( 'the_content', 'wpautop' , 10);
+}
+
+
 // turn on extra Wordpress goodies
 add_theme_support( 'post-formats', array( 'video','status','quote','status','aside' ) );
-add_theme_support( 'post-thumbnails' );
+add_theme_support( 'post-thumbnails', array( 'post' ) );
 add_theme_support( 'automatic-feed-links' );
 
 
@@ -23,7 +30,9 @@ function dc_loadScripts() {
 	if (!is_admin()) {  
         
         // start with the basics
-        dc_enqueue_script( 'jquery', o('jquery_url') );
+        if(o('override_default_js')){
+            dc_enqueue_script( 'jquery', o('jquery_url') );
+        }
         dc_enqueue_script( 'jqueryui', o('jqueryui_url'), array('jquery') );
         dc_enqueue_script( 'modernizr', o('modernizr_url'), array('jquery') );
         dc_enqueue_script( 'dc_functions', get_bloginfo('template_url').'/js/dc_functions.js', array('jquery'), '0', true );

@@ -116,7 +116,7 @@ class dc_meta_box{
 		foreach($this->fields as $field){
 		
 		    $meta_value = get_post_meta( $post_id, $field['handle'], true );
-			$new_meta_value = sanitize_text_field( $_POST[$field['handle']] );				
+			$new_meta_value = $_POST[$field['handle']];				
 	
 			if ( $new_meta_value && !$meta_value ){
 				add_post_meta( $post_id, $field['handle'], $new_meta_value, true );

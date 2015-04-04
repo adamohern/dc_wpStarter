@@ -69,9 +69,9 @@ function dc_query_posts ($args) {
     
     
     
-    if($args['types']) 
+    if($args['types']) {
         $args['types'] = dc_commas_to_type_array($args['types']);
-    else if($args['excludetypes']) {
+    } else if($args['excludetypes']) {
         $args['types'] = get_post_types();
         $args['excludetypes'] = dc_commas_to_type_array($args['excludetypes']);
         $args['types'] = array_diff($args['types'],$args['excludetypes']);

@@ -8,10 +8,11 @@ function dc_render_markup($markup) {
 
 // Our way of allowing users to access Wordpress template tags
 // without the danger of eval() statements.
-function dc_get_render_markup($markup) {
+function dc_get_render_markup($markup,$args=array()) {
          
     if($markup){
 
+        $markup = htmlspecialchars_decode($markup);
         $shortcodes = array(
         	array('the_post_thumbnail',		'dc_get_the_post_thumbnail'),
         	array('request_uri',			'dc_get_request_uri'),
@@ -37,20 +38,29 @@ function dc_get_render_markup($markup) {
             array('get_post_class',			'dc_get_post_class'),
             array('dc_sidebar',				'dc_get_sidebar'),
             array('dc_google_authorship',	'dc_get_google_authorship'),
-            array('dc_author_bio',			'dc_get_author_bio')
+            array('dc_author_bio',			'dc_get_author_bio'),
+            array('the_modified_date',      'dc_get_the_modified_date')
         );
 
         foreach ($shortcodes as $shortcode){
-            add_shortcode($shortcode[0],$shortcode[1]);
+            if($shortcode[0] == 'the_title'){
+                if($args['hide_title']=='true') add_shortcode($shortcode[0],'dc_nothing');
+                else add_shortcode($shortcode[0],$shortcode[1]);
+            } else {
+                add_shortcode($shortcode[0],$shortcode[1]);
+            }
         }
         
         $markup = do_shortcode($markup);
          
     }
    
-    return apply_filters(__FUNCTION__, htmlspecialchars_decode($markup));
+    return apply_filters(__FUNCTION__, $markup);
 }
 
+function dc_nothing($args){
+    return '';
+}
 
 function dc_get_the_post_thumbnail($args){
 	if(get_the_post_thumbnail()!=''){
@@ -77,9 +87,13 @@ function dc_get_the_author_posts_link($args){
 }
 
 function dc_get_the_title($args){
-	$x = get_the_title();
-	if(isset($args['link']) && $args['link']) $x = "<a href=\"".get_permalink()."\">$x</a>";
-	return apply_filters(__FUNCTION__,$x);
+    if (is_array($args)){
+        if (!$args['hide_title']){
+        	$x = get_the_title();
+        	if(isset($args['link']) && $args['link']) $x = "<a href=\"".get_permalink()."\">$x</a>";
+        	return apply_filters(__FUNCTION__,$x);
+        }
+    }
 }
 
 function dc_get_the_date($args){
@@ -98,13 +112,44 @@ function dc_get_the_content($args){
 }
 
 function dc_get_the_tags($args){
-    $x = get_the_tags();
-    return apply_filters(__FUNCTION__,$x);
+    $defaults = array('sep'=>', ','before'=>'Tags: ','after'=>'');
+    $args = shortcode_atts( $defaults, $args );
+    $tagsArray = get_the_tags();
+    if($tagsArray){
+        foreach($tagsArray as $tag) $tagIDs[] = $tag->term_id;
+        foreach($tagIDs as $tagID) $tagLinks[] = '<a href="'.get_tag_link($tagID).'" />'.get_term($tagID,'post_tag')->name.'</a>';
+        $outputString = $args['before'].implode($args['sep'],$tagLinks).$args['after'];
+    } else {
+        $outputString = '<!--'.__FUNCTION__.': no tags found-->';
+    }
+    return apply_filters(__FUNCTION__,$outputString);
 }
 
 function dc_get_the_category($args){
-    $x = get_the_category();
-    return apply_filters(__FUNCTION__,$x);
+    $defaults = array('sep'=>', ','parents'=>'single','post_id'=>'false');
+    $args = shortcode_atts( $defaults, $args );
+    $outputString .= c('getting categories',1,1);
+    if($args['parents']!='single') $outputString .= c('"parents" attribute not supported at this time',1,1);
+    if($args['post_id'] != 'false'){
+        $outputString .= c('post_id supplied, getting explicit category link',1,1);
+        $outputString .= get_category_link($args['post_id']);
+    } else {
+        $outputString .= c('no post_id supplied, getting list for current post in The Loop',1,1);
+        $cats = get_the_category();
+        $linksArray = array();
+        foreach($cats as $cat){
+            $linksArray[] = '<a href="'.get_category_link($cat->term_id).'">'.$cat->name.'</a>';
+        }
+        $outputString .= implode($args['sep'],$linksArray);
+    }
+    return apply_filters(__FUNCTION__,$outputString);
+}
+
+function dc_get_the_modified_date($args){
+    $defaults = array('d'=>get_option('date_format'),'before'=>'','after'=>'','echo'=>'true');
+    $args = shortcode_atts( $defaults, $args );
+    $outputString = $args['before'].get_the_modified_date( $args['d'] ).$args['after'];
+    return apply_filters(__FUNCTION__,$outputString);
 }
 
 function dc_get_bloginfo($args){
@@ -149,10 +194,14 @@ function dc_get_comments_template($args){
 }
 
 function dc_get_post_meta($args){
-    if(!$key=$args['key']) $key = null;
-    if(!$single=$args['single']) $single = null;
-    $x = get_post_meta(get_the_ID(),$key,$single);
-    return apply_filters(__FUNCTION__,$x);
+    $defaults = array('key'=>null,'single'=>null,'before'=>'','after'=>'');
+    $args = shortcode_atts( $defaults, $args );
+    $x = get_post_meta(get_the_ID(),$args['key'],$args['single']);
+    $y = array();
+    foreach($x as $i) $y[] = $i;
+    $x = implode(', ',$y);
+    if($x) return apply_filters(__FUNCTION__,$args['before'].$x.$args['after']);
+    else return apply_filters(__FUNCTION__,c('post meta tag "'.$args['key'].'" not found',1,1));
 }
        
 
@@ -217,8 +266,8 @@ function dc_get_the_loop($format){
 			the_post(); 
 			
 			if(is_singular()){
-				$disable_wpautop = get_post_meta($post->ID, 'dc_wpautop');
-				if ($disable_wpautop) remove_filter('the_content', 'wpautop');
+				$disable_wpautop = get_post_meta(get_the_ID(), 'dc_wpautop');
+				if ($disable_wpautop[0]) remove_filter('the_content', 'wpautop');
 			
 				$post_css = get_post_meta($post->ID, 'dc_post_css');
 				
@@ -231,7 +280,10 @@ function dc_get_the_loop($format){
 			
 			$x .= '<article id="'.$id.'" class="dc-wrapper '.implode(' ',get_post_class()).'">';
 			$x .= '<div class="dc-liner">';
-			$x .= dc_get_render_markup(apply_filters($format,o($format)));
+			$dc_hide_title = get_post_meta(get_the_ID(), 'dc_hide_title');
+			$args = array('hide_title'=>$dc_hide_title[0]);
+            $x .= "\n<!-- Using '$format' format. -->\n";
+			$x .= dc_get_render_markup(apply_filters($format,o($format)),$args);
 			$x .= '</div><!--/.post-liner-->';
 			$x .= '</article><!--/'.$id.'-->';
 			$x .= br(2,1);

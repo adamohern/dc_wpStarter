@@ -46,15 +46,6 @@ add_image_size ( 'rss-thumb', 645, 330, true );
 
 
 
-
-// stop WP adding junk (i.e. <br /> and <p></p>) to shortcodes
-remove_filter( 'the_content', 'wpautop' );
-add_filter( 'the_content', 'wpautop' , 10);
-
-
-
-
-
 // <title> tag
 function dc_archiveTitle() {
 	$title = '';

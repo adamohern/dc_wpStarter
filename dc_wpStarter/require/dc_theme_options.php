@@ -10,6 +10,9 @@ $dc_options['std'] -> add_section('Sidebars','sidebars');
 $dc_options['css'] = new dc_theme_options('Theme CSS','dc CSS','dc_css_options');
 $dc_options['css'] -> add_section('CSS','css');
 
+$dc_options['login'] = new dc_theme_options('Theme Login Screen','dc Login','dc_login_options');
+$dc_options['login'] -> add_section('Login Screen','login');
+
 $dc_options['js'] = new dc_theme_options('Theme Javascript','dc Javascript','dc_javascript_options');
 $dc_options['js'] -> add_section('Javascript','js');
 
@@ -142,7 +145,75 @@ $dc_options['css'] -> set('meta_viewport', array(
 ));
 
 
+/* Login
+===========================================*/   
 
+$dc_options['login'] -> set('login_logo_url', array(
+    'section' => 'login',
+    'title'   => 'login logo URL',
+    'desc'    => 'Logo that displays above the login form',
+    'type'    => 'text',
+    'std'     => ''
+));
+
+$dc_options['login'] -> set('login_logo_width', array(
+    'section' => 'login',
+    'title'   => 'login logo width',
+    'desc'    => 'Width of logo. Usually a percentage, should not be larger than 100%',
+    'type'    => 'text',
+    'std'     => '100%'
+));
+
+$dc_options['login'] -> set('login_logo_height', array(
+    'section' => 'login',
+    'title'   => 'login logo height',
+    'desc'    => 'Height of logo box, usually in pixels.',
+    'type'    => 'text',
+    'std'     => '96px'
+));
+
+$dc_options['login'] -> set('login_css', array(
+    'title'   => 'Login CSS Overrides',
+    'desc'    => 'Enter any CSS overrides for the login screen.',
+    'type'    => 'css_big',
+    'section' => 'login',
+    'class'   => 'cssOverrides code',
+    'std'     => htmlspecialchars( 
+        
+"
+body {
+    background-color:#fff;
+}
+
+.login form .input {
+    background: #f5f5f5;
+    box-shadow: none;
+    border: none;
+    padding: .5em;
+}
+
+.login form {
+    background: transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    padding: 0;
+    margin-bottom:5em;
+}
+
+.wp-core-ui .button.button-large {
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background: #2ea2cc;
+    color: #fff;
+    text-decoration: none;
+    padding: .5em 2em;
+    width: auto;
+    height: auto;
+}"
+    
+    )
+));  
 
 
 
@@ -359,11 +430,24 @@ $dc_options['content'] -> set('copyright', array(
     'std'     => get_bloginfo('name')
 ));
 
+
+$dc_options['content'] -> set('wpautop_global_toggle', array(
+    'section' => 'special',
+    'title'   => 'Disable Auto-HTML',
+    'desc'    => 'Keeps Wordpress from using "wpautop" to wrap <p> tags around content automatically (and often erroniously). Recommended for advanced users.',
+    'type'    => 'radio',
+    'std'     => '0',
+    'choices' => array(
+        '1' => 'yes, disable auto-HTML',
+        '0' => 'no, don\'t disable it'
+    )
+));      
+
                                    
 $dc_options['content'] -> set('debug_mode', array(
     'section' => 'special',
     'title'   => 'Debug Mode',
-    'desc'    => 'Displays helpful comments explaining the HTML output.',
+    'desc'    => 'Displays helpful comments explaining the HTML output. Recommended during development, but best to disable for final deployment.',
     'type'    => 'radio',
     'std'     => '1',
     'choices' => array(
@@ -425,10 +509,18 @@ $dc_options['js'] -> set('footer_js', array(
 ));
 
 
+$dc_options['js'] -> set('override_default_js', array(
+    'section' => 'js',
+    'title' => 'Override default jQuery?',
+    'desc' => 'Only check this box if you know what you\'re doing!',
+    'type' => 'checkbox',
+    'std' => 0
+));
+
 $dc_options['js'] -> set('jquery_url', array(
     'section' => 'js',
     'title'   => 'jquery',
-    'desc'    => 'Required. Enter the URL for jquery. (Loads from google APIs by default, ideal for performance.)',
+    'desc'    => 'Required. Enter the URL for jquery. (Loads from google APIs by default, ideal for performance.) Only works if "Override" above is checked.',
     'type'    => 'text',
     'std'     => '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js'
 ));

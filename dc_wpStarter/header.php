@@ -45,6 +45,11 @@ e('<link rel="stylesheet" href="'.get_stylesheet_directory_uri().'/style.css">')
 
 e('<style type="text/css">');
 e(apply_filters('dc_css_overrides',o('css_overrides')));
+if($a = get_post_meta($post->ID, 'dc_post_css_field')){
+    foreach($a as $i) {
+        e($i);
+    }
+}
 e('</style>');
 
 c('if we have js, hide the body until everything is loaded',1);

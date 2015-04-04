@@ -101,12 +101,12 @@ add_shortcode('dc_tabs', 'dc_tabs');
 
 // renders a list of post links based on a custom query
 function dc_query_posts_shortcode($atts) {
-    if(!$atts[showtitles])     	$atts[showtitles] = true;	
-    if(!$atts[order]) 			$atts[order] = 'asc';
-	if(!$atts[maxposts])        $atts[maxposts] = 12;
-    if(!$atts[dateformat]) 	    $atts[dateformat] = 'd F, Y';
-    if(!$atts[offset])          $atts[offset] = 0;
-    if(!$atts[paginate])        $atts[paginate] = false;
+    if(!$atts['showtitles'])     	$atts['showtitles'] = true;	
+    if(!$atts['order']) 			$atts['order'] = 'asc';
+	if(!$atts['maxposts'])        $atts['maxposts'] = 12;
+    if(!$atts['dateformat']) 	    $atts['dateformat'] = 'd F, Y';
+    if(!$atts['offset'])          $atts['offset'] = 0;
+    if(!$atts['paginate'])        $atts['paginate'] = false;
 	
 	return dc_query_posts($atts);
 }
