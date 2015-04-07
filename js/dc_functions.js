@@ -25,12 +25,9 @@
 
 // adapted from HTML5 Reset (http://html5reset.org/)
 
-// remap jQuery to $
-(function($){})(window.jquery);
-
 /* trigger when page is ready */
 jQuery(document).ready(function (){
-	
+
 		jQuery(function() {
 			jQuery( ".accordion" ).accordion();
 		});
@@ -43,12 +40,12 @@ jQuery(document).ready(function (){
 			}
 		);
 
-						
+
 	/* .misc ---------------------------------*/
-				
-		// When the document is fully-loaded (and only then!), we display the page.  
+
+		// When the document is fully-loaded (and only then!), we display the page.
 		jQuery('#everything').fadeIn('fast');
-		
+
 });
 
 
