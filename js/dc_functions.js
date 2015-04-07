@@ -29,17 +29,17 @@
 (function($){})(window.jquery);
 
 /* trigger when page is ready */
-$(document).ready(function (){
+jQuery(document).ready(function (){
 	
-		$(function() {
-			$( ".accordion" ).accordion();
+		jQuery(function() {
+			jQuery( ".accordion" ).accordion();
 		});
-		$(function() {
-			$( ".tabs" ).tabs();
+		jQuery(function() {
+			jQuery( ".tabs" ).tabs();
 		});
-		$( ".toggle" ).click(
+		jQuery( ".toggle" ).click(
 			function(){
-				$(this).next().slideToggle();
+				jQuery(this).next().slideToggle();
 			}
 		);
 
@@ -47,17 +47,17 @@ $(document).ready(function (){
 	/* .misc ---------------------------------*/
 				
 		// When the document is fully-loaded (and only then!), we display the page.  
-		$('#everything').fadeIn('fast');
+		jQuery('#everything').fadeIn('fast');
 		
 });
 
 
 /* optional triggers
-$(window).load(function() {
+jQuery(window).load(function() {
 
 });
 
 
-$(window).resize(function() {
+jQuery(window).resize(function() {
 
 });*/
