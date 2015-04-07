@@ -23,31 +23,6 @@
     }
 }());
 
-// adapted from HTML5 Reset (http://html5reset.org/)
-
-/* trigger when page is ready */
-jQuery(document).ready(function (){
-
-		jQuery(function() {
-			jQuery( ".accordion" ).accordion();
-		});
-		jQuery(function() {
-			jQuery( ".tabs" ).tabs();
-		});
-		jQuery( ".toggle" ).click(
-			function(){
-				jQuery(this).next().slideToggle();
-			}
-		);
-
-
-	/* .misc ---------------------------------*/
-
-		// When the document is fully-loaded (and only then!), we display the page.
-		jQuery('#everything').fadeIn('fast');
-
-});
-
 
 /* optional triggers
 jQuery(window).load(function() {
