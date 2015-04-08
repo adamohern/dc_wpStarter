@@ -97,6 +97,8 @@ function dc_get_the_title($args){
     if (is_array($args)){
         if (!$args['hide_title']){
         	$x = get_the_title();
+            if($args['before']) $x = $args['before'].$x;
+            if($args['after']) $x .= $args['after'];
         	if(isset($args['link']) && $args['link']) $x = "<a href=\"".get_permalink()."\">$x</a>";
         	return apply_filters(__FUNCTION__,$x);
         }
