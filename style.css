@@ -29,7 +29,7 @@ h1 {font-size:3em;}
 h2 {font-size:2em;}
 h3 {font-size:1em;}
 
-textarea, input {padding: 5px;border: 0;outline:0;background: #f5f5f5;border:0;-webkit-appearance: none;display:inline-block;}
+textarea, input {padding: 5px;border: 0;outline:0;background: #f5f5f5;border:0;display:inline-block;}
 
 
 input[type="search"]::-webkit-search-cancel-button{
