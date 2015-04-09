@@ -64,9 +64,16 @@ function dc_nothing($args){
 
 function dc_get_the_post_thumbnail($args){
 	if(get_the_post_thumbnail()!=''){
-		if(isset($args['size'])) $size = $args['size']; else $size = 'medium';
-		$x = get_the_post_thumbnail(get_the_ID(),$size);
-		if(isset($args['link']) && $args['link']) $x = "<a href=\"".get_permalink()."\">$x</a>";
+        if(isset($args['cropbox']) && $args['cropbox']){
+            $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+            $x = '<div class="cropbox" style="background-image:url('.$url.');"></div>';
+        } else {
+            if(isset($args['size'])) $size = $args['size']; else $size = 'medium';
+            $x = get_the_post_thumbnail(get_the_ID(),$size);
+        }
+
+        if(isset($args['link']) && $args['link']) $x = "<a href=\"".get_permalink()."\">$x</a>";
+
 		return apply_filters(__FUNCTION__,$x);
 	} else return false;
 }
@@ -90,6 +97,8 @@ function dc_get_the_title($args){
     if (is_array($args)){
         if (!$args['hide_title']){
         	$x = get_the_title();
+            if($args['before']) $x = $args['before'].$x;
+            if($args['after']) $x .= $args['after'];
         	if(isset($args['link']) && $args['link']) $x = "<a href=\"".get_permalink()."\">$x</a>";
         	return apply_filters(__FUNCTION__,$x);
         }
