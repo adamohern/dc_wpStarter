@@ -74,8 +74,12 @@ function dc_get_the_post_thumbnail($args){
 
         if(isset($args['link']) && $args['link']) $x = "<a href=\"".get_permalink()."\">$x</a>";
 
-		return apply_filters(__FUNCTION__,$x);
-	} else return false;
+        $x = apply_filters('post_thumbnail_html',$x);
+		$x = apply_filters(__FUNCTION__,$x);
+
+        return $x;
+
+    } else return false;
 }
 
 function dc_get_request_uri($args){
